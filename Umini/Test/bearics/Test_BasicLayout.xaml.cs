@@ -12,22 +12,18 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace Umini.Test
+namespace Umini.Test.bearics
 {
     /// <summary>
-    /// Interaction logic for TestWindow.xaml
+    /// Interaction logic for Test_BasicLayout.xaml
     /// </summary>
-    public partial class TestWindow : Window
+    public partial class Test_BasicLayout : Window
     {
-        public TestWindow()
+        public Test_BasicLayout()
         {
             InitializeComponent();
         }
 
-        private void btn_BasicLayout_Click(object sender, RoutedEventArgs e)
-        {
-            Window window = new bearics.Test_BasicLayout();
-            window.Show();
-        }
+
     }
 }

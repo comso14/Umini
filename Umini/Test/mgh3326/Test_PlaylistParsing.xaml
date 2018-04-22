@@ -6,6 +6,7 @@
         mc:Ignorable="d"
         Title="Test_PlaylistParsing" Height="450" Width="800">
     <Grid>
-        
+        <TextBox x:Name="TextBox" HorizontalAlignment="Left" Height="258" Margin="102,68,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="612"/>
+
     </Grid>
 </Window>

@@ -29,5 +29,11 @@ namespace Umini.Test
             Window window = new bearics.Test_BasicLayout();
             window.Show();
         }
+
+        private void mgh3326_btn_BasicLayout_Click(object sender, RoutedEventArgs e)
+        {
+            Window window = new mgh3326.Test_BasicLayout();
+            window.Show();
+        }
     }
 }

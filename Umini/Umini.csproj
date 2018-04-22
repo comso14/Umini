@@ -57,6 +57,9 @@
     <Compile Include="Test\bearics\Test_BasicLayout.xaml.cs">
       <DependentUpon>Test_BasicLayout.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Test\mgh3326\Test_BasicLayout.xaml.cs">
+      <DependentUpon>Test_BasicLayout.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Test\TestWindow.xaml.cs">
       <DependentUpon>TestWindow.xaml</DependentUpon>
     </Compile>
@@ -73,6 +76,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Test\bearics\Test_BasicLayout.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Test\mgh3326\Test_BasicLayout.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

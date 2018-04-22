@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Diagnostics;
 
 namespace Umini.Test
 {
@@ -32,8 +33,16 @@ namespace Umini.Test
 
         private void mgh3326_btn_BasicLayout_Click(object sender, RoutedEventArgs e)
         {
+            System.Console.WriteLine();
+            System.Diagnostics.Debug.WriteLine("");
+            System.Diagnostics.Trace.WriteLine("");
+            System.Diagnostics.Debug.WriteLine("Debug WriteLine");
+            Console.WriteLine("Console WriteLine");
+            System.Diagnostics.Trace.WriteLine("Trace WriteLine");
             Window window = new mgh3326.Test_BasicLayout();
             window.Show();
+
+
         }
     }
 }

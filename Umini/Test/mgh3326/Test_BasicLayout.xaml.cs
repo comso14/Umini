@@ -22,6 +22,10 @@ namespace Umini.Test.mgh3326
         public Test_BasicLayout()
         {
             InitializeComponent();
+           
+            
+
+
         }
     }
 }

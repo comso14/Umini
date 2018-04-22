@@ -31,15 +31,9 @@ namespace Umini.Test
             window.Show();
         }
 
-        private void mgh3326_btn_BasicLayout_Click(object sender, RoutedEventArgs e)
+        private void btn_PlaylistParsing_Click(object sender, RoutedEventArgs e)
         {
-            System.Console.WriteLine();
-            System.Diagnostics.Debug.WriteLine("");
-            System.Diagnostics.Trace.WriteLine("");
-            System.Diagnostics.Debug.WriteLine("Debug WriteLine");
-            Console.WriteLine("Console WriteLine");
-            System.Diagnostics.Trace.WriteLine("Trace WriteLine");
-            Window window = new mgh3326.Test_BasicLayout();
+            Window window = new mgh3326.Test_PlaylistParsing();
             window.Show();
 
 

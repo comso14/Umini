@@ -29,154 +29,155 @@ namespace Umini.Test.mgh3326
     /// </summary>
     public partial class Test_PlaylistParsing : Window
     {
-        static int hoho=0;
+        static int hoho = 0;
         public Test_PlaylistParsing()
         {
             InitializeComponent();
-            TextBox.Text = "Play List 가져오는중..";
-            PlaylistUpdates object1 = new PlaylistUpdates();
-            object1.ohoh();
-            while(true)
-            {
-                if (hoho == 1)
-                    break;
-            }
-            TextBox.Text = object1.output;
-            
-
-
+            TextBox1.Text = "Update 버튼을 눌러주세요 처음에는 로그인을 해야되서 로그인 후에 프로그램을 재실행 해주시면 감사하겠습니다.\r\n";
+            //PlaylistUpdates object1 = new PlaylistUpdates();
+            //object1.ohoh();
+            //while(true)
+            //{
+            //    if (hoho == 1)
+            //        break;
+            //}
+            //TextBox.Text = object1.output;
         }
-        class PlaylistUpdates
+
+        //class PlaylistUpdates : Test_PlaylistParsing
+        //{
+
+
+
+        [STAThread]
+        private void Button_update_Click(object sender, RoutedEventArgs e)
         {
             
-            public String output = "11";
-            
-
-            [STAThread]
-            public void ohoh()
+            TextBox1.Text = "YouTube Data API: Playlist Updates\r\n";
+            try
             {
-               output += "22";
-
-            Console.WriteLine("YouTube Data API: Playlist Updates");
-                Console.WriteLine("==================================");
-
-                try
-                {
-                    new PlaylistUpdates().Run().Wait();
-                }
-                catch (AggregateException ex)
-                {
-                    foreach (var e in ex.InnerExceptions)
-                    {
-                        Console.WriteLine("Error: " + e.Message);
-                        output = "Error: " + e.Message;
-
-                    }
-                }
-
-                Console.WriteLine("Press any key to continue...");
-                output += "Press any key to continue...";
-
-                //Console.ReadKey();
+                Run().Wait();
             }
-            
-            private async Task Run()
+            catch (AggregateException ex)
             {
+                foreach (var ee in ex.InnerExceptions)
+                {
+                    TextBox1.Text = "Error: " + ee.Message;
+                }
+            }
+            TextBox1.AppendText("선택할 재생목록을 입력해주세요\r\n");
+            
+            //Console.ReadKey();
+        }
+        private async Task Run()
+        {
+            TextBox1.AppendText("Run Start\r\n");
+            UserCredential credential;
+            using (var stream = new FileStream("client_secrets.json", FileMode.Open, FileAccess.Read))
+            {
+                credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
+                    GoogleClientSecrets.Load(stream).Secrets,
+                    // This OAuth 2.0 access scope allows for full read/write access to the
+                    // authenticated user's account.
+                    new[] { YouTubeService.Scope.Youtube },
+                    "user",
+                    CancellationToken.None,
+                    new FileDataStore(this.GetType().ToString())
+                );
+            }
+            var youtubeService = new YouTubeService(new BaseClientService.Initializer()
+            {
+                HttpClientInitializer = credential,
+                ApplicationName = this.GetType().ToString()
+            });
+            //////////////////////////////////////////////////////
+            Console.WriteLine("start");
+            var lRequest = youtubeService.Playlists.List("snippet");
+            lRequest.Mine = true;
+            var result = lRequest.Execute();
+
+            //System.Diagnostics.Debugger.Break();
+            //Console.WriteLine(result.Items.Count);
+            for (int i = 0; i < result.Items.Count; i++)
+            {
+                //if (result.Items[i].Snippet.Title == "Favorites")//내꺼에서 오류나서 일단 지움
+                //    Console.WriteLine("Test");
+                Console.WriteLine("재생목록" + i + 1);
+                TextBox1.AppendText("재생목록" + (i + 1)+"\r\n");
+
+                Console.WriteLine("제목 : " + result.Items[i].Snippet.Title);
+                TextBox1.AppendText("제목 : " + result.Items[i].Snippet.Title + "\r\n");
+                var resItem = youtubeService.PlaylistItems.List("snippet");
+                resItem.PlaylistId = result.Items[i].Id;
+                var resitem2 = resItem.Execute();
+                //Console.WriteLine(resitem2.Items.Count);
+                //Console.WriteLine(result.Items[i].Snippet.Title);
+                for (int j = 0; j < resitem2.Items.Count; j++)
+                {
+                    Console.WriteLine(resitem2.Items[j].Snippet.Title);
+                    TextBox1.AppendText(resitem2.Items[j].Snippet.Title+"\r\n");
+
+                }
+            }
+        }
+        private async Task Run(int num)
+        {
+            TextBox1.Text = "";
+            
+            UserCredential credential;
+            using (var stream = new FileStream("client_secrets.json", FileMode.Open, FileAccess.Read))
+            {
+                credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
+                    GoogleClientSecrets.Load(stream).Secrets,
+                    // This OAuth 2.0 access scope allows for full read/write access to the
+                    // authenticated user's account.
+                    new[] { YouTubeService.Scope.Youtube },
+                    "user",
+                    CancellationToken.None,
+                    new FileDataStore(this.GetType().ToString())
+                );
+            }
+            var youtubeService = new YouTubeService(new BaseClientService.Initializer()
+            {
+                HttpClientInitializer = credential,
+                ApplicationName = this.GetType().ToString()
+            });
+            //////////////////////////////////////////////////////
+            Console.WriteLine("start");
+            var lRequest = youtubeService.Playlists.List("snippet");
+            lRequest.Mine = true;
+            var result = lRequest.Execute();
+
+            //System.Diagnostics.Debugger.Break();
+            //Console.WriteLine(result.Items.Count);
+            
+                //if (result.Items[i].Snippet.Title == "Favorites")//내꺼에서 오류나서 일단 지움
+                //    Console.WriteLine("Test");
                
-                output += "33";
-
-                UserCredential credential;
-                using (var stream = new FileStream("client_secrets.json", FileMode.Open, FileAccess.Read))
+                var resItem = youtubeService.PlaylistItems.List("snippet");
+                resItem.PlaylistId = result.Items[num-1].Id;
+                var resitem2 = resItem.Execute();
+                //Console.WriteLine(resitem2.Items.Count);
+                //Console.WriteLine(result.Items[i].Snippet.Title);
+                for (int j = 0; j < resitem2.Items.Count; j++)
                 {
-                    credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
-                        GoogleClientSecrets.Load(stream).Secrets,
-                        // This OAuth 2.0 access scope allows for full read/write access to the
-                        // authenticated user's account.
-                        new[] { YouTubeService.Scope.Youtube },
-                        "user",
-                        CancellationToken.None,
-                        new FileDataStore(this.GetType().ToString())
-                    );
-                }
-
-                var youtubeService = new YouTubeService(new BaseClientService.Initializer()
-                {
-                    HttpClientInitializer = credential,
-                    ApplicationName = this.GetType().ToString()
-                });
-
-
-                //////////////////////////////////////////////////////
-
-
-                Console.WriteLine("start");
-                var lRequest = youtubeService.Playlists.List("snippet");
-                lRequest.Mine = true;
-                var result = lRequest.Execute();
-
-                //System.Diagnostics.Debugger.Break();
-                //Console.WriteLine(result.Items.Count);
-                for (int i = 0; i < result.Items.Count; i++)
-                {
-                    //if (result.Items[i].Snippet.Title == "Favorites")//내꺼에서 오류나서 일단 지움
-                    //    Console.WriteLine("Test");
-                    Console.WriteLine("재생목록" + i + 1);
-                    output += "재생목록" + i + 1;
-                    Console.WriteLine("제목 : " + result.Items[i].Snippet.Title);
-                    output += "제목 : " + result.Items[i].Snippet.Title;
-                    var resItem = youtubeService.PlaylistItems.List("snippet");
-                    resItem.PlaylistId = result.Items[i].Id;
-                    var resitem2 = resItem.Execute();
-                    //Console.WriteLine(resitem2.Items.Count);
-                    //Console.WriteLine(result.Items[i].Snippet.Title);
-                    for (int j = 0; j < resitem2.Items.Count; j++)
-                    {
-                        Console.WriteLine(resitem2.Items[j].Snippet.Title);
-                        output += resitem2.Items[j].Snippet.Title;
-                    }
+                    Console.WriteLine(resitem2.Items[j].Snippet.Title);
+                    TextBox1.AppendText(resitem2.Items[j].Snippet.Title + "\r\n");
 
                 }
-                output += "complete";
-                hoho = 1;
-                
-
-    //Console.WriteLine(resitem2.Items[1].Snippet.Title);
-    
-
-                //System.Diagnostics.Debugger.Break();
-
-
-                //Console.WriteLine("start2");
-                //var listRequest = youtubeService.PlaylistItems.List("snippet");
-                //listRequest.PlaylistId = "노래";
-                //var result = listRequest.Execute();
-
-
-
-                // var searchListResponse = await listRequest.ExecuteAsync();
-
-                //Console.WriteLine("list :: {0} !!", result);
-
-                //// Create a new, private playlist in the authorized user's channel.
-                //var newPlaylist = new Playlist();
-                //newPlaylist.Snippet = new PlaylistSnippet();
-                //newPlaylist.Snippet.Title = "Test Playlist";
-                //newPlaylist.Snippet.Description = "A playlist created with the YouTube API v3";
-                //newPlaylist.Status = new PlaylistStatus();
-                //newPlaylist.Status.PrivacyStatus = "public";
-                //newPlaylist = await youtubeService.Playlists.Insert(newPlaylist, "snippet,status").ExecuteAsync();
-
-                //// Add a video to the newly created playlist.
-                //var newPlaylistItem = new PlaylistItem();
-                //newPlaylistItem.Snippet = new PlaylistItemSnippet();
-                //newPlaylistItem.Snippet.PlaylistId = newPlaylist.Id;
-                //newPlaylistItem.Snippet.ResourceId = new ResourceId();
-                //newPlaylistItem.Snippet.ResourceId.Kind = "youtube#video";
-                //newPlaylistItem.Snippet.ResourceId.VideoId = "GNRMeaz6QRI";
-                //newPlaylistItem = await youtubeService.PlaylistItems.Insert(newPlaylistItem, "snippet").ExecuteAsync();
-
-                //Console.WriteLine("Playlist item id {0} was added to playlist id {1}.", newPlaylistItem.Id, newPlaylist.Id);
+            
+        }
+        private void ButtonPlayListNumberSelect_Click(object sender, RoutedEventArgs e)
+        {
+            if(TextBoxPlayListNumber.Text=="")
+            {
+                MessageBox.Show("텍스트박스가 비었습니다. 채우고 입력해주세요");
+                return;
             }
+            
+            Run(Int32.Parse(TextBoxPlayListNumber.Text)).Wait();
+
+
         }
     }
 }

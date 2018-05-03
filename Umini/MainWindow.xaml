@@ -5,11 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Umini"
         mc:Ignorable="d"
+        Icon="Images/Logo/logo-small.png"
+        x:Name="AppWindow"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
         AllowsTransparency="True"
         Title="Umini" Height="450" Width="800">
-    <Grid>
+    <!--<Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
@@ -30,7 +32,7 @@
                     <Label HorizontalContentAlignment="Center" Width="45" Content="-" Foreground="White">
                         <Label.Style>
                             <Style TargetType="Label">
-                                <!--<Setter Property="Foreground" Value="Green"/>-->
+                                --><!--<Setter Property="Foreground" Value="Green"/>--><!--
                                 <Style.Triggers>
                                     <Trigger Property="IsMouseOver" Value="True">
                                         <Setter Property="Background" Value="IndianRed"/>
@@ -51,14 +53,33 @@
 
         <Button Content="Test" HorizontalAlignment="Left" Margin="20,50,0,0" VerticalAlignment="Top" Width="76" Click="Button_Click"/>
 
-    </Grid>
+    </Grid>-->
 
+    <Window.Resources>
+        <Style TargetType="{x:Type local:MainWindow}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Window}">
+                        <!-- Outer border with the dropshadow margin-->
+                        <Border Padding="{Binding OuterMarginSize, FallbackValue=10}">
+                            <Grid Background="Red">
+                                
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    
     <WindowChrome.WindowChrome>
         <WindowChrome
             ResizeBorderThickness="{Binding ResizeBorderThickness}"
             CaptionHeight="{Binding TitleHeight}"
-            CornerRadius="10"
+            CornerRadius="0"
             GlassFrameThickness="0"
             />
     </WindowChrome.WindowChrome>
+
+    <Grid Background="red"></Grid>
 </Window>

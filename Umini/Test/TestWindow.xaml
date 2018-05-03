@@ -23,5 +23,6 @@
         </Grid.RowDefinitions>
         <Button Grid.Column="0" Grid.Row="0" Name="btn_BasicLayout" Content="Bearics" Click="btn_BasicLayout_Click"/>
         <Button Grid.Column="1" Grid.Row="0" Name="btn_PlaylistParsing" Content="mgh3326" Click="btn_PlaylistParsing_Click"/>
+        <Button Grid.Column="2" Grid.Row="0" x:Name="btn_optionFunction" Content="junpil" Click="btn_optionFunction_Click" Grid.ColumnSpan="2" Margin="0.6,0,98.8,0.4"/>
     </Grid>
 </Window>

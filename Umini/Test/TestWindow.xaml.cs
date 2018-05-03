@@ -38,5 +38,11 @@ namespace Umini.Test
 
 
         }
+
+        private void btn_optionFunction_Click(object sender, RoutedEventArgs e)
+        {
+            Window window = new junpil.Test_optionFunction();
+            window.Show();
+        }
     }
 }

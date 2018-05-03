@@ -68,7 +68,7 @@ namespace Umini.ViewModel
         /// How close to the edge the window has to be to be detected as at the edge of the screen
         /// </summary>
         private int mEdgeTolerance = 1;
-
+        
         /// <summary>
         /// The transform matrix used to convert WPF sizes to screen pixels
         /// </summary>

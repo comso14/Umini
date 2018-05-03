@@ -20,7 +20,6 @@ using Google.Apis.Upload;
 using Google.Apis.Util.Store;
 using Google.Apis.YouTube.v3;
 using Google.Apis.YouTube.v3.Data;
-using HtmlAgilityPack;
 using System.Net;
 using Newtonsoft.Json.Linq;
 using System.Xml;

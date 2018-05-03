@@ -5,9 +5,60 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Umini"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        AllowsTransparency="True"
+        Title="Umini" Height="450" Width="800">
     <Grid>
-        <Button Content="Test" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="76" Click="Button_Click"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="200"/>
+            </Grid.RowDefinitions>
+            <Grid x:Name="grdTitle" Background="#FF363636">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="135" />
+                </Grid.ColumnDefinitions>
+                <Button Style="{StaticResource Hoverless}" Content="aaaa"/>
+                <StackPanel x:Name="pnlCloseBtns" Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="0" Grid.Column="2">
+                    <Label HorizontalContentAlignment="Center" Width="45" Content="-" Foreground="White">
+                        <Label.Style>
+                            <Style TargetType="Label">
+                                <!--<Setter Property="Foreground" Value="Green"/>-->
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="IndianRed"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Label.Style>
+                    </Label>
+
+                    <Label HorizontalContentAlignment="Center" Width="45" Content="[]" Foreground="White"/>
+                    <Label HorizontalContentAlignment="Center" Width="45" Content="X" Foreground="White"/>
+                </StackPanel>
+            </Grid>
+
+        </Grid>
+
+            
+
+        <Button Content="Test" HorizontalAlignment="Left" Margin="20,50,0,0" VerticalAlignment="Top" Width="76" Click="Button_Click"/>
 
     </Grid>
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome
+            ResizeBorderThickness="{Binding ResizeBorderThickness}"
+            CaptionHeight="{Binding TitleHeight}"
+            CornerRadius="10"
+            GlassFrameThickness="0"
+            />
+    </WindowChrome.WindowChrome>
 </Window>

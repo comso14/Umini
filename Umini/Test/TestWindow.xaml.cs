@@ -35,8 +35,12 @@ namespace Umini.Test
         {
             Window window = new mgh3326.Test_PlaylistParsing();
             window.Show();
+        }
 
-
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Window win = new hhhh24.Test_play();
+            win.Show();
         }
     }
 }

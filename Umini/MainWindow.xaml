@@ -62,8 +62,16 @@
                     <ControlTemplate TargetType="{x:Type Window}">
                         <!-- Outer border with the dropshadow margin-->
                         <Border Padding="{Binding OuterMarginSize, FallbackValue=10}">
-                            <Grid Background="Red">
-                                
+                            <Grid>
+                                <!-- Window border and dropshadown -->
+                                <Border Background="{Binding ForegroundLightBrush, FallbackValue=White}">
+                                    <Border.Effect>
+                                        <DropShadowEffect ShadowDepth="0" Opacity="0.2"/>
+                                    </Border.Effect>
+                                </Border>
+
+                                <!-- The Main window content --> 
+                               
                             </Grid>
                         </Border>
                     </ControlTemplate>

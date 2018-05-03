@@ -3,20 +3,67 @@
                     xmlns:local="clr-namespace:Umini">
 
     <ResourceDictionary.MergedDictionaries>
-        <!-- Oder is important -->
-        <ResourceDictionary Source="Colors.xaml" />
+        <!-- Order is important -->
+        <ResourceDictionary Source="Colors.xaml"/>
+        <ResourceDictionary Source="Fonts.xaml"/>
     </ResourceDictionary.MergedDictionaries>
-
-
+    
+    <!-- Hoverless button-->
     <Style TargetType="{x:Type Button}" x:Key="Hoverless">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <Border Padding="{TemplateBinding Padding}" Background="{TemplateBinding Background}">
+                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+    
+    <!-- System Icon Button -->
+
+    <Style TargetType="{x:Type Button}" x:Key="SytemIconButton" BasedOn="{StaticResource Hoverless}">
+        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
+        <Setter Property="Padding" Value="10"/>
+    </Style>
+    
+    <!-- Window Control Button -->
+    <Style TargetType="{x:Type Button}" x:Key="WindowsControlButton" BasedOn="{StaticResource BaseStyle}">
+        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Padding" Value="8"/>
+        <Setter Property="Width" Value="45"/>
+        <Setter Property="VerticalAlignment" Value="Stretch"/>
+        <Setter Property="Foreground" Value="{StaticResource ForegroundMainBrush}"/>
+        
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Padding="{TemplateBinding Padding}" Background="{TemplateBinding Background}">
+                        <TextBlock  VerticalAlignment="Center" HorizontalAlignment="Center" Text="{TemplateBinding Content}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource BackgroundLightBrush}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+           
+    
+    <!-- Window Close Button -->
+    <Style TargetType="{x:Type Button}" x:Key="WindowsCloseButton" BasedOn="{StaticResource WindowsControlButton}">
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="Red" />
+                <Setter Property="Foreground" Value="{StaticResource ForeGroundLightBrush}"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 </ResourceDictionary>

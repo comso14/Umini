@@ -6,17 +6,24 @@
         mc:Ignorable="d"
         Title="Test_PlaylistParsing" Height="450" Width="800">
     <Grid>
-        <TextBox x:Name="TextBox1" HorizontalAlignment="Left" Height="258" Margin="152,68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="612"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="189*"/>
+            <ColumnDefinition Width="494*"/>
+            <ColumnDefinition Width="111*"/>
+        </Grid.ColumnDefinitions>
+        <TextBox x:Name="TextBox1" HorizontalAlignment="Left" Height="258" Margin="152,68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="612" Grid.ColumnSpan="3"/>
         <Button x:Name="Button_update" Content="Update" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Click="Button_update_Click"/>
-        <TextBox x:Name="TextBoxPlayListNumber" HorizontalAlignment="Left" Height="23" Margin="236,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <Label Content="재생목록 번호" HorizontalAlignment="Left" Margin="117,7,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="ButtonPlayListNumberSelect" Content="재생목록 선택" HorizontalAlignment="Left" Margin="378,10,0,0" VerticalAlignment="Top" Width="90" Click="ButtonPlayListNumberSelect_Click"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="689,378,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
-        <TextBox x:Name="TextBoxPlay" HorizontalAlignment="Left" Height="55" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="530" Margin="117,342,0,0"/>
+        <TextBox x:Name="TextBoxPlayListNumber" HorizontalAlignment="Left" Height="23" Margin="47.2,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Grid.Column="1"/>
+        <Label Content="재생목록 번호" HorizontalAlignment="Left" Margin="117,7,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+        <Button x:Name="ButtonPlayListNumberSelect" Content="재생목록 선택" HorizontalAlignment="Left" Margin="189.2,10,0,0" VerticalAlignment="Top" Width="90" Click="ButtonPlayListNumberSelect_Click" Grid.Column="1"/>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="6.165,378,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click" Grid.Column="2"/>
+        <TextBox x:Name="TextBoxPlay" HorizontalAlignment="Left" Height="55" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="495" Margin="152,342,0,0" Grid.ColumnSpan="2"/>
         <TextBox x:Name="TextBoxPlayname" HorizontalAlignment="Left" Height="23" Margin="10,92,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="TextBoxPlayartist" HorizontalAlignment="Left" Height="23" Margin="10,147,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
         <Label Content="제목" HorizontalAlignment="Left" Margin="47,61,0,0" VerticalAlignment="Top"/>
         <Label Content="아티스트" HorizontalAlignment="Left" Margin="47,116,0,0" VerticalAlignment="Top"/>
         <Button x:Name="Buttonlyric"  Content="가사 찾기" HorizontalAlignment="Left" Margin="10,197,0,0" VerticalAlignment="Top" Width="75" Click="Buttonlyric_Click"/>
+        <Image x:Name="image_music" HorizontalAlignment="Left" Height="129" Margin="10,226,0,0" VerticalAlignment="Top" Width="120"/>
+
     </Grid>
 </Window>

@@ -110,6 +110,8 @@ namespace Umini.Test.mgh3326
 
                 Console.WriteLine("제목 : " + result.Items[i].Snippet.Title);
                 TextBox1.AppendText("제목 : " + result.Items[i].Snippet.Title + "\r\n");
+                TextBox1.AppendText("제목 : " + result.Items[i].Snippet.Title + "\r\n");
+
                 var resItem = youtubeService.PlaylistItems.List("snippet");
                 resItem.PlaylistId = result.Items[i].Id;
                 var resitem2 = resItem.Execute();
@@ -209,6 +211,35 @@ namespace Umini.Test.mgh3326
                     string song_name = obj["data"]["songlist"][0]["songnm"].ToString();
                     string album_mname = obj["data"]["songlist"][0]["albumnm"].ToString();
                     string articst_name = obj["data"]["songlist"][0]["ARTIST_NMS"].ToString();
+                    string album_id = obj["data"]["songlist"][0]["albumid"].ToString();
+                    string image_path = "";
+                    if (album_id.Length == 7)
+                    {
+                        image_path = "http://cmsimg.mnet.com/clipimage/album/480/00" + album_id[0] + "/" + album_id.Substring(1, 3) + "/" + album_id + ".jpg";
+                    }
+                    else
+                    {
+                        image_path = "http://cmsimg.mnet.com/clipimage/album/480/000/" + album_id.Substring(0, 3) + "/" + album_id + ".jpg";
+                    }
+                    if(image_path!="")
+                    {
+                        var image = new Image();
+                        //var fullFilePath = @"http://www.americanlayout.com/wp/wp-content/uploads/2012/08/C-To-Go-300x300.png";
+
+                        BitmapImage bitmap = new BitmapImage();
+                        bitmap.BeginInit();
+                        bitmap.UriSource = new Uri(image_path, UriKind.Absolute);
+                        bitmap.EndInit();
+
+
+                        image_music.Source = bitmap;
+                        //MessageBox.Show("이미지 로드 완료");
+                        //wrapPanel1.Children.Add(image);
+                    }
+                    else
+                    {
+                        image_music.Source = null;
+                    }
                     //TextBox1.Text = "";
                     //TextBox1.AppendText("song_name : " + song_name + "\r\n");
 
@@ -216,6 +247,7 @@ namespace Umini.Test.mgh3326
                     //TextBox1.AppendText("articst_name : " + articst_name + "\r\n");
                     TextBoxPlayname.Text = song_name;
                     TextBoxPlayartist.Text = articst_name;
+
 
                 }
                 else
@@ -252,7 +284,7 @@ namespace Umini.Test.mgh3326
 
         private async Task Run_lyric()
         {
-            
+
             String callUrl = "http://lyrics.alsong.co.kr/alsongwebservice/service1.asmx";
 
             string title = TextBoxPlayname.Text;
@@ -288,7 +320,7 @@ namespace Umini.Test.mgh3326
             TextBox1.Text = "";
             foreach (var word in tokens)
             {
-                TextBox1.AppendText(word+"\r\n");
+                TextBox1.AppendText(word + "\r\n");
 
                 //Console.WriteLine(word);
             }

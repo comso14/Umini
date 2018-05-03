@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Diagnostics;
 
 namespace Umini.Test
 {
@@ -28,6 +29,14 @@ namespace Umini.Test
         {
             Window window = new bearics.Test_BasicLayout();
             window.Show();
+        }
+
+        private void btn_PlaylistParsing_Click(object sender, RoutedEventArgs e)
+        {
+            Window window = new mgh3326.Test_PlaylistParsing();
+            window.Show();
+
+
         }
     }
 }

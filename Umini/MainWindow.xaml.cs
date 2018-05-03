@@ -32,5 +32,7 @@ namespace Umini
             Window window = new TestWindow();
             window.Show();
         }
+
+       
     }
 }

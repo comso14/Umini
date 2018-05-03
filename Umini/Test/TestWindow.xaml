@@ -22,6 +22,7 @@
             <RowDefinition Height="9*"/>
         </Grid.RowDefinitions>
         <Button Grid.Column="0" Grid.Row="0" Name="btn_BasicLayout" Content="Bearics" Click="btn_BasicLayout_Click"/>
+        <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="235" Margin="26,41,0,0" Grid.Row="1" Grid.ColumnSpan="3" Height="111" Grid.Column="2" Click="Button_Click"/>
 
     </Grid>
 </Window>

@@ -29,5 +29,11 @@ namespace Umini.Test
             Window window = new bearics.Test_BasicLayout();
             window.Show();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Window win = new hhhh24.Test_play();
+            win.Show();
+        }
     }
 }

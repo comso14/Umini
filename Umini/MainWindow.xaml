@@ -5,60 +5,119 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Umini"
         mc:Ignorable="d"
+        Icon="Images/Logo/logo-small.png"
+        x:Name="AppWindow"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
         AllowsTransparency="True"
         Title="Umini" Height="450" Width="800">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
-        </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Grid.Column="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="200"/>
-            </Grid.RowDefinitions>
-            <Grid x:Name="grdTitle" Background="#FF363636">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*" />
-                    <ColumnDefinition Width="1*" />
-                    <ColumnDefinition Width="135" />
-                </Grid.ColumnDefinitions>
-                <Button Style="{StaticResource Hoverless}" Content="aaaa"/>
-                <StackPanel x:Name="pnlCloseBtns" Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="0" Grid.Column="2">
-                    <Label HorizontalContentAlignment="Center" Width="45" Content="-" Foreground="White">
-                        <Label.Style>
-                            <Style TargetType="Label">
-                                <!--<Setter Property="Foreground" Value="Green"/>-->
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="IndianRed"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Label.Style>
-                    </Label>
 
-                    <Label HorizontalContentAlignment="Center" Width="45" Content="[]" Foreground="White"/>
-                    <Label HorizontalContentAlignment="Center" Width="45" Content="X" Foreground="White"/>
-                </StackPanel>
-            </Grid>
+    <Window.Resources>
+        <Style TargetType="{x:Type local:MainWindow}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Window}">
+                        <!-- Outer border with the dropshadow margin-->
+                        <Border Padding="{Binding OuterMarginSize, FallbackValue=10}">
+                            
+                            <!-- Main window outline -->
+                            <Grid>
+                                <!-- Opacity mask for corners on grid -->
+                                <Border x:Name="Container"
+                                        Background="{StaticResource BackgroundLightBrush}"/>
 
-        </Grid>
+                                <!-- Window border and dropshadown -->
+                                <Border Background="{Binding ForegroundLightBrush, FallbackValue=White}">
+                                    <Border.Effect>
+                                        <DropShadowEffect ShadowDepth="0" Opacity="0.2"/>
+                                    </Border.Effect>
+                                </Border>
 
-            
-
-        <Button Content="Test" HorizontalAlignment="Left" Margin="20,50,0,0" VerticalAlignment="Top" Width="76" Click="Button_Click"/>
-
-    </Grid>
-
+                                <!-- The Main window content -->
+                                <Grid>
+ 
+                                    <Grid.RowDefinitions>
+                                        <!-- Title Bar -->
+                                        <RowDefinition Height="{Binding TitleHeightGridLength, FallbackValue=42}"/>
+                                        <!-- Drop shadow -->
+                                        <RowDefinition Height="Auto" />
+                                        <!-- Window Content -->
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    
+                                    <!-- Title Bar -->
+                                    <Grid Grid.Column="0" Panel.ZIndex="1">
+                                        <Grid.ColumnDefinitions>
+                                            <!-- Icon -->
+                                            <ColumnDefinition Width="Auto" />
+                                            <!-- Title -->
+                                            <ColumnDefinition Width="*" />
+                                            <!-- Windows Button -->
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        
+                                        <!-- Icon -->
+                                        <Button Style="{StaticResource SytemIconButton}" Command="{Binding MenuCommand}">
+                                            <Image Source="/Images/Logo/logo-small.png" />
+                                        </Button>
+                                        
+                                        <!-- Title -->
+                                        <Viewbox Grid.Column="1" Margin="0">
+                                            <TextBlock Style="{StaticResource HeaderText}" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Title, FallbackValue='Welcome, '}"/>
+                                        </Viewbox>
+                                        
+                                        <!-- Window Buttons -->
+                                        <StackPanel Grid.Column="2" Orientation="Horizontal">
+                                            <Button Command="{Binding MinimizeCommand}" Style="{StaticResource WindowsControlButton}" Content="-"/>
+                                            <Button Command="{Binding MaximizeCommand}" Style="{StaticResource WindowsControlButton}" Content="[]"/>
+                                            <Button Command="{Binding CloseCommand}" Style="{StaticResource WindowsCloseButton}" Content="X"/>
+                                        </StackPanel>
+                                        
+                                    </Grid>
+                                    
+                                    <!-- Drop shadow -->
+                                    <Border Grid.Row="1" Height="6" BorderThickness="0 0.2 0 0">
+                                        <!-- Underling -->
+                                        <Border.BorderBrush>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="1, 0">
+                                                <GradientStop Color="{StaticResource ForeGroundLight}" Offset="0.0"/>
+                                                <GradientStop Color="{StaticResource ForeGroundMain}" Offset="0.5"/>
+                                                <GradientStop Color="{StaticResource ForeGroundLight}" Offset="1.0"/>
+                                            </LinearGradientBrush>
+                                        </Border.BorderBrush>
+                                        
+                                        <!-- Drop shadow -->
+                                        <!--<Border.Background>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0, 1">
+                                                <GradientStop Color="{StaticResource BackgroundVeryLight}" Offset="0.0"/>
+                                                <GradientStop Color="{StaticResource ForeGroundLight}" Offset="1.0"/>
+                                            </LinearGradientBrush>
+                                        </Border.Background>-->
+                                    </Border>
+                                    
+                                    <!-- Page Content -->
+                                    <Border Grid.Row="2" Padding="{Binding InnerContentPadding}">
+                                        <ContentPresenter Content="{TemplateBinding Content}"/>
+                                    </Border>
+                                </Grid>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    
     <WindowChrome.WindowChrome>
         <WindowChrome
             ResizeBorderThickness="{Binding ResizeBorderThickness}"
             CaptionHeight="{Binding TitleHeight}"
-            CornerRadius="10"
+            CornerRadius="0"
             GlassFrameThickness="0"
             />
     </WindowChrome.WindowChrome>
+
+    <Grid>
+        <Button Width="50" Height="50" Content="test" Click="Button_Click"/>
+    </Grid>
 </Window>

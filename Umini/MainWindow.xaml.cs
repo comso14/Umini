@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using Umini.ViewModel;
 using Umini.Test;
 
 namespace Umini
@@ -25,6 +26,8 @@ namespace Umini
         public MainWindow()
         {
             InitializeComponent();
+
+            DataContext = new WindowViewModel(this);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

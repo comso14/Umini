@@ -16,6 +16,7 @@ using Google.Apis.YouTube.v3;
 using Google.Apis.Auth;
 using Microsoft.Win32;
 using System.Windows.Threading;
+using System.Threading;
 
 namespace Umini.Test.hhhh24
 {
@@ -25,13 +26,35 @@ namespace Umini.Test.hhhh24
     public partial class Test_play : Window
     {
         TimeSpan t;
-        //DispatcherTimer timer == new DispatcherTimer();
+        bool isplayed = false;
+        DispatcherTimer timer = new DispatcherTimer();
         public Test_play()
         {
             InitializeComponent();
-            
+            timer.Interval = TimeSpan.FromMilliseconds(1000);
+            timer.Tick += new EventHandler(update);
+            timer.Start();
+           // CompositionTarget.Rendering += new EventHandler(Rendering_Update);
         }
 
+        void update(object sender,EventArgs e)
+        {
+            slide.Value = video.Position.TotalSeconds;
+            time.Text = new TimeSpan(0,0,(Convert.ToInt32(slide.Value))).ToString() + "/" + new TimeSpan(0, 0, Convert.ToInt32(t.TotalSeconds)); ;
+        }
+        //private void PlayStatusUpdate(TimeSpan t)
+        //{
+        //    string text = 
+        //}
+        //private void Rendering_Update()
+        //{
+        //    if(t.TotalSeconds != 0)
+        //    {
+        //        double Percent = (video.Position.TotalSeconds / t.TotalSeconds);
+        //        slide.Value = Percent * slide.Maximum;
+        //        PlaystatusUpdate(video.Position);
+        //    }
+        //}
         private void Button_Click(object sender, RoutedEventArgs e)
         {
 
@@ -61,8 +84,33 @@ namespace Umini.Test.hhhh24
             //    web.NavigateToString(embed);
             //------------------------------------------------
         }
+        public void VideoPlay()
+        {
+            video.Play();
+        }
+        public void VideoPause()
+        {
+            video.Pause();
+        }
+        
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void video_MediaOpened(object sender, RoutedEventArgs e)
+        {
+            t = video.NaturalDuration.TimeSpan;
+            slide.Minimum = 0;
+            slide.Maximum = t.TotalSeconds;
+        }
+ 
+        private void slide_LostMouseCapture(object sender, MouseEventArgs e)
+        {
+            int pos = Convert.ToInt32(slide.Value);
+            video.Position = new TimeSpan(0, 0, 0, pos);
+            string curTime = (new TimeSpan(0, 0, 0, pos)).ToString() + "/" + new TimeSpan(0, 0, Convert.ToInt32(t.TotalSeconds));
+            if (time.Text != curTime)
+                time.Text = curTime;
+        }
+
+        private void btn_Open_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
             if (ofd.ShowDialog(this).GetValueOrDefault() == true)
@@ -72,43 +120,33 @@ namespace Umini.Test.hhhh24
                 video.Source = new Uri(ofd.FileName);
                 video.LoadedBehavior = MediaState.Manual;
                 video.UnloadedBehavior = MediaState.Manual;
-                video.Play();
-               
+                
+                btn_Play.Content = "||";
+                VideoPlay();
+                isplayed = true;
             }
-
         }
 
-        private void Button_Click_2(object sender, RoutedEventArgs e)
+        private void btn_Play_Click(object sender, RoutedEventArgs e)
         {
-            video.Play();
-        }
-        
-
-        private void Button_Click_3(object sender, RoutedEventArgs e)
-        {
-            video.Pause();
-        }
-
-        private void video_MediaOpened(object sender, RoutedEventArgs e)
-        {
-            t = video.NaturalDuration.TimeSpan;
-            slide.Minimum = 0;
-            slide.Maximum = t.TotalSeconds;
-        }
-      
-
-        private void f5_Click(object sender, RoutedEventArgs e)
-        {
-            t = video.Position;
-            time.Text = t.ToString();
+            if (isplayed)
+            {
+                btn_Play.Content = ">";
+                VideoPause();
+                isplayed = false;
+            }
+            else
+            {
+                btn_Play.Content = "||";
+                VideoPlay();
+                isplayed = true;
+            }
         }
 
-        private void slide_LostMouseCapture(object sender, MouseEventArgs e)
+        private void vol_LostMouseCapture(object sender, MouseEventArgs e)
         {
-            int pos = Convert.ToInt32(slide.Value);
-            video.Position = new TimeSpan(0, 0, 0, pos, 0);
-            time.Text = (new TimeSpan(0, 0, 0, pos, 0)).ToString();
+            label_Vol.Content = Convert.ToInt32(vol.Value * 100);
+            video.Volume = vol.Value;
         }
-        
     }
 }

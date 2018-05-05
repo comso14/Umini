@@ -237,7 +237,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Icon1.ico" />
-    <Folder Include="Images\Icons\" />
     <Resource Include="Images\Logo\icon.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -248,6 +247,15 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Logo\logo-small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Player\Player.csproj">
+      <Project>{df0d33cb-0c73-4037-84e6-07fd43f2dcae}</Project>
+      <Name>Player</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Images\Icons\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Fody.3.0.3\build\Fody.targets" Condition="Exists('..\packages\Fody.3.0.3\build\Fody.targets')" />

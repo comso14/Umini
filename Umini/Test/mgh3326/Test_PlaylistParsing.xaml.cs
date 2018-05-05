@@ -23,7 +23,7 @@ using Google.Apis.YouTube.v3.Data;
 using System.Net;
 using Newtonsoft.Json.Linq;
 using System.Xml;
-
+using Player;
 namespace Umini.Test.mgh3326
 {
     /// <summary>
@@ -31,26 +31,167 @@ namespace Umini.Test.mgh3326
     /// </summary>
     public partial class Test_PlaylistParsing : Window
     {
-        static int hoho = 0;
+        string mYoutubeId = "";//유튜브 아이디
+        string _mYoutbueTitle = "";//유튜브 제목
+        string mMusicLyric = "";//가사
+        string mMusicTitle = "";//노래 제목
+        string mMusicArtist = "";//노래 가수
+        string mMusicAlbumName = "";//앨범 이름
+        string mMusicAlbumPictureUrl = "";//앨범 사진 url
+        int Update(MediaFile mediaFile)
+        {
+            //mediaFile.mYoutubeId
+            try
+            {
+                YoutubePlaySearch(mediaFile.mYoutubeId).Wait();
+            }
+            catch (AggregateException ex)
+            {
+                foreach (var e in ex.InnerExceptions)
+                {
+                    Console.WriteLine("Error: " + e.Message);
+                }
+            }
+            StringBuilder builder = new StringBuilder(_mYoutbueTitle);
+            builder.Replace("\"", "");
+            //builder.Replace("[second]", "2nd");
+
+            mediaFile.mYoutbueTitle = builder.ToString(); // Value of y is "Hello 1st 2nd world"
+            //mediaFile.mYoutbueTitle = _mYoutbueTitle;//타이틀 받아오기
+
+            MnetParsing(mediaFile.mYoutbueTitle, out mMusicTitle, out mMusicAlbumName, out mMusicAlbumPictureUrl, out mMusicArtist);
+            mediaFile.mTitle = mMusicTitle;
+            mediaFile.mAllbum = mMusicAlbumName;
+            mediaFile.mImagePath = mMusicAlbumPictureUrl;
+            mediaFile.mArtist = mMusicArtist;
+            return 0; //true
+            return 1;//false
+        }
+        private async Task YoutubePlaySearch(string youtubeIDorName)
+        {
+            UserCredential credential;
+            using (var stream = new FileStream("client_secrets.json", FileMode.Open, FileAccess.Read))
+            {
+                credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
+                    GoogleClientSecrets.Load(stream).Secrets,
+                    // This OAuth 2.0 access scope allows for full read/write access to the
+                    // authenticated user's account.
+                    new[] { YouTubeService.Scope.Youtube },
+                    "user",
+                    CancellationToken.None,
+                    new FileDataStore(this.GetType().ToString())
+                );
+            }
+
+
+            var youtubeService = new YouTubeService(new BaseClientService.Initializer()
+            {
+                //ApiKey = "REPLACE_ME",
+                HttpClientInitializer = credential,
+                ApplicationName = this.GetType().ToString()
+            });
+
+            var searchListRequest = youtubeService.Search.List("snippet");
+            searchListRequest.Q = youtubeIDorName;// Replace with your search term.
+            searchListRequest.MaxResults = 1;//50->1
+
+            // Call the search.list method to retrieve results matching the specified query term.
+            //var searchListResponse = await searchListRequest.ExecuteAsync();
+            var searchListResponse = searchListRequest.Execute();
+
+            //List<string> videos = new List<string>();
+            //List<string> channels = new List<string>();
+            //List<string> playlists = new List<string>();
+            //MessageBox.Show(String.Format("{0} ({1})", searchListResponse.Items[0].Snippet.Title, searchListResponse.Items[0].Id.VideoId));
+            _mYoutbueTitle = searchListResponse.Items[0].Snippet.Title;
+
+            //// Add each result to the appropriate list, and then display the lists of
+            //// matching videos, channels, and playlists.
+            //foreach (var searchResult in searchListResponse.Items)
+            //{
+            //    MessageBox.Show(String.Format("{0} ({1})", searchResult.Snippet.Title, searchResult.Id.VideoId));
+
+            //}
+
+            //Console.WriteLine(String.Format("Videos:\n{0}\n", string.Join("\n", videos)));
+            //Console.WriteLine(String.Format("Channels:\n{0}\n", string.Join("\n", channels)));
+            //Console.WriteLine(String.Format("Playlists:\n{0}\n", string.Join("\n", playlists)));
+        }
+        int MnetParsing(string youtube_name, out string song_name, out string album_name, out string artist_name, out string image_path)
+        {
+            //M / V
+
+            //var youtube_name = TextBoxPlay.Text;
+            var url = Uri.EscapeUriString(@"http://search.api.mnet.com/search/totalweb?q=" + youtube_name + "&sort=r&callback=angular.callbacks._0");//인코딩?
+            WebClient wc = new WebClient();
+            wc.Encoding = Encoding.UTF8;
+            string doc = "";
+            doc = wc.DownloadString(url);
+            wc.Dispose();//이게 해제인가
+            //doc = doc.Substring(21);
+            doc = doc.Substring(21, doc.Length - 1 - 21);
+            JObject obj = JObject.Parse(doc);
+            //Console.WriteLine(obj["message"].ToString());
+            image_path = "";
+            artist_name = "";
+            album_name = "";
+            song_name = "";
+            if (obj["resultCode"].ToString() == "S0000" || obj["message"].ToString() == "성공")
+            {
+                if (obj["info"]["songcnt"].ToString() != "0")
+                {
+                    song_name = obj["data"]["songlist"][0]["songnm"].ToString();
+                    album_name = obj["data"]["songlist"][0]["albumnm"].ToString();
+                    artist_name = obj["data"]["songlist"][0]["ARTIST_NMS"].ToString();
+                    string album_id = obj["data"]["songlist"][0]["albumid"].ToString();
+                    image_path = "";
+                    if (album_id.Length == 7)
+                    {
+                        image_path = "http://cmsimg.mnet.com/clipimage/album/480/00" + album_id[0] + "/" + album_id.Substring(1, 3) + "/" + album_id + ".jpg";
+                    }
+                    else
+                    {
+                        image_path = "http://cmsimg.mnet.com/clipimage/album/480/000/" + album_id.Substring(0, 3) + "/" + album_id + ".jpg";
+                    }
+                    if (image_path != "")
+                    {
+                        var image = new Image();
+                        //var fullFilePath = @"http://www.americanlayout.com/wp/wp-content/uploads/2012/08/C-To-Go-300x300.png";
+                        BitmapImage bitmap = new BitmapImage();
+                        bitmap.BeginInit();
+                        bitmap.UriSource = new Uri(image_path, UriKind.Absolute);
+                        bitmap.EndInit();
+                        image_music.Source = bitmap;
+                        //MessageBox.Show("이미지 로드 완료");
+                        //wrapPanel1.Children.Add(image);
+                    }
+                    else
+                    {
+                        image_music.Source = null;
+                    }
+
+                    return 0;
+                }
+                else
+                {
+                    //TextBox1.Text = "검색결과가 없습니다.";
+
+                    return -1;
+                }
+            }
+            else
+            {
+                //TextBox1.Text = "";
+                //TextBox1.AppendText("실패입니다.\r\n");
+                return -1;
+            }
+        }
         public Test_PlaylistParsing()
         {
             InitializeComponent();
             TextBox1.Text = "Update 버튼을 눌러주세요 처음에는 로그인을 해야되서 로그인 후에 프로그램을 재실행 해주시면 감사하겠습니다.\r\n";
-            //PlaylistUpdates object1 = new PlaylistUpdates();
-            //object1.ohoh();
-            //while(true)
-            //{
-            //    if (hoho == 1)
-            //        break;
-            //}
-            //TextBox.Text = object1.output;
+
         }
-
-        //class PlaylistUpdates : Test_PlaylistParsing
-        //{
-
-
-
         [STAThread]
         private void Button_update_Click(object sender, RoutedEventArgs e)
         {
@@ -58,7 +199,7 @@ namespace Umini.Test.mgh3326
             TextBox1.Text = "YouTube Data API: Playlist Updates\r\n";
             try
             {
-                Run().Wait();
+                YoutubePlylist().Wait();
             }
             catch (AggregateException ex)
             {
@@ -68,10 +209,8 @@ namespace Umini.Test.mgh3326
                 }
             }
             TextBox1.AppendText("선택할 재생목록을 입력해주세요\r\n");
-
-            //Console.ReadKey();
         }
-        private async Task Run()
+        private async Task YoutubePlylist()
         {
             TextBox1.AppendText("Run Start\r\n");
             UserCredential credential;
@@ -92,25 +231,14 @@ namespace Umini.Test.mgh3326
                 HttpClientInitializer = credential,
                 ApplicationName = this.GetType().ToString()
             });
-            //////////////////////////////////////////////////////
-            Console.WriteLine("start");
             var lRequest = youtubeService.Playlists.List("snippet");
             lRequest.Mine = true;
             var result = lRequest.Execute();
-
-            //System.Diagnostics.Debugger.Break();
-            //Console.WriteLine(result.Items.Count);
             for (int i = 0; i < result.Items.Count; i++)
             {
-                //if (result.Items[i].Snippet.Title == "Favorites")//내꺼에서 오류나서 일단 지움
-                //    Console.WriteLine("Test");
-                Console.WriteLine("재생목록" + i + 1);
                 TextBox1.AppendText("재생목록" + (i + 1) + "\r\n");
-
-                Console.WriteLine("제목 : " + result.Items[i].Snippet.Title);
                 TextBox1.AppendText("제목 : " + result.Items[i].Snippet.Title + "\r\n");
                 TextBox1.AppendText("제목 : " + result.Items[i].Snippet.Title + "\r\n");
-
                 var resItem = youtubeService.PlaylistItems.List("snippet");
                 resItem.PlaylistId = result.Items[i].Id;
                 var resitem2 = resItem.Execute();
@@ -118,13 +246,11 @@ namespace Umini.Test.mgh3326
                 //Console.WriteLine(result.Items[i].Snippet.Title);
                 for (int j = 0; j < resitem2.Items.Count; j++)
                 {
-                    Console.WriteLine(resitem2.Items[j].Snippet.Title);
                     TextBox1.AppendText(resitem2.Items[j].Snippet.Title + "\r\n");
-
                 }
             }
         }
-        private async Task Run(int num)
+        private async Task YoutubePlylist(int num)
         {
             TextBox1.Text = "";
 
@@ -147,27 +273,16 @@ namespace Umini.Test.mgh3326
                 ApplicationName = this.GetType().ToString()
             });
             //////////////////////////////////////////////////////
-            Console.WriteLine("start");
             var lRequest = youtubeService.Playlists.List("snippet");
             lRequest.Mine = true;
             var result = lRequest.Execute();
-
-            //System.Diagnostics.Debugger.Break();
-            //Console.WriteLine(result.Items.Count);
-
-            //if (result.Items[i].Snippet.Title == "Favorites")//내꺼에서 오류나서 일단 지움
-            //    Console.WriteLine("Test");
-
             var resItem = youtubeService.PlaylistItems.List("snippet");
             resItem.PlaylistId = result.Items[num - 1].Id;
             var resitem2 = resItem.Execute();
-            //Console.WriteLine(resitem2.Items.Count);
-            //Console.WriteLine(result.Items[i].Snippet.Title);
             for (int j = 0; j < resitem2.Items.Count; j++)
             {
                 Console.WriteLine(resitem2.Items[j].Snippet.Title);
                 TextBox1.AppendText(resitem2.Items[j].Snippet.Title + "\r\n");
-
             }
 
         }
@@ -178,20 +293,15 @@ namespace Umini.Test.mgh3326
                 MessageBox.Show("텍스트박스가 비었습니다. 채우고 입력해주세요");
                 return;
             }
-
-            Run(Int32.Parse(TextBoxPlayListNumber.Text)).Wait();
-
-
+            YoutubePlylist(Int32.Parse(TextBoxPlayListNumber.Text)).Wait();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
 
             //var youtube_name = "오마이걸 반하나 - 바나나 알러지 원숭이 [세로라이브] OH MY GIRL BANHANA - Banana allergy monkey";
-
             var youtube_name = TextBoxPlay.Text;
             var url = Uri.EscapeUriString(@"http://search.api.mnet.com/search/totalweb?q=" + youtube_name + "&sort=r&callback=angular.callbacks._0");//인코딩?
-
             WebClient wc = new WebClient();
             wc.Encoding = Encoding.UTF8;
             string doc = "";
@@ -199,10 +309,8 @@ namespace Umini.Test.mgh3326
             wc.Dispose();//이게 해제인가
             //doc = doc.Substring(21);
             doc = doc.Substring(21, doc.Length - 1 - 21);
-
             JObject obj = JObject.Parse(doc);
             Console.WriteLine(obj["message"].ToString());
-
             if (obj["resultCode"].ToString() == "S0000" || obj["message"].ToString() == "성공")
             {
                 if (obj["info"]["songcnt"].ToString() != "0")
@@ -220,17 +328,14 @@ namespace Umini.Test.mgh3326
                     {
                         image_path = "http://cmsimg.mnet.com/clipimage/album/480/000/" + album_id.Substring(0, 3) + "/" + album_id + ".jpg";
                     }
-                    if(image_path!="")
+                    if (image_path != "")
                     {
                         var image = new Image();
                         //var fullFilePath = @"http://www.americanlayout.com/wp/wp-content/uploads/2012/08/C-To-Go-300x300.png";
-
                         BitmapImage bitmap = new BitmapImage();
                         bitmap.BeginInit();
                         bitmap.UriSource = new Uri(image_path, UriKind.Absolute);
                         bitmap.EndInit();
-
-
                         image_music.Source = bitmap;
                         //MessageBox.Show("이미지 로드 완료");
                         //wrapPanel1.Children.Add(image);
@@ -241,13 +346,10 @@ namespace Umini.Test.mgh3326
                     }
                     //TextBox1.Text = "";
                     //TextBox1.AppendText("song_name : " + song_name + "\r\n");
-
                     //TextBox1.AppendText("album_mname : " + album_mname + "\r\n");
                     //TextBox1.AppendText("articst_name : " + articst_name + "\r\n");
                     TextBoxPlayname.Text = song_name;
                     TextBoxPlayartist.Text = articst_name;
-
-
                 }
                 else
                 {
@@ -259,8 +361,6 @@ namespace Umini.Test.mgh3326
                 TextBox1.Text = "";
                 TextBox1.AppendText("실패입니다.\r\n");
             }
-            //TextBox1.Text = doc2.DocumentNode.OuterHtml;
-
         }
 
         [STAThread]
@@ -278,7 +378,6 @@ namespace Umini.Test.mgh3326
                     TextBox1.Text = "Error: " + ee.Message;
                 }
             }
-            //TextBox1.AppendText("선택할 재생목록을 입력해주세요\r\n");
         }
 
         private async Task Run_lyric()
@@ -313,17 +412,20 @@ namespace Umini.Test.mgh3326
             string alsong_name = xdoc.ChildNodes[1].FirstChild.FirstChild.FirstChild.FirstChild["strTitle"].InnerText;
             string alsong_artist = xdoc.ChildNodes[1].FirstChild.FirstChild.FirstChild.FirstChild["strArtistName"].InnerText;
             string lyric = xdoc.ChildNodes[1].FirstChild.FirstChild.FirstChild.FirstChild["strLyric"].InnerText;
-
-            //Console.WriteLine(lyric);
             string[] tokens = lyric.Split(new[] { "<br>" }, StringSplitOptions.None);
             TextBox1.Text = "";
             foreach (var word in tokens)
             {
                 TextBox1.AppendText(word + "\r\n");
-
-                //Console.WriteLine(word);
             }
         }
 
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            MediaFile mfile = new MediaFile();
+            mfile.mYoutubeId = "Amq-qlqbjYA"; //티티ㅣ
+            Update(mfile);
+            MessageBox.Show("업데이트 완료!" + mfile.mYoutbueTitle);
+        }
     }
 }

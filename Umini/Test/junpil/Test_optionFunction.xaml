@@ -34,6 +34,9 @@
             <ComboBoxItem Content="Alt"/>
             <ComboBoxItem Content="Shift"/>
         </ComboBox>
+        <Button x:Name="btnYoutube" Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="330,330,0,0" Click="btnYoutube_Click"/>
+        <TextBox x:Name="txttesttxt" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="307" Margin="19,373,0,0"/>
+        <TextBox x:Name="txtJustTest" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="271" Margin="19,324,0,0"/>
 
     </Grid>
 </Window>

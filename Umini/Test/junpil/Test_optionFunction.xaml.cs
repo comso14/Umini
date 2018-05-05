@@ -16,7 +16,6 @@ using System.Windows.Shapes;
 using System.Windows.Interop;
 using System.Windows.Forms;
 using System.Drawing;
-using WpfApp1;
 using System.Windows.Threading; // 타이머 사용
 using System.Management; // 자동종료 사용
 using System.Diagnostics;
@@ -24,6 +23,7 @@ using System.IO;
 using System.Timers;
 using System.ComponentModel;
 using System.Runtime.Serialization;
+using YoutubeExtractor;
 
 
 
@@ -37,6 +37,17 @@ namespace Umini.Test.junpil
     /// </summary>
     public partial class Test_optionFunction : Window
     {
+
+        public class DownFile
+        {
+
+            public string mYoutubeId = "";
+
+            public string mPath = "";
+
+        }
+        List<DownFile> mDownList = new List<DownFile>();
+        int mIndex = 0;
         public System.Windows.Forms.NotifyIcon notify;
 
         [DllImport("user32.dll")]
@@ -47,7 +58,7 @@ namespace Umini.Test.junpil
 
         private static extern int UnregisterHotKey(int hwnd, int id); // 핫키 제거
         [DllImport("user32.dll")]
-        public static extern IntPtr SendMessageW(IntPtr hWnd, int Msg,IntPtr wParam, IntPtr lParam); //시스템 볼륨 조절
+        public static extern IntPtr SendMessageW(IntPtr hWnd, int Msg, IntPtr wParam, IntPtr lParam); //시스템 볼륨 조절
 
         System.Timers.Timer timer = new System.Timers.Timer();
 
@@ -60,28 +71,27 @@ namespace Umini.Test.junpil
 
         //public System.Windows.Forms.NotifyIcon notify;
 
-        Page1 p1 = new Page1();
 
         public Test_optionFunction()
         {
             InitializeComponent();
-            Window a = new Window();
+
 
 
             Loaded += (s, e) =>   //핫키등록
             {
-                _hotkey = new HotKey(ModifierKeys.Control | ModifierKeys.Alt, WpfApp1.Keys.F5, this);
+                _hotkey = new HotKey(ModifierKeys.Control | ModifierKeys.Alt, Keys.F5, this);
                 _hotkey.HotKeyPressed += (k) => Console.Beep();
-                _hotkey = new HotKey(ModifierKeys.Control | ModifierKeys.Alt, WpfApp1.Keys.F1, this);
+                _hotkey = new HotKey(ModifierKeys.Control | ModifierKeys.Alt, Keys.F1, this);
                 _hotkey.HotKeyPressed += (k) => VolDown();
-                _hotkey = new HotKey(ModifierKeys.Control | ModifierKeys.Alt, WpfApp1.Keys.F2, this);
+                _hotkey = new HotKey(ModifierKeys.Control | ModifierKeys.Alt, Keys.F2, this);
                 _hotkey.HotKeyPressed += (k) => VolUp();
-                _hotkey = new HotKey(ModifierKeys.Control | ModifierKeys.Alt, WpfApp1.Keys.F3, this);
+                _hotkey = new HotKey(ModifierKeys.Control | ModifierKeys.Alt, Keys.F3, this);
                 _hotkey.HotKeyPressed += (k) => Mute();
             };
         }
 
-      
+
 
         private void Mute()
         {
@@ -109,7 +119,7 @@ namespace Umini.Test.junpil
                 string messageBoxText = "트레이로 최소화 하시려면 Yes , 종료는 No입니다.";
                 string caption = "트레이";
                 MessageBoxButton button = MessageBoxButton.YesNoCancel;
-                
+
 
                 MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show(messageBoxText, caption, button);
                 switch (messageBoxResult)
@@ -169,12 +179,6 @@ namespace Umini.Test.junpil
             notify.MouseClick += Notify_Click;
         }
 
-
-       
- 
-
-
-
         private new void PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
 
@@ -189,7 +193,6 @@ namespace Umini.Test.junpil
             {
 
             }
-
         }
 
         private void Button_Click(object sender, RoutedEventArgs e) // 알람 버튼
@@ -213,16 +216,10 @@ namespace Umini.Test.junpil
             timer.Elapsed += new ElapsedEventHandler(timer_Event_Alarm);
             timer.Start();
 
-            
-
-
-
             System.Windows.MessageBox.Show(inHour + "시간" + inMin + "분 후에 알람이 울립니다");
-
-
         }
 
- 
+
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
@@ -256,7 +253,7 @@ namespace Umini.Test.junpil
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e) // Enable TOP MOST
         {
-           // App.Current.MainWindow.Topmost = true; -> 메인 윈도우 최상위시
+            // App.Current.MainWindow.Topmost = true; -> 메인 윈도우 최상위시
             Window.GetWindow(this).Topmost = true; // 현재 체크박스가 있는 윈도우 최상위시
 
         }
@@ -271,6 +268,98 @@ namespace Umini.Test.junpil
         private void TextBox_TextChanged_1(object sender, TextChangedEventArgs e)
         {
 
+        }
+
+        public string GetAbPath(string relationPath)
+        {
+            return System.IO.Path.GetFullPath(relationPath);
+        }
+        public void AddToList(DownFile downFiles)
+        {
+            if (mDownList.Count == 5)
+            {
+
+                FileInfo fileDel = new FileInfo(mDownList[0].mPath);
+                if (fileDel.Exists) //삭제할 파일이 있는지
+                {
+                    fileDel.Delete(); //없어도 에러안남
+                }
+                mDownList.RemoveAt(0);
+                mDownList.Add(downFiles);
+            }
+            else
+            {
+                mDownList.Add(downFiles);
+            }
+        }
+
+        public int GetIndex(string id) // id를 검색해서 해당 인덱스 반환
+        {
+            int tmp = -1;
+            for (int i = 0; i < 5; i++)
+            {
+                if (mDownList[i].mYoutubeId.Equals(id))
+                {
+                    tmp = i;
+                }
+            }
+            return tmp;
+        }
+
+        public void YoutubeMediaDownload(string url) // 유튜브 영상 다운로드
+        {
+            IEnumerable<VideoInfo> videoInfos = DownloadUrlResolver.GetDownloadUrls(url);
+            VideoInfo video = videoInfos
+                     .First(info => info.VideoType == VideoType.Mp4 && info.Resolution == 360);
+
+
+            string fileName = url.Substring(17);
+            DownFile tmp = new DownFile(); // 다운받는 영상을 리스트에 삽입
+            tmp.mYoutubeId = fileName;
+            tmp.mPath = "../../videotmp/" + fileName + video.VideoExtension;
+            AddToList(tmp);
+
+
+
+            txttesttxt.Text = System.IO.Path.GetFullPath("../../videotmp/" + fileName + video.VideoExtension);
+
+
+            if (video.RequiresDecryption)
+            {
+                DownloadUrlResolver.DecryptDownloadUrl(video);
+            }
+
+            var videoDownloader = new VideoDownloader(video, System.IO.Path.Combine("../../videotmp", fileName + video.VideoExtension));
+
+
+            videoDownloader.DownloadProgressChanged += (sender, args) => Console.WriteLine(args.ProgressPercentage);
+
+
+            //videoDownloader.Execute();
+
+            /*video = videoInfos
+
+                .OrderByDescending(info => info.AudioBitrate)
+                .FirstOrDefault();
+
+
+            if (video.RequiresDecryption)
+            {
+                DownloadUrlResolver.DecryptDownloadUrl(video);
+            }
+
+               var audioDownloader = new VideoDownloader(video, System.IO.Path.Combine("C:/Users/pansy/Desktop/Umini/Umini/Downloads", video.Title + ".m4a"));
+
+               audioDownloader.DownloadProgressChanged += (sender, args) => Console.WriteLine(args.ProgressPercentage * 0.85);
+
+
+               audioDownloader.Execute();*/
+        }
+
+        private void btnYoutube_Click(object sender, RoutedEventArgs e)
+        {
+            YoutubeMediaDownload(txtJustTest.Text);
+            mIndex++;
         }
     }
 }

@@ -24,17 +24,17 @@ namespace Player
     public class MediaFile
     { // mp3,wmv,  mp4
         // file's information
-        private string mType { get; set; }  // file type
-        private string mPath{ get; set; }
-        private float mLength{ get; set; }
-        
+        public string mType { get; set; }  // file type
+        public string mPath{ get; set; }
+        public float mLength{ get; set; }
+
         // media tag
-        private string mTitle{ get; set; }
-        private string mArtist{ get; set; }
-        private string mAllbum{ get; set; }
-        private int mYear{ get; set; }
-        private int mTrack{ get; set; }
-        private string mGenre{ get; set; }
-        private string mcomment{ get; set; }
+        public string mTitle{ get; set; }
+        public string mArtist{ get; set; }
+        public string mAllbum{ get; set; }
+        public int mYear{ get; set; }
+        public int mTrack{ get; set; }
+        public string mGenre{ get; set; }
+        public string mcomment{ get; set; }
     }
 }

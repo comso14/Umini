@@ -20,7 +20,7 @@
         <MediaElement x:Name="video" HorizontalAlignment="Left" Height="250" VerticalAlignment="Top" Width="408" Margin="10,40,0,0" MediaOpened="video_MediaOpened"/>
         <Button x:Name="btn_Open" Content="열기" HorizontalAlignment="Left" VerticalAlignment="Top" Width="101" Margin="10,311,0,0" Height="41" RenderTransformOrigin="0.353,0.588" Click="btn_Open_Click"/>
         <Button x:Name="btn_Play" Content="&gt;" HorizontalAlignment="Left" VerticalAlignment="Top" Width="101" Margin="152,311,0,0" Height="41" Click="btn_Play_Click"/>
-        <Slider x:Name="slide" HorizontalAlignment="Left" Margin="10,289,0,0" VerticalAlignment="Top" Height="24" Width="414" RenderTransformOrigin="0.5,0.5" LostMouseCapture="slide_LostMouseCapture">
+        <Slider x:Name="Slider_Time" MouseMove="Slider_Time_OnMouseMove" IsMoveToPointEnabled="True" HorizontalAlignment="Left" Margin="10,289,0,0" VerticalAlignment="Top" Height="24" Width="414" RenderTransformOrigin="0.5,0.5" LostMouseCapture="Slider_Time_LostMouseCapture">
             <Slider.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -31,7 +31,7 @@
             </Slider.RenderTransform>
         </Slider>
         <TextBox x:Name="time" HorizontalAlignment="Left" Height="20" Margin="269,309,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="149" RenderTransformOrigin="-0.724,0.665"/>
-        <Slider x:Name="vol" HorizontalAlignment="Left" Margin="471,311,0,0" VerticalAlignment="Top" Width="100" Maximum="1" Value="0.5" LostMouseCapture="vol_LostMouseCapture" SmallChange="0.01" TickFrequency="0.1"/>
+        <Slider x:Name="Slider_Volume" MouseMove="Slider_Volume_OnMouseMove" IsMoveToPointEnabled="True" HorizontalAlignment="Left" Margin="471,311,0,0" VerticalAlignment="Top" Width="100" Maximum="1" Value="0.5" LostMouseCapture="Slider_Volume_LostMouseCapture" SmallChange="0.01" TickFrequency="0.1"/>
         <Label x:Name="label_Vol" Content="50" HorizontalAlignment="Left" Margin="506,334,0,0" VerticalAlignment="Top" Width="54"/>
 
     </Grid>

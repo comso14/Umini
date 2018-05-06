@@ -16,7 +16,9 @@ using Google.Apis.YouTube.v3;
 using Google.Apis.Auth;
 using Microsoft.Win32;
 using System.Windows.Threading;
-using System.Threading;
+using System.Windows.Controls.Primitives;
+using System.IO;
+using Player;
 
 namespace Umini.Test.hhhh24
 {
@@ -26,35 +28,77 @@ namespace Umini.Test.hhhh24
     public partial class Test_play : Window
     {
         TimeSpan t;
-        bool isplayed = false;
-        DispatcherTimer timer = new DispatcherTimer();
+        bool mIsPlayed = false;
+        DispatcherTimer mTimer = new DispatcherTimer();
+        int mnum = 0;
+        List<MediaFile> mfiles = new List<MediaFile>();
+
         public Test_play()
         {
             InitializeComponent();
-            timer.Interval = TimeSpan.FromMilliseconds(1000);
-            timer.Tick += new EventHandler(update);
-            timer.Start();
+            mTimer.Interval = TimeSpan.FromMilliseconds(1000);
+            mTimer.Tick += new EventHandler(update);
+            mTimer.Start();
            // CompositionTarget.Rendering += new EventHandler(Rendering_Update);
+        }
+        
+        public void Music_Open(string path)
+        {
+            video.Source = new Uri(path);
+            video.LoadedBehavior = MediaState.Manual;
+            video.UnloadedBehavior = MediaState.Manual;
+
+            FileInfo file = new FileInfo(path);
+            MediaFile files = new MediaFile();
+
+            string[] type = path.Split('.');
+            files.mType = type[1];
+            files.mPath = path;
+            files.mLength = Convert.ToUInt32(video.Position.TotalSeconds);
+
+            if (files.mType == "mp3")
+            {
+
+                
+                using (TagLib.File mp3 = TagLib.File.Create(path))
+                {
+                    int k = 0;
+
+                    files.mTitle = mp3.Tag.Title;
+                    files.mAllbum = mp3.Tag.Album;
+                    files.mYear = Convert.ToInt32(mp3.Tag.Year);
+                    files.mTrack = Convert.ToInt32(mp3.Tag.Track);
+                    while (true)
+                    {
+                        if (mp3.Tag.Artists[k] == null)
+                            break;
+                        files.mArtist += mp3.Tag.Artists[k++] + ", ";
+                        //artists가 string이 아니고 string[]형식이라서 그냥 아티스트 전부 ,로 구분해서 한 string에 담기로함
+                    }
+                    k = 0;
+                    while (true)
+                    {
+                        if (mp3.Tag.Genres[k] == null)
+                            break;
+                        files.mGenre += mp3.Tag.Genres[k++] + ", ";
+                        //장르도 마찬가지
+                    }
+                    files.mcomment = mp3.Tag.Comment;
+
+                }
+
+            }
+            
+            mfiles.Add(files); // 다 저장된 하나의 mediafile 클래스를 리스트에 추가함\
+            VideoPlay();
         }
 
         void update(object sender,EventArgs e)
         {
-            slide.Value = video.Position.TotalSeconds;
-            time.Text = new TimeSpan(0,0,(Convert.ToInt32(slide.Value))).ToString() + "/" + new TimeSpan(0, 0, Convert.ToInt32(t.TotalSeconds)); ;
+            Slider_Time.Value = video.Position.TotalSeconds;
+            time.Text = new TimeSpan(0,0,(Convert.ToInt32(Slider_Time.Value))).ToString() + "/" + new TimeSpan(0, 0, Convert.ToInt32(t.TotalSeconds)); ;
         }
-        //private void PlayStatusUpdate(TimeSpan t)
-        //{
-        //    string text = 
-        //}
-        //private void Rendering_Update()
-        //{
-        //    if(t.TotalSeconds != 0)
-        //    {
-        //        double Percent = (video.Position.TotalSeconds / t.TotalSeconds);
-        //        slide.Value = Percent * slide.Maximum;
-        //        PlaystatusUpdate(video.Position);
-        //    }
-        //}
+        
         private void Button_Click(object sender, RoutedEventArgs e)
         {
 
@@ -86,67 +130,87 @@ namespace Umini.Test.hhhh24
         }
         public void VideoPlay()
         {
+            btn_Play.Content = "||";
             video.Play();
+            mIsPlayed = true;
+            
         }
         public void VideoPause()
         {
+            btn_Play.Content = ">";
             video.Pause();
+            mIsPlayed = false;
         }
         
 
         private void video_MediaOpened(object sender, RoutedEventArgs e)
         {
             t = video.NaturalDuration.TimeSpan;
-            slide.Minimum = 0;
-            slide.Maximum = t.TotalSeconds;
+            Slider_Time.Minimum = 0;
+            Slider_Time.Maximum = t.TotalSeconds;
+            Slider_Time.IsMoveToPointEnabled = true;
         }
  
-        private void slide_LostMouseCapture(object sender, MouseEventArgs e)
+        private void Slider_Time_LostMouseCapture(object sender, MouseEventArgs e)
         {
-            int pos = Convert.ToInt32(slide.Value);
+            
+            int pos = Convert.ToInt32(Slider_Time.Value);
             video.Position = new TimeSpan(0, 0, 0, pos);
             string curTime = (new TimeSpan(0, 0, 0, pos)).ToString() + "/" + new TimeSpan(0, 0, Convert.ToInt32(t.TotalSeconds));
             if (time.Text != curTime)
                 time.Text = curTime;
         }
-
+        private void Slider_Time_OnMouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                int pos = Convert.ToInt32(Slider_Time.Value);
+                video.Position = new TimeSpan(0, 0, 0, pos);
+                string curTime = (new TimeSpan(0, 0, 0, pos)).ToString() + "/" + new TimeSpan(0, 0, Convert.ToInt32(t.TotalSeconds));
+                if (time.Text != curTime)
+                    time.Text = curTime;
+            }
+        }
         private void btn_Open_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
             if (ofd.ShowDialog(this).GetValueOrDefault() == true)
 
             {
+                //Music_Open(여기에 파일 path받아야함); 그리고 어디서받을지 몰라서 일단 여기 이벤트에넣어놨는데
+                //노래 리스트에서 더블클릭같은 이벤트에서 Music_Open(path)가 발생해야할듯?? 잘모름..
 
                 video.Source = new Uri(ofd.FileName);
                 video.LoadedBehavior = MediaState.Manual;
                 video.UnloadedBehavior = MediaState.Manual;
-                
-                btn_Play.Content = "||";
+
                 VideoPlay();
-                isplayed = true;
+                MessageBox.Show(ofd.FileName);
             }
         }
 
         private void btn_Play_Click(object sender, RoutedEventArgs e)
         {
-            if (isplayed)
-            {
-                btn_Play.Content = ">";
+            if (mIsPlayed)              
                 VideoPause();
-                isplayed = false;
-            }
             else
-            {
-                btn_Play.Content = "||";
                 VideoPlay();
-                isplayed = true;
-            }
+                
         }
 
-        private void vol_LostMouseCapture(object sender, MouseEventArgs e)
+        private void Slider_Volume_LostMouseCapture(object sender, MouseEventArgs e)
         {
-            label_Vol.Content = Convert.ToInt32(vol.Value * 100);
-            video.Volume = vol.Value;
+            label_Vol.Content = Convert.ToInt32(Slider_Volume.Value * 100);
+            video.Volume = Slider_Volume.Value;
+        }
+        private void Slider_Volume_OnMouseMove(object sender, MouseEventArgs e)
+        {
+            Slider_Volume.IsMoveToPointEnabled = true;
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                label_Vol.Content = Convert.ToInt32(Slider_Volume.Value * 100);
+                video.Volume = Slider_Volume.Value;
+            }
         }
     }
 }

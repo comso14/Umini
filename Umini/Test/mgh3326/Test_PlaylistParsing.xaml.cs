@@ -61,16 +61,20 @@ namespace Umini.Test.mgh3326
 
             mediaFile.mYoutbueTitle = builder.ToString(); // Value of y is "Hello 1st 2nd world"
             //mediaFile.mYoutbueTitle = _mYoutbueTitle;//타이틀 받아오기
-
-            MnetParsing(mediaFile.mYoutbueTitle, out mMusicTitle, out mMusicAlbumName, out mMusicArtist, out mMusicAlbumPictureUrl, out mMusicGenre, out mMusicYear);
+            int temp;
+            temp = MnetParsing(mediaFile.mYoutbueTitle, out mMusicTitle, out mMusicAlbumName, out mMusicArtist, out mMusicAlbumPictureUrl, out mMusicGenre, out mMusicYear);
             mediaFile.mTitle = mMusicTitle;
             mediaFile.mAllbum = mMusicAlbumName;
             mediaFile.mImagePath = mMusicAlbumPictureUrl;
             mediaFile.mArtist = mMusicArtist;
             mediaFile.mGenre = mMusicGenre;
             mediaFile.mYear = mMusicYear;
-            AlsongParsing(mediaFile.mTitle, mediaFile.mArtist, out mMusicLyric);//알송 가사 파싱
-            mediaFile.mLyric = mMusicLyric;
+            if (temp == 0)
+            {
+                AlsongParsing(mediaFile.mTitle, mediaFile.mArtist, out mMusicLyric);//알송 가사 파싱
+                mediaFile.mLyric = mMusicLyric;
+            }
+
             return 0; //true
             return 1;//false
         }
@@ -230,6 +234,8 @@ namespace Umini.Test.mgh3326
             xdoc.LoadXml(respone);
             //이거 아직 예외 처리 안함
             XmlNodeList xnList = xdoc.SelectNodes("Body/GetResembleLyric2Response/GetResembleLyric2Result/ST_GET_RESEMBLELYRIC2_RETURN");
+            if (xdoc.ChildNodes[1].FirstChild.FirstChild.FirstChild.FirstChild == null)
+                return -1;//예외처리
             string alsong_name = xdoc.ChildNodes[1].FirstChild.FirstChild.FirstChild.FirstChild["strTitle"].InnerText;
             string alsong_artist = xdoc.ChildNodes[1].FirstChild.FirstChild.FirstChild.FirstChild["strArtistName"].InnerText;
             string lyric_parsing = xdoc.ChildNodes[1].FirstChild.FirstChild.FirstChild.FirstChild["strLyric"].InnerText;

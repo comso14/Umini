@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
 
-namespace WpfApp1
+namespace Umini.Test.junpil
 {
 	/// <summary>
 	/// Class allow to register hotkeys in system 

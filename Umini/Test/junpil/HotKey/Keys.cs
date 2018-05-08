@@ -1,4 +1,4 @@
-﻿namespace WpfApp1
+﻿namespace Umini.Test.junpil
 {
 	/// <summary>
 	/// 	Enum from System.Windows.Forms.Keys

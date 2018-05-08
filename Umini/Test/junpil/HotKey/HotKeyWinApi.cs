@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Windows.Input;
 
-namespace WpfApp1
+namespace Umini.Test.junpil
 {
 	internal class HotKeyWinApi
 	{

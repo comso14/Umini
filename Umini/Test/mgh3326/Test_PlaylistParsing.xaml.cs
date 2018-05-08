@@ -38,7 +38,10 @@ namespace Umini.Test.mgh3326
         string mMusicArtist = "";//노래 가수
         string mMusicAlbumName = "";//앨범 이름
         string mMusicAlbumPictureUrl = "";//앨범 사진 url
-        int Update(MediaFile mediaFile)
+        string mMusicGenre = "";//장르
+        string mMusicYear = "";//출시 일자
+
+        int Update(MediaFile mediaFile)//Youtube id를 넣어주고 함수를 호출하면 제목 가수 앨범 사진url 장르 출시일자 가사를 가져옴
         {
             //mediaFile.mYoutubeId
             try
@@ -59,13 +62,15 @@ namespace Umini.Test.mgh3326
             mediaFile.mYoutbueTitle = builder.ToString(); // Value of y is "Hello 1st 2nd world"
             //mediaFile.mYoutbueTitle = _mYoutbueTitle;//타이틀 받아오기
 
-            MnetParsing(mediaFile.mYoutbueTitle, out mMusicTitle, out mMusicAlbumName, out mMusicAlbumPictureUrl, out mMusicArtist);
+            MnetParsing(mediaFile.mYoutbueTitle, out mMusicTitle, out mMusicAlbumName, out mMusicArtist, out mMusicAlbumPictureUrl, out mMusicGenre, out mMusicYear);
             mediaFile.mTitle = mMusicTitle;
             mediaFile.mAllbum = mMusicAlbumName;
             mediaFile.mImagePath = mMusicAlbumPictureUrl;
             mediaFile.mArtist = mMusicArtist;
-
-            mediaFile.
+            mediaFile.mGenre = mMusicGenre;
+            mediaFile.mYear = mMusicYear;
+            AlsongParsing(mediaFile.mTitle, mediaFile.mArtist, out mMusicLyric);//알송 가사 파싱
+            mediaFile.mLyric = mMusicLyric;
             return 0; //true
             return 1;//false
         }
@@ -119,7 +124,7 @@ namespace Umini.Test.mgh3326
             //Console.WriteLine(String.Format("Channels:\n{0}\n", string.Join("\n", channels)));
             //Console.WriteLine(String.Format("Playlists:\n{0}\n", string.Join("\n", playlists)));
         }
-        int MnetParsing(string youtube_name, out string song_name, out string album_name, out string artist_name, out string image_path)
+        int MnetParsing(string youtube_name, out string song_name, out string album_name, out string artist_name, out string image_path, out string genrenm_name, out string releaseymd_name)
         {
             //M / V
 
@@ -138,6 +143,8 @@ namespace Umini.Test.mgh3326
             artist_name = "";
             album_name = "";
             song_name = "";
+            genrenm_name = "";
+            releaseymd_name = "";
             if (obj["resultCode"].ToString() == "S0000" || obj["message"].ToString() == "성공")
             {
                 if (obj["info"]["songcnt"].ToString() != "0")
@@ -146,6 +153,8 @@ namespace Umini.Test.mgh3326
                     album_name = obj["data"]["songlist"][0]["albumnm"].ToString();
                     artist_name = obj["data"]["songlist"][0]["ARTIST_NMS"].ToString();
                     string album_id = obj["data"]["songlist"][0]["albumid"].ToString();
+                    genrenm_name = obj["data"]["songlist"][0]["genrenm"].ToString();
+                    releaseymd_name = obj["data"]["songlist"][0]["releaseymd"].ToString();
                     //장르 : genrenm 
                     //출시 : releaseymd
                     image_path = "";
@@ -189,6 +198,56 @@ namespace Umini.Test.mgh3326
                 //TextBox1.AppendText("실패입니다.\r\n");
                 return -1;
             }
+        }
+        
+        int AlsongParsing(string title, string artist, out string lyric)
+        {
+            lyric = "가사를 찾지 못했습니다.";
+
+            String callUrl = "http://lyrics.alsong.co.kr/alsongwebservice/service1.asmx";
+
+            //string title = TextBoxPlayname.Text;
+            //string artist = TextBoxPlayartist.Text;
+
+            //String postData = "<?xml version=" + '\u0022' + "1.0" + '\u0022' + " encoding=" + '\u0022' + "UTF-8" + '\u0022' + "?>" + "<SOAP-ENV:Envelope  xmlns:SOAP-ENV=" + '\u0022' + "http://www.w3.org/2003/05/soap-envelope" + '\u0022' + " xmlns:SOAP-ENC=" + '\u0022' + "http://www.w3.org/2003/05/soap-encoding" + '\u0022' + " xmlns:xsi=" + '\u0022' + "http://www.w3.org/2001/XMLSchema-instance" + '\u0022' + " xmlns:xsd=" + '\u0022' + "http://www.w3.org/2001/XMLSchema" + '\u0022' + " xmlns:ns2=" + '\u0022' + "ALSongWebServer/Service1Soap" + '\u0022' + " xmlns:ns1=" + '\u0022' + "ALSongWebServer" + '\u0022' + " xmlns:ns3=" + '\u0022' + "ALSongWebServer/Service1Soap12" + '\u0022' + ">" + "<SOAP-ENV:Body>" + "<ns1:GetLyric5>" + "<ns1:stQuery>" + "<ns1:strChecksum>" + musicmd5 + "</ns1:strChecksum>" + "<ns1:strVersion>3.36</ns1:strVersion>" + "<ns1:strMACAddress>00ff667f9a08</ns1:strMACAddress>" + "<ns1:strIPAddress>xxx.xxx.xxx.xxx</ns1:strIPAddress>" + "</ns1:stQuery>" + "</ns1:GetLyric5>" + "</SOAP-ENV:Body>" + "</SOAP-ENV:Envelope>";
+            String xml_string = "<?xml version=" + '\u0022' + "1.0" + '\u0022' + " encoding=" + '\u0022' + "UTF-8" + '\u0022' + "?><SOAP-ENV:Envelope xmlns:SOAP-ENV=" + '\u0022' + "http://www.w3.org/2003/05/soap-envelope" + '\u0022' + " xmlns:SOAP-ENC=" + '\u0022' + "http://www.w3.org/2003/05/soap-encoding" + '\u0022' + " xmlns:xsi=" + '\u0022' + "http://www.w3.org/2001/XMLSchema-instance" + '\u0022' + " xmlns:xsd=" + '\u0022' + "http://www.w3.org/2001/XMLSchema" + '\u0022' + " xmlns:ns2=" + '\u0022' + "ALSongWebServer/Service1Soap" + '\u0022' + " xmlns:ns1=" + '\u0022' + "ALSongWebServer" + '\u0022' + " xmlns:ns3=" + '\u0022' + "ALSongWebServer/Service1Soap12" + '\u0022' + "><SOAP-ENV:Body><ns1:GetResembleLyric2><ns1:stQuery><ns1:strTitle>" + title + "</ns1:strTitle><ns1:strArtistName>" + artist + "</ns1:strArtistName><ns1:nCurPage>0</ns1:nCurPage></ns1:stQuery></ns1:GetResembleLyric2></SOAP-ENV:Body></SOAP-ENV:Envelope>";
+
+            //Console.WriteLine("{0}", xml_string);
+            HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(callUrl);
+            // 인코딩 UTF-8
+            byte[] sendData = UTF8Encoding.UTF8.GetBytes(xml_string);
+            httpWebRequest.ContentType = "application/soap+xml; charset=UTF-8";
+            httpWebRequest.UserAgent = "gSOAP/2.7";
+            httpWebRequest.Method = "POST";
+            httpWebRequest.ContentLength = sendData.Length;
+            Stream requestStream = httpWebRequest.GetRequestStream();
+            requestStream.Write(sendData, 0, sendData.Length);
+            requestStream.Close();
+            HttpWebResponse httpWebResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+            StreamReader streamReader = new StreamReader(httpWebResponse.GetResponseStream(), Encoding.GetEncoding("UTF-8"));
+            string respone = streamReader.ReadToEnd();
+            XmlDocument xdoc = new XmlDocument();
+            xdoc.LoadXml(respone);
+            //이거 아직 예외 처리 안함
+            XmlNodeList xnList = xdoc.SelectNodes("Body/GetResembleLyric2Response/GetResembleLyric2Result/ST_GET_RESEMBLELYRIC2_RETURN");
+            string alsong_name = xdoc.ChildNodes[1].FirstChild.FirstChild.FirstChild.FirstChild["strTitle"].InnerText;
+            string alsong_artist = xdoc.ChildNodes[1].FirstChild.FirstChild.FirstChild.FirstChild["strArtistName"].InnerText;
+            string lyric_parsing = xdoc.ChildNodes[1].FirstChild.FirstChild.FirstChild.FirstChild["strLyric"].InnerText;
+            string[] tokens = lyric_parsing.Split(new[] { "<br>" }, StringSplitOptions.None);
+            lyric = "";
+            foreach (var word in tokens)
+            {
+                //TextBox1.AppendText(word + "\r\n");
+                lyric += (word + "\n");
+            }
+
+
+
+
+
+
+            return 0;//성공
+            return -1;//실패
         }
         public Test_PlaylistParsing()
         {
@@ -429,7 +488,7 @@ namespace Umini.Test.mgh3326
             MediaFile mfile = new MediaFile();
             mfile.mYoutubeId = "Amq-qlqbjYA"; //티티ㅣ
             Update(mfile);
-            //MessageBox.Show("업데이트 완료!" + mfile.mYoutbueTitle);
+            MessageBox.Show("업데이트 완료!" + mfile.mYoutbueTitle);
         }
     }
 }

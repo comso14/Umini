@@ -263,6 +263,12 @@
     <Resource Include="Images\Logo\logo-small.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Player\Player.csproj">
+      <Project>{df0d33cb-0c73-4037-84e6-07fd43f2dcae}</Project>
+      <Name>Player</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="Images\Icons\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

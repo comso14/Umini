@@ -38,7 +38,7 @@
  
                                     <Grid.RowDefinitions>
                                         <!-- Title Bar -->
-                                        <RowDefinition Height="{Binding TitleHeightGridLength, FallbackValue=42}"/>
+                                        <RowDefinition Height="{Binding TitleHeightGridLength, FallbackValue=30}"/>
                                         <!-- Drop shadow -->
                                         <RowDefinition Height="Auto" />
                                         <!-- Window Content -->

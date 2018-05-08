@@ -199,7 +199,7 @@ namespace Umini.Test.mgh3326
                 return -1;
             }
         }
-        
+
         int AlsongParsing(string title, string artist, out string lyric)
         {
             lyric = "가사를 찾지 못했습니다.";
@@ -486,9 +486,10 @@ namespace Umini.Test.mgh3326
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             MediaFile mfile = new MediaFile();
-            mfile.mYoutubeId = "Amq-qlqbjYA"; //티티ㅣ
+            mfile.mYoutubeId = txtYoutubeId.Text;
             Update(mfile);
             MessageBox.Show("업데이트 완료!" + mfile.mYoutbueTitle);
+            TextBox1.Text = mfile.mTitle + "\r\n" + mfile.mArtist + "\r\n" + mfile.mLyric + "\r\n";
         }
     }
 }

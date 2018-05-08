@@ -64,6 +64,8 @@ namespace Umini.Test.mgh3326
             mediaFile.mAllbum = mMusicAlbumName;
             mediaFile.mImagePath = mMusicAlbumPictureUrl;
             mediaFile.mArtist = mMusicArtist;
+
+            mediaFile.
             return 0; //true
             return 1;//false
         }
@@ -144,6 +146,8 @@ namespace Umini.Test.mgh3326
                     album_name = obj["data"]["songlist"][0]["albumnm"].ToString();
                     artist_name = obj["data"]["songlist"][0]["ARTIST_NMS"].ToString();
                     string album_id = obj["data"]["songlist"][0]["albumid"].ToString();
+                    //장르 : genrenm 
+                    //출시 : releaseymd
                     image_path = "";
                     if (album_id.Length == 7)
                     {
@@ -425,7 +429,7 @@ namespace Umini.Test.mgh3326
             MediaFile mfile = new MediaFile();
             mfile.mYoutubeId = "Amq-qlqbjYA"; //티티ㅣ
             Update(mfile);
-            MessageBox.Show("업데이트 완료!" + mfile.mYoutbueTitle);
+            //MessageBox.Show("업데이트 완료!" + mfile.mYoutbueTitle);
         }
     }
 }

@@ -52,7 +52,8 @@ namespace Umini.Test.hhhh24
             MediaFile files = new MediaFile();
 
             string[] type = path.Split('.');
-            files.mType = type[1];
+
+            files.mType = type[type.Length == 0 ? type.Length - 1 : 0];
             files.mPath = path;
             files.mLength = Convert.ToUInt32(video.Position.TotalSeconds);
 
@@ -70,9 +71,9 @@ namespace Umini.Test.hhhh24
                     files.mTrack = Convert.ToInt32(mp3.Tag.Track);
                     while (true)
                     {
-                        if (mp3.Tag.Artists[k] == null)
+                        if (mp3.Tag.AlbumArtists[k] == null) //이거 나중에 다시 수정해야할듯
                             break;
-                        files.mArtist += mp3.Tag.Artists[k++] + ", ";
+                        files.mArtist += mp3.Tag.AlbumArtists[k++] + ", ";
                         //artists가 string이 아니고 string[]형식이라서 그냥 아티스트 전부 ,로 구분해서 한 string에 담기로함
                     }
                     k = 0;

@@ -246,6 +246,7 @@
     <Resource Include="Fonts\NanumBarunGothicBold.ttf" />
     <Resource Include="Fonts\NanumBarunGothicLight.ttf" />
     <Resource Include="Fonts\NanumBarunGothicUltraLight.ttf" />
+    <None Include="client_secrets.json" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

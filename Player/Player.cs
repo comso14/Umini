@@ -9,12 +9,19 @@ namespace Player
     public class Account
     {
         private string mID { get; set; }
-        List<Playlist> mPlaylists { get; set; }
+        List<Playlist> mPlaylistList { get; set; }
+    }
+
+    public class NowPlayingList
+    {
+        public bool mIsPlay { get; set; }
+        List<Playlist> mPlaylistList { get; set; }
+        List<MediaFile> mMediaList { get; set; }
     }
 
     public class Playlist
     {
-        List<MediaFile> mMediaFiles { get; set; }
+        List<MediaFile> mMediaList { get; set; }
 
         private string mName { get; set; }
         private string mAccount { get; set; }

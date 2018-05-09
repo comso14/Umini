@@ -138,11 +138,8 @@
             <!-- conten area-->
             <Grid Background="LightGoldenrodYellow" Grid.Column="1" Grid.Row="1">
                 <StackPanel Orientation="Vertical">
-                    <Label Content="플레이 리스트 목록"/>
-                    <Label Content="노래1"/>
-                    <Label Content="노래2"/>
-                    <Label Content="노래3"/>
-                    <Label Content="노래4"/>
+                    <Label Content="현재 재생 목록"/>
+                    <TextBox x:Name="playlist" Width="500" Height="200" Text="aaa"/>
                     <StackPanel Orientation="Horizontal">
                         <TextBox Width="400" Text="aaa"/>
                         <Button Width="100" Content="URL로 추가" Click="btnURLAdd_Click"/>

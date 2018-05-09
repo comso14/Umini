@@ -260,3 +260,9 @@ paket-files/
 __pycache__/
 *.pyc
 *.json
+
+# media files
+*.mp4
+*.mp3
+*.flv
+*.wmv

@@ -126,7 +126,7 @@
                         <TextBox Name="txtPlayingMedia"></TextBox>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Grid.Row="1">
-                        <Button Width="40" Height="30" Content="play" />
+                        <Button Width="40" Height="30" Content="play" Click="Button_Click_1" />
                         <Button Width="40" Height="30" Content="pause"/>
                         <Button Width="40" Height="30" Content="stop" />
                         <Button Width="40" Height="30" Content="next" />
@@ -155,5 +155,6 @@
 
             </Grid>
         </Grid>
+        <TextBox x:Name="txtVideoFullpath" HorizontalAlignment="Left" Height="18" TextWrapping="Wrap" VerticalAlignment="Top" Width="400" Margin="201,349,0,0"/>
     </Grid>
 </Window>

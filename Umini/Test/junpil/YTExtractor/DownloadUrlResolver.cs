@@ -10,7 +10,7 @@ namespace YoutubeExtractor
     /// <summary>
     /// Provides a method to get the download link of a YouTube video.
     /// </summary>
-    public static class DownloadUrlResolver
+    public class DownloadUrlResolver
     {
         private const string RateBypassFlag = "ratebypass";
         private const string SignatureQuery = "signature";

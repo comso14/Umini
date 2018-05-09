@@ -91,42 +91,39 @@ namespace Umini.Test.hhhh24
             
             mfiles.Add(files); // 다 저장된 하나의 mediafile 클래스를 리스트에 추가함\
             VideoPlay();
+           
         }
 
         void update(object sender,EventArgs e)
         {
             Slider_Time.Value = video.Position.TotalSeconds;
             time.Text = new TimeSpan(0,0,(Convert.ToInt32(Slider_Time.Value))).ToString() + "/" + new TimeSpan(0, 0, Convert.ToInt32(t.TotalSeconds)); ;
+            
         }
         
+        public void YoutubePlay(string url)
+        {
+            var ytb = new YouTubeService(new BaseClientService.Initializer()
+            {
+                ApiKey = "AIzaSyB2oz5IFRID3wtpe5v7Sa1KQWst1zBIqBc",
+                ApplicationName = "My tube"
+            });
+
+            string[] sp = url.Split('=');
+            string id = sp[1];
+            string embed = "<html><head>" + "<meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge=c\"/>" +
+                           "</head><body>" + "<iframe src=\"https://youtube.com/embed/"
+                           + id + "?autoplay=1&vq=light\"" +
+                           "allow = \" encrypted-media\"></iframe>" +
+                           "</body></html>";
+            web.NavigateToString(embed);
+        }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
 
-            
-           // string path = @"C:\Users\Kwang1\Desktop\123.mp4";
-           // video.Source = new Uri(@"C:\Users\Kwang1\Desktop\123.mp4", UriKind.RelativeOrAbsolute);
-            
-           // video.Play();
-            
+            YoutubePlay(txtbox.Text);
 
-
-            // ---------youtube영상 embed하는방법-------
-            //    var ytb = new YouTubeService(new BaseClientService.Initializer()
-            //    {
-            //        ApiKey = "AIzaSyB2oz5IFRID3wtpe5v7Sa1KQWst1zBIqBc",
-            //        ApplicationName = "My tube"
-            //    });
-
-            //    string url = txtbox.Text;
-            //    string[] sp = url.Split('=');
-            //    string id = sp[1];
-            //    string embed = "<html><head>" + "<meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge=c\"/>" +
-            //                   "</head><body>" + "<iframe src=\"https://youtube.com/embed/" 
-            //                   + id + "?autoplay=1&vq=light\"" +
-            //                   "allow = \" encrypted-media\"></iframe>" +
-            //                   "</body></html>";
-            //    web.NavigateToString(embed);
-            //------------------------------------------------
         }
         public void VideoPlay()
         {

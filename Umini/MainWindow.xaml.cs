@@ -26,6 +26,7 @@ namespace Umini
     /// </summary>
     public partial class MainWindow : Window
     {
+      
         public MainWindow()
         {
             InitializeComponent();
@@ -49,7 +50,7 @@ namespace Umini
         }
 
    
-    }
+ }
 
 }
 

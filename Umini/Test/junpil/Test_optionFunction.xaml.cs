@@ -35,7 +35,7 @@ namespace Umini.Test.junpil
 {
 
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for MainWindow.xaml   
     /// </summary>
     public partial class Test_optionFunction : Window
     {
@@ -306,11 +306,12 @@ namespace Umini.Test.junpil
 
         public string YoutubeMediaDownload(string url) 
         {
+            DownloadUrlResolver urlResolve = new DownloadUrlResolver();
             IEnumerable<VideoInfo> videoInfos = DownloadUrlResolver.GetDownloadUrls(url);
             VideoInfo video = videoInfos
                      .First(info => info.VideoType == VideoType.Mp4 && info.Resolution == 360);
 
-            string fileName = url.Substring(17);
+            string fileName = url.Substring(32);
             mVideoIndex.Add("../../videotmp/" + fileName + video.VideoExtension);
 
             string res = System.IO.Path.GetFullPath("../../videotmp/" + fileName + video.VideoExtension);

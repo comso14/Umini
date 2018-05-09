@@ -19,7 +19,7 @@
                     <ControlTemplate TargetType="{x:Type Window}">
                         <!-- Outer border with the dropshadow margin-->
                         <Border Padding="{Binding OuterMarginSize, FallbackValue=10}">
-                            
+
                             <!-- Main window outline -->
                             <Grid>
                                 <!-- Opacity mask for corners on grid -->
@@ -35,7 +35,7 @@
 
                                 <!-- The Main window content -->
                                 <Grid>
- 
+
                                     <Grid.RowDefinitions>
                                         <!-- Title Bar -->
                                         <RowDefinition Height="{Binding TitleHeightGridLength, FallbackValue=30}"/>
@@ -44,7 +44,7 @@
                                         <!-- Window Content -->
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
-                                    
+
                                     <!-- Title Bar -->
                                     <Grid Grid.Column="0" Panel.ZIndex="1">
                                         <Grid.ColumnDefinitions>
@@ -55,46 +55,26 @@
                                             <!-- Windows Button -->
                                             <ColumnDefinition Width="Auto" />
                                         </Grid.ColumnDefinitions>
-                                        
+
                                         <!-- Icon -->
                                         <Button Style="{StaticResource SytemIconButton}" Command="{Binding MenuCommand}">
                                             <Image Source="/Images/Logo/logo-small.png" />
                                         </Button>
-                                        
+
                                         <!-- Title -->
                                         <Viewbox Grid.Column="1" Margin="0">
                                             <TextBlock Style="{StaticResource HeaderText}" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Title, FallbackValue='Welcome, '}"/>
                                         </Viewbox>
-                                        
+
                                         <!-- Window Buttons -->
                                         <StackPanel Grid.Column="2" Orientation="Horizontal">
                                             <Button Command="{Binding MinimizeCommand}" Style="{StaticResource WindowsControlButton}" Content="-"/>
                                             <Button Command="{Binding MaximizeCommand}" Style="{StaticResource WindowsControlButton}" Content="[]"/>
                                             <Button Command="{Binding CloseCommand}" Style="{StaticResource WindowsCloseButton}" Content="X"/>
                                         </StackPanel>
-                                        
+
                                     </Grid>
-                                    
-                                    <!-- Drop shadow -->
-                                    <Border Grid.Row="1" Height="6" BorderThickness="0 0.2 0 0">
-                                        <!-- Underling -->
-                                        <Border.BorderBrush>
-                                            <LinearGradientBrush StartPoint="0,0" EndPoint="1, 0">
-                                                <GradientStop Color="{StaticResource ForeGroundLight}" Offset="0.0"/>
-                                                <GradientStop Color="{StaticResource ForeGroundMain}" Offset="0.5"/>
-                                                <GradientStop Color="{StaticResource ForeGroundLight}" Offset="1.0"/>
-                                            </LinearGradientBrush>
-                                        </Border.BorderBrush>
-                                        
-                                        <!-- Drop shadow -->
-                                        <!--<Border.Background>
-                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0, 1">
-                                                <GradientStop Color="{StaticResource BackgroundVeryLight}" Offset="0.0"/>
-                                                <GradientStop Color="{StaticResource ForeGroundLight}" Offset="1.0"/>
-                                            </LinearGradientBrush>
-                                        </Border.Background>-->
-                                    </Border>
-                                    
+
                                     <!-- Page Content -->
                                     <Border Grid.Row="2" Padding="{Binding InnerContentPadding}">
                                         <ContentPresenter Content="{TemplateBinding Content}"/>
@@ -107,7 +87,7 @@
             </Setter>
         </Style>
     </Window.Resources>
-    
+
     <WindowChrome.WindowChrome>
         <WindowChrome
             ResizeBorderThickness="{Binding ResizeBorderThickness}"
@@ -118,6 +98,40 @@
     </WindowChrome.WindowChrome>
 
     <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <!-- player layout -->
+            <Grid Grid.Row="0">
+                <Grid Background="LightGray">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+                    <!-- album image -->
+                    <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Orientation="Horizontal" Grid.Row="0">
+                            <TextBox Name="txtPlayingMedia"></TextBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Grid.Row="1">
+                            <Button Width="40" Height="30" Content="play" />
+                            <Button Width="40" Height="30" Content="pause"/>
+                            <Button Width="40" Height="30" Content="stop" />
+                            <Button Width="40" Height="30" Content="next" />
+                            <Button Width="40" Height="30" Content="prev" />
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </Grid>
+
+        </Grid>
         <Button Width="50" Height="50" Content="test" Click="Button_Click"/>
     </Grid>
 </Window>

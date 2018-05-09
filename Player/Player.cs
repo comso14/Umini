@@ -18,14 +18,22 @@ namespace Player
 
         private string mName { get; set; }
         private string mAccount { get; set; }
-
     }
+
+    public class Youtube : MediaFile
+    {
+        public string mURL { get; set; }
+        public string mYoutubeID { get; set; }
+        public string mYoutubeTitle { get; set; }
+    }
+    
 
     public class MediaFile
     { // mp3,wmv,  mp4
         // file's information
         
         public string mType { get; set; }  // file type
+        public string mExt { get; set; }
         public string mPath { get; set; }
         public float mLength { get; set; }
 
@@ -39,10 +47,5 @@ namespace Player
         public string mcomment { get; set; }
         public string mImagePath { get; set; }
         public string mLyric { get; set; }
-        // youtube tag
-
-        public string mYoutubeId { get; set; }
-        public string mYoutbueTitle { get; set; }
-
     }
 }

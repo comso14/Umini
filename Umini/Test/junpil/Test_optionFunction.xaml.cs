@@ -62,13 +62,13 @@ namespace Umini.Test.junpil
         private const int WM_APPCOMMAND = 0x319;
 
         private HotKey _hotkey;
-        
+
         public Test_optionFunction()
         {
             InitializeComponent();
             Window a = new Window();
 
-            
+
 
 
             Loaded += (s, e) =>   //핫키등록
@@ -203,13 +203,13 @@ namespace Umini.Test.junpil
             alarmTimer.Tick += new EventHandler(timer_Event_Alarm);
             alarmTimer.Start();
 
-            System.Windows.MessageBox.Show(inHour + "시간" + inMin + "분" + inSec +"초 후에 알람이 울립니다");
+            System.Windows.MessageBox.Show(inHour + "시간" + inMin + "분" + inSec + "초 후에 알람이 울립니다");
         }
 
         void timer_Event_Alarm(object sender, EventArgs e)
         {
             MediaElement alarmMusic = new MediaElement();
-            
+
             alarmMusic.LoadedBehavior = MediaState.Manual;
             alarmTimer.Stop();
             alarmTimer.Dispose();
@@ -268,10 +268,10 @@ namespace Umini.Test.junpil
         }
 
 
-        public void AddToPlaylist(List<MediaFile> mediaFiles , MediaFile media)
+        public void AddToPlaylist(List<MediaFile> mediaFiles, MediaFile media)
         {
             mediaFiles.Add(media);
-       
+
         }
         public List<MediaFile> AddToPlaylist(MediaFile media)
         {
@@ -280,6 +280,6 @@ namespace Umini.Test.junpil
             return tmp;
         }
 
-        
+
     }
 }

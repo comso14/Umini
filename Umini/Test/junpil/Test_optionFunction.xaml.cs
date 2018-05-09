@@ -24,6 +24,7 @@ using System.Timers;
 using System.ComponentModel;
 using System.Runtime.Serialization;
 using Player;
+using Umini;
 
 
 
@@ -270,6 +271,7 @@ namespace Umini.Test.junpil
         public void AddToPlaylist(List<MediaFile> mediaFiles , MediaFile media)
         {
             mediaFiles.Add(media);
+       
         }
         public List<MediaFile> AddToPlaylist(MediaFile media)
         {

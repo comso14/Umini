@@ -30,7 +30,6 @@ namespace Umini.Test.hhhh24
         TimeSpan t;
         bool mIsPlayed = false;
         DispatcherTimer mTimer = new DispatcherTimer();
-        int mnum = 0;
         List<MediaFile> mfiles = new List<MediaFile>();
 
         public Test_play()
@@ -51,13 +50,13 @@ namespace Umini.Test.hhhh24
             FileInfo file = new FileInfo(path);
             MediaFile files = new MediaFile();
 
-            string[] type = path.Split('.');
+            string[] ext = path.Split('.');
 
-            files.mType = type[type.Length == 0 ? type.Length - 1 : 0];
+            files.mExt = ext[ext.Length == 0 ? ext.Length - 1 : 0];
             files.mPath = path;
             files.mLength = Convert.ToUInt32(video.Position.TotalSeconds);
 
-            if (files.mType == "mp3")
+            if (files.mExt == "mp3")
             {
 
                 
@@ -85,7 +84,7 @@ namespace Umini.Test.hhhh24
                         //장르도 마찬가지
                     }
                     files.mcomment = mp3.Tag.Comment;
-
+                    files.mLyric = mp3.Tag.Lyrics;
                 }
 
             }

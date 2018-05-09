@@ -26,12 +26,12 @@ namespace Player
         public string mYoutubeID { get; set; }
         public string mYoutubeTitle { get; set; }
     }
-    
+
 
     public class MediaFile
     { // mp3,wmv,  mp4
-        // file's information
-        
+      // file's information
+
         public string mType { get; set; }  // file type
         public string mExt { get; set; }
         public string mPath { get; set; }

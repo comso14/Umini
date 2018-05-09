@@ -36,6 +36,10 @@ namespace Umini
             window.Show();
         }
 
-       
+        private void btnURLAdd_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        
     }
 }

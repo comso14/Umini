@@ -31,7 +31,7 @@ namespace Umini.Test.mgh3326
     /// </summary>
     public partial class Test_PlaylistParsing : Window
     {
-        string mYoutubeId = "";//유튜브 아이디
+        string mYoutubeID = "";//유튜브 아이디
         string _mYoutbueTitle = "";//유튜브 제목
         string mMusicLyric = "";//가사
         string mMusicTitle = "";//노래 제목
@@ -41,12 +41,12 @@ namespace Umini.Test.mgh3326
         string mMusicGenre = "";//장르
         string mMusicYear = "";//출시 일자
 
-        int Update(MediaFile mediaFile)//Youtube id를 넣어주고 함수를 호출하면 제목 가수 앨범 사진url 장르 출시일자 가사를 가져옴
+        int Update(Youtube mediaFile)//Youtube id를 넣어주고 함수를 호출하면 제목 가수 앨범 사진url 장르 출시일자 가사를 가져옴
         {
-            //mediaFile.mYoutubeId
+            //mediaFile.mYoutubeID
             try
             {
-                YoutubePlaySearch(mediaFile.mYoutubeId).Wait();
+                YoutubePlaySearch(mediaFile.mYoutubeID).Wait();
             }
             catch (AggregateException ex)
             {
@@ -59,10 +59,10 @@ namespace Umini.Test.mgh3326
             builder.Replace("\"", "");
             //builder.Replace("[second]", "2nd");
 
-            mediaFile.mYoutbueTitle = builder.ToString(); // Value of y is "Hello 1st 2nd world"
-            //mediaFile.mYoutbueTitle = _mYoutbueTitle;//타이틀 받아오기
+            mediaFile.mYoutubeTitle = builder.ToString(); // Value of y is "Hello 1st 2nd world"
+            //mediaFile.mYoutubeTitle = _mYoutbueTitle;//타이틀 받아오기
             int temp;
-            temp = MnetParsing(mediaFile.mYoutbueTitle, out mMusicTitle, out mMusicAlbumName, out mMusicArtist, out mMusicAlbumPictureUrl, out mMusicGenre, out mMusicYear);
+            temp = MnetParsing(mediaFile.mYoutubeTitle, out mMusicTitle, out mMusicAlbumName, out mMusicArtist, out mMusicAlbumPictureUrl, out mMusicGenre, out mMusicYear);
             mediaFile.mTitle = mMusicTitle;
             mediaFile.mAllbum = mMusicAlbumName;
             mediaFile.mImagePath = mMusicAlbumPictureUrl;
@@ -491,10 +491,10 @@ namespace Umini.Test.mgh3326
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            MediaFile mfile = new MediaFile();
-            mfile.mYoutubeId = txtYoutubeId.Text;
+            Youtube mfile = new Youtube();
+            mfile.mYoutubeID = txtYoutubeId.Text;
             Update(mfile);
-            MessageBox.Show("업데이트 완료!" + mfile.mYoutbueTitle);
+            MessageBox.Show("업데이트 완료!" + mfile.mYoutubeTitle);
             TextBox1.Text = mfile.mTitle + "\r\n" + mfile.mArtist + "\r\n" + mfile.mLyric + "\r\n";
         }
     }

@@ -35,6 +35,11 @@ namespace Umini
             Window window = new TestWindow();
             window.Show();
         }
+
+        private void btnURLAdd_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
         
     }
 }

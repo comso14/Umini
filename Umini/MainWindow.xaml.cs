@@ -15,6 +15,9 @@ using System.Windows.Shapes;
 
 using Umini.ViewModel;
 using Umini.Test;
+using Player;
+using Umini.Test.mgh3326;
+using System.Web;
 
 namespace Umini
 {
@@ -38,8 +41,13 @@ namespace Umini
 
         private void btnURLAdd_Click(object sender, RoutedEventArgs e)
         {
+            Test_PlaylistParsing parsing = new Test_PlaylistParsing();
+            Youtube youtube = parsing.ParsingYoutube(txtUrl.Text);
+            MessageBox.Show(youtube.mTitle);
 
         }
-        
     }
+
 }
+
+

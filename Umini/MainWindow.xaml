@@ -155,5 +155,6 @@
 
             </Grid>
         </Grid>
+        <TextBox x:Name="txtVideoFullpath" HorizontalAlignment="Left" Height="18" TextWrapping="Wrap" VerticalAlignment="Top" Width="400" Margin="201,349,0,0"/>
     </Grid>
 </Window>

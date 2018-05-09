@@ -304,7 +304,7 @@ namespace Umini.Test.junpil
             }
         }
 
-        public void YoutubeMediaDownload(string url)
+        public string YoutubeMediaDownload(string url) 
         {
             IEnumerable<VideoInfo> videoInfos = DownloadUrlResolver.GetDownloadUrls(url);
             VideoInfo video = videoInfos
@@ -312,7 +312,8 @@ namespace Umini.Test.junpil
 
             string fileName = url.Substring(17);
             mVideoIndex.Add("../../videotmp/" + fileName + video.VideoExtension);
-            txttesttxt.Text = System.IO.Path.GetFullPath("../../videotmp/" + fileName + video.VideoExtension);
+
+            string res = System.IO.Path.GetFullPath("../../videotmp/" + fileName + video.VideoExtension);
 
 
             if (video.RequiresDecryption)
@@ -328,7 +329,9 @@ namespace Umini.Test.junpil
 
             videoDownloader.Execute();
 
-            video = videoInfos
+            return res;
+
+            /*video = videoInfos
 
                 .OrderByDescending(info => info.AudioBitrate)
                 .FirstOrDefault();

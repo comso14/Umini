@@ -28,6 +28,7 @@ namespace Umini
     /// </summary>
     public partial class MainWindow : Window
     {
+      
         public MainWindow()
         {
             InitializeComponent();
@@ -56,7 +57,7 @@ namespace Umini
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             Test_play play = new Test_play();
-            play.YoutubePlay(txtUrl.Text);
+            play.Music_Open(txtVideoFullpath.Text);
         }
     }
 

@@ -98,6 +98,7 @@ namespace Umini.Test.hhhh24
         {
             Slider_Time.Value = video.Position.TotalSeconds;
             time.Text = new TimeSpan(0,0,(Convert.ToInt32(Slider_Time.Value))).ToString() + "/" + new TimeSpan(0, 0, Convert.ToInt32(t.TotalSeconds)); ;
+            
         }
         
         public void YoutubePlay(string url)

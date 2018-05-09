@@ -22,6 +22,9 @@
         <TextBox x:Name="Txtb8" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="81" Margin="496,75,0,0" PreviewKeyDown="PreviewKeyDown"/>
         <Button x:Name="btnDeleteAlarm" Content="알람 제거" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="107,38,0,0" Click="btnDeleteAlarm_Click"/>
         <Button x:Name="btnDeleteShut" Content="종료 제거" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="399,38,0,0" Click="btnDeleteShut_Click"/>
+        <TextBox x:Name="txttesttxt" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="461" Margin="13,255,0,0"/>
+        <Button x:Name="btnYoutube" Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="149,194,0,0" Click="btnYoutube_Click"/>
+        <TextBox x:Name="txtJustTest" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="Input URL" VerticalAlignment="Top" Width="120" Margin="13,194,0,0"/>
 
     </Grid>
 </Window>

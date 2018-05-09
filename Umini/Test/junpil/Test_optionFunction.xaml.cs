@@ -25,6 +25,7 @@ using System.ComponentModel;
 using System.Runtime.Serialization;
 using Player;
 using Umini;
+using YoutubeExtractor;
 
 
 
@@ -39,7 +40,8 @@ namespace Umini.Test.junpil
     public partial class Test_optionFunction : Window
     {
         public System.Windows.Forms.NotifyIcon notify;
-
+        List<string> mVideoIndex = new List<string>();
+        int mIndex = 0;
         System.Windows.Forms.Timer shutTimer = new System.Windows.Forms.Timer(); //자동종료 타이머
         System.Windows.Forms.Timer alarmTimer = new System.Windows.Forms.Timer(); //알람 타이머
 
@@ -279,7 +281,80 @@ namespace Umini.Test.junpil
             tmp.Add(media);
             return tmp;
         }
+        public string GetAbPath(string relationPath)
+        {
+            return System.IO.Path.GetFullPath(relationPath);
+        }
+        public void AddToList(string path)
+        {
+            if (mVideoIndex.Count == 5)
+            {
+
+                FileInfo fileDel = new FileInfo(mVideoIndex[0]);
+                if (fileDel.Exists) //삭제할 파일이 있는지
+                {
+                    fileDel.Delete(); //없어도 에러안남
+                }
+                mVideoIndex.RemoveAt(0);
+                mVideoIndex.Add(path);
+            }
+            else
+            {
+                mVideoIndex.Add(path);
+            }
+        }
+
+        public void YoutubeMediaDownload(string url)
+        {
+            IEnumerable<VideoInfo> videoInfos = DownloadUrlResolver.GetDownloadUrls(url);
+            VideoInfo video = videoInfos
+                     .First(info => info.VideoType == VideoType.Mp4 && info.Resolution == 360);
+
+            string fileName = url.Substring(17);
+            mVideoIndex.Add("../../videotmp/" + fileName + video.VideoExtension);
+            txttesttxt.Text = System.IO.Path.GetFullPath("../../videotmp/" + fileName + video.VideoExtension);
 
 
+            if (video.RequiresDecryption)
+            {
+                DownloadUrlResolver.DecryptDownloadUrl(video);
+            }
+
+            var videoDownloader = new VideoDownloader(video, System.IO.Path.Combine("../../videotmp", fileName + video.VideoExtension));
+
+
+            videoDownloader.DownloadProgressChanged += (sender, args) => Console.WriteLine(args.ProgressPercentage);
+
+
+            videoDownloader.Execute();
+
+            video = videoInfos
+
+                .OrderByDescending(info => info.AudioBitrate)
+                .FirstOrDefault();
+
+
+            if (video.RequiresDecryption)
+            {
+                DownloadUrlResolver.DecryptDownloadUrl(video);
+            }
+
+            /*   var audioDownloader = new VideoDownloader(video, System.IO.Path.Combine("C:/Users/pansy/Desktop/Umini/Umini/Downloads", video.Title + ".m4a"));
+
+               audioDownloader.DownloadProgressChanged += (sender, args) => Console.WriteLine(args.ProgressPercentage * 0.85);
+
+
+               audioDownloader.Execute();*/
+        }
+        private void btnYoutube_Click(object sender, RoutedEventArgs e)
+        {
+            YoutubeMediaDownload(txtJustTest.Text);
+        
+        }
+
+        private void btnYoutube_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

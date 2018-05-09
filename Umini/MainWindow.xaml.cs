@@ -43,10 +43,13 @@ namespace Umini
 
         private void btnURLAdd_Click(object sender, RoutedEventArgs e)
         {
+            Test_optionFunction testOption = new Test_optionFunction();
             Test_PlaylistParsing parsing = new Test_PlaylistParsing();
             Youtube youtube = parsing.ParsingYoutube(txtUrl.Text);
+            txtVideoFullpath.Text = testOption.YoutubeMediaDownload(txtUrl.Text);
             MessageBox.Show(youtube.mTitle);
             playlist.AppendText(youtube.mTitle+"\n");
+
 
         }
 

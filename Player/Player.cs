@@ -24,9 +24,10 @@ namespace Player
     public class MediaFile
     { // mp3,wmv,  mp4
         // file's information
-        private string mType { get; set; }  // file type
-        private string mPath { get; set; }
-        private float mLength { get; set; }
+        
+        public string mType { get; set; }  // file type
+        public string mPath { get; set; }
+        public float mLength { get; set; }
 
         // media tag
         public string mTitle { get; set; }
@@ -42,5 +43,6 @@ namespace Player
 
         public string mYoutubeId { get; set; }
         public string mYoutbueTitle { get; set; }
+
     }
 }

@@ -111,11 +111,13 @@
             <Grid Background="LightGray" Grid.ColumnSpan="2" Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="100"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="85*"/>
+                    <ColumnDefinition Width="16*"/>
+                    <ColumnDefinition Width="92*"/>
                     <ColumnDefinition Width="100"/>
                 </Grid.ColumnDefinitions>
                 <!-- album image -->
-                <Grid Grid.Column="1">
+                <Grid Grid.Column="1" Grid.ColumnSpan="3">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="50"/>
                         <RowDefinition Height="50"/>
@@ -131,7 +133,7 @@
                         <Button Width="40" Height="30" Content="prev" />
                     </StackPanel>
                 </Grid>
-                    <Button Width="50" Height="50" Content="test" Click="Button_Click" Grid.Column="2"/>
+                <Button Width="50" Height="50" Content="test" Click="Button_Click" Grid.Column="4" Margin="25"/>
             </Grid>
             <Grid Background="LightCyan" Grid.Column="0" Grid.Row="1">
             </Grid>
@@ -141,16 +143,16 @@
                     <Label Content="현재 재생 목록"/>
                     <TextBox x:Name="playlist" Width="500" Height="200" Text="aaa"/>
                     <StackPanel Orientation="Horizontal">
-                        <TextBox Width="400" Text="aaa"/>
+                        <TextBox x:Name="txtUrl" Width="400" Text="https://www.youtube.com/watch?v=rRzxEiBLQCA"/>
                         <Button Width="100" Content="URL로 추가" Click="btnURLAdd_Click"/>
                     </StackPanel>
 
                 </StackPanel>
-                
+
             </Grid>
 
             <Grid>
-                
+
             </Grid>
         </Grid>
     </Grid>

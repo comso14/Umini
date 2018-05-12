@@ -111,9 +111,7 @@
             <Grid Background="LightGray" Grid.ColumnSpan="2" Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="100"/>
-                    <ColumnDefinition Width="85*"/>
-                    <ColumnDefinition Width="16*"/>
-                    <ColumnDefinition Width="92*"/>
+                    <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="100"/>
                 </Grid.ColumnDefinitions>
                 <!-- album image -->
@@ -122,29 +120,32 @@
                         <RowDefinition Height="50"/>
                         <RowDefinition Height="50"/>
                     </Grid.RowDefinitions>
-                    <StackPanel Orientation="Horizontal" Grid.Row="0">
-                        <TextBox Name="txtPlayingMedia"></TextBox>
+                    <StackPanel Orientation="Horizontal" Grid.Row="0" >
+                        <TextBox x:Name="txtNoPlayingInformation" Text="aaa" Background="LightGray" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Grid.Row="1">
-                        <Button Width="40" Height="30" Content="play" Click="Button_Click_1" />
-                        <Button Width="40" Height="30" Content="pause"/>
-                        <Button Width="40" Height="30" Content="stop" />
-                        <Button Width="40" Height="30" Content="next" />
-                        <Button Width="40" Height="30" Content="prev" />
+                        <Button Width="40" Height="30" Margin="10" Content="play" Click="Button_Click_1" />
+                        <Button Width="40" Height="30" Margin="10" Content="pause"/>
+                        <Button Width="40" Height="30" Margin="10" Content="stop" />
+                        <Button Width="40" Height="30" Margin="10" Content="next" />
+                        <Button Width="40" Height="30" Margin="10" Content="prev" />
                     </StackPanel>
                 </Grid>
                 <Button Width="50" Height="50" Content="test" Click="Button_Click" Grid.Column="4" Margin="25"/>
             </Grid>
             <Grid Background="LightCyan" Grid.Column="0" Grid.Row="1">
+                <Label Content="- 재생목록" FontSize="20" Margin="10 20 0 0" />
+                <Label Content="- 추천노래" FontSize="20" Margin="10 50 0 0" />
+                <Label Content="- 검색" FontSize="20" Margin="10 80 0 0" />
             </Grid>
             <!-- conten area-->
             <Grid Background="LightGoldenrodYellow" Grid.Column="1" Grid.Row="1">
                 <StackPanel Orientation="Vertical">
-                    <Label Content="현재 재생 목록"/>
-                    <TextBox x:Name="playlist" Width="500" Height="200" Text="aaa"/>
+                    <Label Margin="40 5 0 0"  Content="현재 재생 목록"/>
+                    <TextBox x:Name="playlist" Width="500" Height="200" Text="No songs"/>
                     <StackPanel Orientation="Horizontal">
-                        <TextBox x:Name="txtUrl" Width="400" Text="https://www.youtube.com/watch?v=rRzxEiBLQCA"/>
-                        <Button Width="100" Content="URL로 추가" Click="btnURLAdd_Click"/>
+                        <TextBox x:Name="txtUrl" Margin="40 5 0 0" Width="400" Text="https://www.youtube.com/watch?v=rRzxEiBLQCA"/>
+                        <Button Width="100" Content="URL로 추가" Margin="0 5 0 0" Click="btnURLAdd_Click"/>
                     </StackPanel>
 
                 </StackPanel>
@@ -155,6 +156,8 @@
 
             </Grid>
         </Grid>
-        <TextBox x:Name="txtVideoFullpath" HorizontalAlignment="Left" Height="18" TextWrapping="Wrap" VerticalAlignment="Top" Width="400" Margin="201,349,0,0"/>
+        <!--
+            <TextBox x:Name="txtVideoFullpath" HorizontalAlignment="Left" Height="18" TextWrapping="Wrap" VerticalAlignment="Top" Width="400" Margin="201,349,0,0"/>
+        -->
     </Grid>
 </Window>

@@ -19,6 +19,7 @@ using Player;
 using Umini.Test.mgh3326;
 using System.Web;
 using Umini.Test.hhhh24;
+using System.Threading;
 
 
 namespace Umini
@@ -47,9 +48,12 @@ namespace Umini
             Test_optionFunction testOption = new Test_optionFunction();
             Test_PlaylistParsing parsing = new Test_PlaylistParsing();
             Youtube youtube = parsing.ParsingYoutube(txtUrl.Text);
-            txtVideoFullpath.Text = testOption.YoutubeMediaDownload(txtUrl.Text);
+            // txtVideoFullpath.Text = testOption.YoutubeMediaDownload(txtUrl.Text);
             MessageBox.Show(youtube.mTitle);
             playlist.AppendText(youtube.mTitle+"\n");
+
+            Thread ththDownMedia;
+
 
 
         }
@@ -57,7 +61,8 @@ namespace Umini
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             Test_play play = new Test_play();
-            play.Music_Open(txtVideoFullpath.Text);
+            //play.Music_Open()
+            // play.Music_Open(txtVideoFullpath.Text);
         }
     }
 

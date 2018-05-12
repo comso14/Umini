@@ -186,7 +186,7 @@ namespace Umini.Test.hhhh24
             }
         }
 
-        private void btn_Play_Click(object sender, RoutedEventArgs e)
+        public void btn_Play_Click(object sender, RoutedEventArgs e)
         {
             if (mIsPlayed)              
                 VideoPause();

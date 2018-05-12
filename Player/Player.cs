@@ -15,8 +15,8 @@ namespace Player
     public class NowPlayingList
     {
         public bool mIsPlay { get; set; }
-        List<Playlist> mPlaylistList { get; set; }
-        List<MediaFile> mMediaList { get; set; }
+        public List<Playlist> mPlaylistList { get; set; }
+        public List<MediaFile> mMediaList { get; set; }
     }
 
     public class Playlist

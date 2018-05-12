@@ -115,17 +115,27 @@
                     <ColumnDefinition Width="100"/>
                 </Grid.ColumnDefinitions>
                 <!-- album image -->
+                <Grid Grid.Column="0" >
+                    <Image x:Name="album" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100" Source="Images/Logo/icon.ico" />
+                </Grid>
                 <Grid Grid.Column="1" Grid.ColumnSpan="3">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="50"/>
                         <RowDefinition Height="50"/>
                     </Grid.RowDefinitions>
-                    <StackPanel Orientation="Horizontal" Grid.Row="0" >
-                        <TextBox x:Name="txtNoPlayingInformation" Text="aaa" Background="LightGray" />
-                    </StackPanel>
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox x:Name="txtNoPlayingInformation" Text="" Background="LightGray" Grid.Column="0"/>
+                        <TextBox x:Name="txtLyric" Text="" Background="LightGray" Grid.Column="1"/>
+
+                    </Grid>
+
                     <StackPanel Orientation="Horizontal" Grid.Row="1">
                         <Button Width="40" Height="30" Margin="10" Content="play" Click="Button_Click_1" />
-                        <Button Width="40" Height="30" Margin="10" Content="pause"/>
+                        <Button Width="40" Height="30" Margin="10" Content="pause" Click="Button_Click_2"/>
                         <Button Width="40" Height="30" Margin="10" Content="stop" />
                         <Button Width="40" Height="30" Margin="10" Content="next" />
                         <Button Width="40" Height="30" Margin="10" Content="prev" />

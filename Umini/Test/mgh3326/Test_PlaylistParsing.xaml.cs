@@ -159,14 +159,14 @@ namespace Umini.Test.mgh3326
             //M / V
 
             //var youtube_name = TextBoxPlay.Text;
-            var url = Uri.EscapeUriString(@"http://search.api.mnet.com/search/totalweb?q=" + youtube_name + "&sort=r&callback=angular.callbacks._0");//인코딩?
+            var url = Uri.EscapeUriString(@"http://search.api.mnet.com/search/totalweb?q=" + youtube_name + "&sort=r");//인코딩?
             WebClient wc = new WebClient();
             wc.Encoding = Encoding.UTF8;
             string doc = "";
             doc = wc.DownloadString(url);
             wc.Dispose();//이게 해제인가
             //doc = doc.Substring(21);
-            doc = doc.Substring(21, doc.Length - 1 - 21);
+            
             JObject obj = JObject.Parse(doc);
             //Console.WriteLine(obj["message"].ToString());
             image_path = "";

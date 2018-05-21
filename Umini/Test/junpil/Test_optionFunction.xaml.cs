@@ -33,7 +33,6 @@ using Umini.Test;
 
 namespace Umini.Test.junpil
 {
-
     /// <summary>
     /// Interaction logic for MainWindow.xaml   
     /// </summary>
@@ -41,7 +40,7 @@ namespace Umini.Test.junpil
     {
         public System.Windows.Forms.NotifyIcon notify;
         List<string> mVideoIndex = new List<string>();
-        int mIndex = 0;
+      //  int mIndex = 0;
         System.Windows.Forms.Timer shutTimer = new System.Windows.Forms.Timer(); //자동종료 타이머
         System.Windows.Forms.Timer alarmTimer = new System.Windows.Forms.Timer(); //알람 타이머
 
@@ -108,7 +107,7 @@ namespace Umini.Test.junpil
 
         private void NavigationWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e) // 트레이
         {
-            if (notify.Visible == true) { }
+           if (notify.Visible == true) { }
             else
             {
                 string messageBoxText = "트레이로 최소화 하시려면 Yes , 종료는 No입니다.";
@@ -309,7 +308,7 @@ namespace Umini.Test.junpil
             DownloadUrlResolver urlResolve = new DownloadUrlResolver();
             IEnumerable<VideoInfo> videoInfos = DownloadUrlResolver.GetDownloadUrls(url);
             VideoInfo video = videoInfos
-                     .First(info => info.VideoType == VideoType.Mp4 && info.Resolution == 360);
+                     .First(info => info.VideoType == VideoType.Mp4 && info.Resolution == 144);
 
             string fileName = url.Substring(32);
             mVideoIndex.Add("../../videotmp/" + fileName + video.VideoExtension);

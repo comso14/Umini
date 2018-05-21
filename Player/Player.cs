@@ -58,7 +58,7 @@ namespace Player
         public string mType { get; set; }  // file type
         public string mExt { get; set; }
         public string mPath { get; set; }
-        public float mLength { get; set; }
+        public double mLength { get; set; }
 
         // media tag
         public string mTitle { get; set; }

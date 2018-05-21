@@ -1,0 +1,22 @@
+﻿<Page x:Class="Umini.PlaylistPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Umini"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="PlaylistPage">
+    <Grid Background="White">
+        <StackPanel Orientation="Vertical">
+            <Label Margin="40 5 0 0"  Content="현재 재생 목록"/>
+            <TextBox x:Name="playlist" Width="500" Height="200" Text="No songs"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBox x:Name="txtUrl" Margin="40 5 0 0" Width="400" Text="https://www.youtube.com/watch?v=rRzxEiBLQCA"/>
+                <Button Width="100" Content="URL로 추가" Margin="0 5 0 0" Click="btnURLAdd_Click"/>
+            </StackPanel>
+
+        </StackPanel>
+
+    </Grid>
+</Page>

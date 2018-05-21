@@ -134,6 +134,7 @@
                     </Grid>
 
                     <StackPanel Orientation="Horizontal" Grid.Row="1">
+                        
                         <Button Width="40" Height="30" Margin="10" Content="play" Click="Button_Click_1" />
                         <Button Width="40" Height="30" Margin="10" Content="pause" Click="Button_Click_2"/>
                         <Button Width="40" Height="30" Margin="10" Content="stop" />
@@ -148,23 +149,15 @@
                 <Label Content="- 추천노래" FontSize="20" Margin="10 50 0 0" />
                 <Label Content="- 검색" FontSize="20" Margin="10 80 0 0" />
             </Grid>
-            <!-- conten area-->
-            <Grid Background="LightGoldenrodYellow" Grid.Column="1" Grid.Row="1">
-                <StackPanel Orientation="Vertical">
-                    <Label Margin="40 5 0 0"  Content="현재 재생 목록"/>
-                    <TextBox x:Name="playlist" Width="500" Height="200" Text="No songs"/>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBox x:Name="txtUrl" Margin="40 5 0 0" Width="400" Text="https://www.youtube.com/watch?v=rRzxEiBLQCA"/>
-                        <Button Width="100" Content="URL로 추가" Margin="0 5 0 0" Click="btnURLAdd_Click"/>
-                    </StackPanel>
-
-                </StackPanel>
-
-            </Grid>
-
-            <Grid>
-
-            </Grid>
+            <!-- content area -->
+            <Frame Source="PlaylistPage.xaml" Grid.Column="1" Grid.Row="1"/>
+            <!-- 
+            
+            <Frame x:Name="frame" Background="LightGoldenrodYellow" Grid.Column="1" Grid.Row="1"> 
+                
+            </Frame>
+            
+            -->
         </Grid>
         <!--
             <TextBox x:Name="txtVideoFullpath" HorizontalAlignment="Left" Height="18" TextWrapping="Wrap" VerticalAlignment="Top" Width="400" Margin="201,349,0,0"/>

@@ -30,6 +30,9 @@ namespace Umini
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+
+
+
     public partial class MainWindow : Window
     {
         public NowPlayingList mNowPlayingList;
@@ -43,48 +46,17 @@ namespace Umini
 
             play = new Test_play();
             mNowPlayingList = new NowPlayingList();
-            mNowPlayingList.mMediaList = new List<MediaFile>();
-            mNowPlayingList.mPlaylistList= new List<Playlist>();
+        }
+
+        private void AppWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            //frame.NavigationService.Navigate(new PlaylistPage());
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Window window = new TestWindow();
             window.Show();
-        }
-
-        private void btnURLAdd_Click(object sender, RoutedEventArgs e)
-        {
-            DownloadYoutube(txtUrl.Text);
-
-
-        }
-
-
-        private void DownloadYoutube(string link)
-        {
-
-            Test_optionFunction testOption = new Test_optionFunction();
-            Test_PlaylistParsing parsing = new Test_PlaylistParsing();
-            Youtube youtube = parsing.ParsingYoutube(txtUrl.Text);
-            // txtVideoFullpath.Text = testOption.YoutubeMediaDownload(txtUrl.Text);
-            MessageBox.Show(youtube.mTitle);
-            playlist.AppendText(youtube.mTitle + "\n");
-            mNowPlayingList.mMediaList.Add((MediaFile)youtube);
-
-            var youTube = YouTube.Default; // starting point for YouTube actions
-            var video = youTube.GetVideo(link); // gets a Video object with info about the video
-
-
-            Directory.CreateDirectory(Directory.GetCurrentDirectory() + @"\videotmp");
-            string path = Directory.GetCurrentDirectory()+ @"\videotmp\" + youtube.mYoutubeID + ".mp4";
-            MessageBox.Show("path : " + path);
-            File.WriteAllBytes(path, video.GetBytes());
-            int index = 0;
-            index = mNowPlayingList.mMediaList.FindIndex(s => ((Youtube)s).mURL.Contains(link));
-            mNowPlayingList.mMediaList[index].mPath = path;
-
-            return;
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
@@ -102,6 +74,7 @@ namespace Umini
             play.VideoPause();
 
         }
+
     }
 
 }

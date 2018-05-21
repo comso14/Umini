@@ -9,12 +9,28 @@ namespace Player
     public class Account
     {
         private string mID { get; set; }
-        List<Playlist> mPlaylists { get; set; }
+        List<Playlist> mPlaylistList { get; set; }
+    }
+
+    public class NowPlayingList
+    {
+        public bool mIsPlay { get; set; }
+        public int mNowPlayingOrder { get; set; }   // now playing media's Order in playlist 
+        public float mNowMediaPosition { get; set; }    // now playing media's position
+        public List<MediaFile> mMediaList { get; set; }
+
+        public NowPlayingList()
+        {
+            mIsPlay = false;
+            mNowPlayingOrder = 0;
+            mNowMediaPosition = 0;
+            mMediaList = new List<MediaFile>();
+        }
     }
 
     public class Playlist
     {
-        List<MediaFile> mMediaFiles { get; set; }
+        List<MediaFile> mMediaList { get; set; }
 
         private string mName { get; set; }
         private string mAccount { get; set; }
@@ -25,6 +41,13 @@ namespace Player
         public string mURL { get; set; }
         public string mYoutubeID { get; set; }
         public string mYoutubeTitle { get; set; }
+
+        public Youtube()
+        {
+            mURL = null;
+            mYoutubeID = null;
+            mYoutubeTitle = null;
+        }
     }
 
 

@@ -24,11 +24,14 @@ using System.Net;
 using Newtonsoft.Json.Linq;
 using System.Xml;
 using Player;
+using System.Web;
+
 namespace Umini.Test.mgh3326
 {
     /// <summary>
     /// Interaction logic for Test_PlaylistParsing.xaml
     /// </summary>
+
     public partial class Test_PlaylistParsing : Window
     {
         string mYoutubeID = "";//유튜브 아이디
@@ -41,7 +44,19 @@ namespace Umini.Test.mgh3326
         string mMusicGenre = "";//장르
         string mMusicYear = "";//출시 일자
 
-        int Update(Youtube mediaFile)//Youtube id를 넣어주고 함수를 호출하면 제목 가수 앨범 사진url 장르 출시일자 가사를 가져옴
+        public Youtube ParsingYoutube(string url)
+        {
+            Youtube mfile = new Youtube();
+            mfile.mURL = url;
+
+            Uri myUri = new Uri(url);//id 반환
+            mfile.mYoutubeID = HttpUtility.ParseQueryString(myUri.Query).Get("v");
+            //MessageBox.Show(mfile.mYoutubeID);
+            Update(mfile);
+            return mfile;
+        }
+
+        public int Update(Youtube mediaFile)//Youtube id를 넣어주고 함수를 호출하면 제목 가수 앨범 사진url 장르 출시일자 가사를 가져옴
         {
             //mediaFile.mYoutubeID
             try
@@ -170,22 +185,7 @@ namespace Umini.Test.mgh3326
                     {
                         image_path = "http://cmsimg.mnet.com/clipimage/album/480/000/" + album_id.Substring(0, 3) + "/" + album_id + ".jpg";
                     }
-                    if (image_path != "")
-                    {
-                        var image = new Image();
-                        //var fullFilePath = @"http://www.americanlayout.com/wp/wp-content/uploads/2012/08/C-To-Go-300x300.png";
-                        BitmapImage bitmap = new BitmapImage();
-                        bitmap.BeginInit();
-                        bitmap.UriSource = new Uri(image_path, UriKind.Absolute);
-                        bitmap.EndInit();
-                        image_music.Source = bitmap;
-                        //MessageBox.Show("이미지 로드 완료");
-                        //wrapPanel1.Children.Add(image);
-                    }
-                    else
-                    {
-                        image_music.Source = null;
-                    }
+
 
                     return 0;
                 }
@@ -496,6 +496,23 @@ namespace Umini.Test.mgh3326
             Update(mfile);
             MessageBox.Show("업데이트 완료!" + mfile.mYoutubeTitle);
             TextBox1.Text = mfile.mTitle + "\r\n" + mfile.mArtist + "\r\n" + mfile.mLyric + "\r\n";
+
+            if (mfile.mImagePath != "")
+            {
+                //var fullFilePath = @"http://www.americanlayout.com/wp/wp-content/uploads/2012/08/C-To-Go-300x300.png";
+                var image = new Image();
+                BitmapImage bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.UriSource = new Uri(mfile.mImagePath, UriKind.Absolute);
+                bitmap.EndInit();
+                image_music.Source = bitmap;
+                //MessageBox.Show("이미지 로드 완료");
+                //wrapPanel1.Children.Add(image);
+            }
+            else
+            {
+                image_music.Source = null;
+            }
         }
     }
 }

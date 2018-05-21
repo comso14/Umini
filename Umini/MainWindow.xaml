@@ -115,46 +115,52 @@
                     <ColumnDefinition Width="100"/>
                 </Grid.ColumnDefinitions>
                 <!-- album image -->
-                <Grid Grid.Column="1">
+                <Grid Grid.Column="0" >
+                    <Image x:Name="album" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100" Source="Images/Logo/icon.ico" />
+                </Grid>
+                <Grid Grid.Column="1" Grid.ColumnSpan="3">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="50"/>
                         <RowDefinition Height="50"/>
                     </Grid.RowDefinitions>
-                    <StackPanel Orientation="Horizontal" Grid.Row="0">
-                        <TextBox Name="txtPlayingMedia"></TextBox>
-                    </StackPanel>
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox x:Name="txtNoPlayingInformation" Text="" Background="LightGray" Grid.Column="0"/>
+                        <TextBox x:Name="txtLyric" Text="" Background="LightGray" Grid.Column="1"/>
+
+                    </Grid>
+
                     <StackPanel Orientation="Horizontal" Grid.Row="1">
-                        <Button Width="40" Height="30" Content="play" />
-                        <Button Width="40" Height="30" Content="pause"/>
-                        <Button Width="40" Height="30" Content="stop" />
-                        <Button Width="40" Height="30" Content="next" />
-                        <Button Width="40" Height="30" Content="prev" />
+                        
+                        <Button Width="40" Height="30" Margin="10" Content="play" Click="Button_Click_1" />
+                        <Button Width="40" Height="30" Margin="10" Content="pause" Click="Button_Click_2"/>
+                        <Button Width="40" Height="30" Margin="10" Content="stop" />
+                        <Button Width="40" Height="30" Margin="10" Content="next" />
+                        <Button Width="40" Height="30" Margin="10" Content="prev" />
                     </StackPanel>
                 </Grid>
-                    <Button Width="50" Height="50" Content="test" Click="Button_Click" Grid.Column="2"/>
+                <Button Width="50" Height="50" Content="test" Click="Button_Click" Grid.Column="4" Margin="25"/>
             </Grid>
             <Grid Background="LightCyan" Grid.Column="0" Grid.Row="1">
+                <Label Content="- 재생목록" FontSize="20" Margin="10 20 0 0" />
+                <Label Content="- 추천노래" FontSize="20" Margin="10 50 0 0" />
+                <Label Content="- 검색" FontSize="20" Margin="10 80 0 0" />
             </Grid>
-            <!-- conten area-->
-            <Grid Background="LightGoldenrodYellow" Grid.Column="1" Grid.Row="1">
-                <StackPanel Orientation="Vertical">
-                    <Label Content="플레이 리스트 목록"/>
-                    <Label Content="노래1"/>
-                    <Label Content="노래2"/>
-                    <Label Content="노래3"/>
-                    <Label Content="노래4"/>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBox Width="400" Text="aaa"/>
-                        <Button Width="100" Content="URL로 추가" Click="btnURLAdd_Click"/>
-                    </StackPanel>
-
-                </StackPanel>
+            <!-- content area -->
+            <Frame Source="PlaylistPage.xaml" Grid.Column="1" Grid.Row="1"/>
+            <!-- 
+            
+            <Frame x:Name="frame" Background="LightGoldenrodYellow" Grid.Column="1" Grid.Row="1"> 
                 
-            </Grid>
-
-            <Grid>
-                
-            </Grid>
+            </Frame>
+            
+            -->
         </Grid>
+        <!--
+            <TextBox x:Name="txtVideoFullpath" HorizontalAlignment="Left" Height="18" TextWrapping="Wrap" VerticalAlignment="Top" Width="400" Margin="201,349,0,0"/>
+        -->
     </Grid>
 </Window>

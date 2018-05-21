@@ -9,34 +9,22 @@
     <Grid Margin="0,0,-322.6,-405">
         <TextBox x:Name="Txtb1" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="75" Margin="10,75,0,0" PreviewKeyDown="PreviewKeyDown" TextChanged="TextBox_TextChanged_1" Text="0"/>
         <Button Content="알람(초)" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="10,38,0,0" Click="Button_Click"/>
-        <Button Content="자동종료" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="227,38,0,0" Click="Button_Click_1"/>
-        <TextBox x:Name="Txtb2" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="75" Margin="227,75,0,0" Text="0" PreviewKeyDown="PreviewKeyDown"/>
+        <Button Content="자동종료" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="299,38,0,0" Click="Button_Click_1"/>
+        <TextBox x:Name="Txtb2" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="75" Margin="299,75,0,0" Text="0" PreviewKeyDown="PreviewKeyDown"/>
         <TextBox x:Name="Txtb3" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="81" Margin="107,74,0,0" RenderTransformOrigin="-0.434,0.797" Text="0" PreviewKeyDown="PreviewKeyDown"/>
         <Label Content="시간" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="46,100,0,0"/>
         <Label Content="분" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="149,98,0,0"/>
-        <TextBox x:Name="Txtb4" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="81" Margin="324,75,0,0" PreviewKeyDown="PreviewKeyDown"/>
-        <Label Content="시간" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="263,96,0,0"/>
-        <Label Content="분" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="366,98,0,0"/>
-        <TextBox x:Name="Txtb5" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="120" Margin="10,126,0,0"/>
-        <Label Content="00:00(00시00분)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="42,149,0,0"/>
-        <TextBox x:Name="Txtb6" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="120" Margin="227,122,0,0" TextChanged="TextBox_TextChanged_1"/>
-        <Label Content="00:00(00시00분)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="259,138,0,0"/>
-        <RadioButton HorizontalAlignment="Left" VerticalAlignment="Top" Margin="102,31,0,0"/>
-        <Label Content="~후에" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="121,28,0,0"/>
-        <CheckBox Content="최상위 창" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="13,175,0,0" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked"/>
-        <ComboBox x:Name="cb1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="13,214,0,0">
-            <ComboBoxItem Content="Ctrl" IsSelected="True"/>
-            <ComboBoxItem Content="Alt"/>
-            <ComboBoxItem Content="Shift"/>
-        </ComboBox>
-        <ComboBox x:Name="cb2" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="149,214,0,0">
-            <ComboBoxItem Content="Ctrl" IsSelected="True"/>
-            <ComboBoxItem Content="Alt"/>
-            <ComboBoxItem Content="Shift"/>
-        </ComboBox>
-        <Button x:Name="btnYoutube" Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="330,330,0,0" Click="btnYoutube_Click"/>
-        <TextBox x:Name="txttesttxt" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="307" Margin="19,373,0,0"/>
-        <TextBox x:Name="txtJustTest" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="271" Margin="19,324,0,0"/>
+        <TextBox x:Name="Txtb4" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="81" Margin="396,75,0,0" PreviewKeyDown="PreviewKeyDown"/>
+        <Label Content="시간" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="335,96,0,0"/>
+        <Label Content="분" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="438,98,0,0"/>
+        <CheckBox Content="최상위 창" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="13,129,0,0" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked"/>
+        <TextBox x:Name="Txtb7" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="81" Margin="209,75,0,0" RenderTransformOrigin="-0.434,0.797" Text="0" PreviewKeyDown="PreviewKeyDown"/>
+        <TextBox x:Name="Txtb8" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="81" Margin="496,75,0,0" PreviewKeyDown="PreviewKeyDown"/>
+        <Button x:Name="btnDeleteAlarm" Content="알람 제거" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="107,38,0,0" Click="btnDeleteAlarm_Click"/>
+        <Button x:Name="btnDeleteShut" Content="종료 제거" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="399,38,0,0" Click="btnDeleteShut_Click"/>
+        <TextBox x:Name="txttesttxt" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="461" Margin="13,255,0,0"/>
+        <Button x:Name="btnYoutube" Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="149,194,0,0" Click="btnYoutube_Click"/>
+        <TextBox x:Name="txtJustTest" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="Input URL" VerticalAlignment="Top" Width="120" Margin="13,194,0,0"/>
 
     </Grid>
 </Window>

@@ -43,6 +43,8 @@ namespace Umini.Test.mgh3326
         string mMusicAlbumPictureUrl = "";//앨범 사진 url
         string mMusicGenre = "";//장르
         string mMusicYear = "";//출시 일자
+        List<string> temp_list = new List<string>();//임시 전역변수
+
         /// <summary>
         /// 함수 대충
         /// </summary>
@@ -79,8 +81,9 @@ namespace Umini.Test.mgh3326
                 }
             }
             StringBuilder builder = new StringBuilder(_mYoutbueTitle);
-            builder.Replace("\"", "");
-            //builder.Replace("[second]", "2nd");
+            //builder.Replace("\"", "");//이거 왜 있지
+
+            builder.Replace("Music Video", "");
 
             mediaFile.mYoutubeTitle = builder.ToString(); // Value of y is "Hello 1st 2nd world"
             //mediaFile.mYoutubeTitle = _mYoutbueTitle;//타이틀 받아오기
@@ -308,9 +311,8 @@ namespace Umini.Test.mgh3326
             var result = lRequest.Execute();
             for (int i = 0; i < result.Items.Count; i++)
             {
-                TextBox1.AppendText("재생목록" + (i + 1) + "\r\n");
-                TextBox1.AppendText("제목 : " + result.Items[i].Snippet.Title + "\r\n");
-                TextBox1.AppendText("제목 : " + result.Items[i].Snippet.Title + "\r\n");
+                TextBox1.AppendText("======================\r\n재생목록" + (i + 1) + " " + result.Items[i].Snippet.Title + "\r\n");
+                //TextBox1.AppendText("제목 : " + result.Items[i].Snippet.Title + "\r\n");
                 var resItem = youtubeService.PlaylistItems.List("snippet");
                 resItem.PlaylistId = result.Items[i].Id;
                 var resitem2 = resItem.Execute();
@@ -320,6 +322,8 @@ namespace Umini.Test.mgh3326
                 {
                     TextBox1.AppendText(resitem2.Items[j].Snippet.Title + "\r\n");
                 }
+                TextBox1.AppendText("======================\r\n");
+
             }
         }
         private async Task YoutubePlylist(int num)
@@ -353,8 +357,28 @@ namespace Umini.Test.mgh3326
             var resitem2 = resItem.Execute();
             for (int j = 0; j < resitem2.Items.Count; j++)
             {
-                Console.WriteLine(resitem2.Items[j].Snippet.Title);
-                TextBox1.AppendText(resitem2.Items[j].Snippet.Title + "\r\n");
+                //Console.WriteLine(resitem2.Items[j].Snippet.Title);
+                //TextBox1.AppendText(resitem2.Items[j].Snippet.Title + "\r\n");
+
+                //나와서
+                foreach (string oh in temp_list)
+                {
+                    Youtube youtube = ParsingYoutube(oh);  // parsing part
+
+                    //MessageBox.Show(youtube.mTitle);
+                    TextBox1.AppendText(youtube.mTitle + "\n");
+                }
+                Youtube mfile = new Youtube();
+                mfile.mURL = "https://www.youtube.com/watch?v" + resitem2.Items[j].Snippet.ResourceId.VideoId;
+                mfile.mYoutubeID = resitem2.Items[j].Snippet.ResourceId.VideoId;
+                if (mfile.mYoutubeID[0] == '-')
+                {
+                    mfile.mYoutubeID = "\\" + mfile.mYoutubeID;
+                }
+                //MessageBox.Show(mfile.mYoutubeID);
+                Update(mfile);
+                TextBox1.AppendText(mfile.mTitle + "\t" + mfile.mArtist + "\r\n");
+                //mw.mNowPlayingList.mMediaList.Add((MediaFile)youtube);
             }
 
         }
@@ -366,6 +390,7 @@ namespace Umini.Test.mgh3326
                 return;
             }
             YoutubePlylist(Int32.Parse(TextBoxPlayListNumber.Text)).Wait();
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

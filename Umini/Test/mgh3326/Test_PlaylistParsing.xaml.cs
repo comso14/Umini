@@ -43,7 +43,11 @@ namespace Umini.Test.mgh3326
         string mMusicAlbumPictureUrl = "";//앨범 사진 url
         string mMusicGenre = "";//장르
         string mMusicYear = "";//출시 일자
-
+        /// <summary>
+        /// 함수 대충
+        /// </summary>
+        /// <param name="url">이 파라미터는 유알엘 입니다.</param>
+        /// <returns></returns>
         public Youtube ParsingYoutube(string url)
         {
             Youtube mfile = new Youtube();
@@ -51,6 +55,10 @@ namespace Umini.Test.mgh3326
 
             Uri myUri = new Uri(url);//id 반환
             mfile.mYoutubeID = HttpUtility.ParseQueryString(myUri.Query).Get("v");
+            if (mfile.mYoutubeID[0] == '-')
+            {
+                mfile.mYoutubeID = "\\" + mfile.mYoutubeID;
+            }
             //MessageBox.Show(mfile.mYoutubeID);
             Update(mfile);
             return mfile;
@@ -246,11 +254,6 @@ namespace Umini.Test.mgh3326
                 //TextBox1.AppendText(word + "\r\n");
                 lyric += (word + "\n");
             }
-
-
-
-
-
 
             return 0;//성공
             return -1;//실패

@@ -135,11 +135,11 @@
 
                     <StackPanel Orientation="Horizontal" Grid.Row="1">
                         
-                        <Button Width="40" Height="30" Margin="10" Content="play" Click="Button_Click_1" />
-                        <Button Width="40" Height="30" Margin="10" Content="pause" Click="Button_Click_2"/>
-                        <Button Width="40" Height="30" Margin="10" Content="stop" />
-                        <Button Width="40" Height="30" Margin="10" Content="next" />
-                        <Button Width="40" Height="30" Margin="10" Content="prev" />
+                        <Button x:Name="btn_Play" Width="40" Height="30" Margin="10" Content="play" Click="btn_Play_Click" />
+                        <Button x:Name="btn_Pause" Width="40" Height="30" Margin="10" Content="pause" Click="btn_Pause_Click"/>
+                        <Button x:Name="btn_Stop" Width="40" Height="30" Margin="10" Content="stop" Click="btn_Stop_Click" />
+                        <Button x:Name="btn_Next" Width="40" Height="30" Margin="10" Content="next" Click="btn_Next_Click" />
+                        <Button x:Name="btn_Prev" Width="40" Height="30" Margin="10" Content="prev" Click="btn_Prev_Click" />
                     </StackPanel>
                 </Grid>
                 <Button Width="50" Height="50" Content="test" Click="Button_Click" Grid.Column="4" Margin="25"/>

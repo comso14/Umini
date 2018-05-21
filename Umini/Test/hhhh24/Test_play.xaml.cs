@@ -100,6 +100,11 @@ namespace Umini.Test.hhhh24
             time.Text = new TimeSpan(0,0,(Convert.ToInt32(Slider_Time.Value))).ToString() + "/" + new TimeSpan(0, 0, Convert.ToInt32(t.TotalSeconds)); ;
             
         }
+
+        public double CurPosition()
+        {
+            return video.Position.TotalMilliseconds;
+        }
         
         public void YoutubePlay(string url)
         {

@@ -19,21 +19,30 @@ using Umini.Test.mgh3326;
 using VideoLibrary;
 using Player;
 using System.IO;
+using System.Net;
+using System.Globalization;
+using System.Drawing;
+using System.Windows.Interop;
 
 namespace Umini
 {
+   
     /// <summary>
     /// Interaction logic for PlaylistPage.xaml
     /// </summary>
     public partial class PlaylistPage : Page
     {
+      
+
         MainWindow mw;
+        List<ListV> mediaItems = new List<ListV>();
+
         public PlaylistPage()
         {
             InitializeComponent();
             mw = (MainWindow)Application.Current.MainWindow;
         }
-
+       
         private void btnURLAdd_Click(object sender, RoutedEventArgs e)
         {
             ParsingYoutube(txtUrl.Text);
@@ -41,7 +50,7 @@ namespace Umini
             Thread downloadThread = new Thread(() => DownloadYoutube(link));
             downloadThread.Start();
         }
-
+       
         /// <summary>
         /// Parsing youtube media and add information to youtube class
         /// </summary>
@@ -53,9 +62,24 @@ namespace Umini
             Youtube youtube = parsing.ParsingYoutube(txtUrl.Text);  // parsing part
 
             MessageBox.Show(youtube.mTitle);
-            playlist.AppendText(youtube.mTitle + "\n");
-            
             mw.mNowPlayingList.mMediaList.Add((MediaFile)youtube);
+      
+            BitmapImage bi = new BitmapImage(new Uri(youtube.mImagePath, UriKind.RelativeOrAbsolute));
+          
+            playlist.Items.Add( new ListV() { ImageData = bi , album = youtube.mAllbum, title = youtube.mTitle, singer = youtube.mArtist, length = youtube.mLength, type = youtube.mType });
+
+        }
+        /// <summary>
+        /// 플레이리스트에 추가하기 위한 클래스
+        /// </summary>
+        private class ListV 
+        {
+            public string title { get; set; }
+            public BitmapImage ImageData { get; set; }
+            public string type { get; set; }
+            public string album { get; set; }
+            public float length { get; set; }
+            public string singer { get; set; }
         }
 
         /// <summary>
@@ -80,6 +104,5 @@ namespace Umini
 
             return;
         }
-
     }
 }

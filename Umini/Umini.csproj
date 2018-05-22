@@ -162,6 +162,7 @@
     <Compile Include="Test\junpil\YTExtractor\YoutubeParseException.cs" />
     <Compile Include="ViewModel\Base\BasicViewModel.cs" />
     <Compile Include="ViewModel\Base\RelayCommand.cs" />
+    <Compile Include="Window\CustomControl.cs" />
     <Compile Include="Window\WindowResizer.cs" />
     <Compile Include="ViewModel\WindowViewModel.cs" />
     <Compile Include="Test\bearics\Test_BasicLayout.xaml.cs">

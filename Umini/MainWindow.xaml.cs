@@ -41,18 +41,14 @@ namespace Umini
         public MainWindow()
         {
             InitializeComponent();
-
             DataContext = new WindowViewModel(this);
 
             play = new Test_play();
             mNowPlayingList = new NowPlayingList();
-        }
 
-        private void AppWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            //frame.NavigationService.Navigate(new PlaylistPage());
+            
         }
-
+        
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Window window = new TestWindow();
@@ -71,10 +67,15 @@ namespace Umini
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
+
             play.VideoPause();
 
         }
 
+        private void AppWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            frame.NavigationService.Navigate(new PlaylistPage());
+        }
     }
 
 }

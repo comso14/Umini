@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:Umini">
+                    xmlns:local="clr-namespace:Umini"
+                    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
 
     <ResourceDictionary.MergedDictionaries>
         <!-- Order is important -->
@@ -29,7 +30,44 @@
         <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
         <Setter Property="Padding" Value="10"/>
     </Style>
-    
+
+    <!-- Window Control Button using Material iconPack-->
+    <Style TargetType="local:WindowsSystemButton" x:Key="WindowsControlButtonWithIconPack" BasedOn="{StaticResource BaseStyle}">
+        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Padding" Value="8"/>
+        <Setter Property="Width" Value="45"/>
+        <Setter Property="VerticalAlignment" Value="Stretch"/>
+        <Setter Property="Foreground" Value="{StaticResource ForegroundMainBrush}"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:WindowsSystemButton">
+                    <Border Padding="{TemplateBinding Padding}" Background="{TemplateBinding Background}">
+                        <materialDesign:PackIcon Kind="{TemplateBinding Kind}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource BackgroundLightBrush}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- Window Close Button using Material iconPack -->
+    <Style TargetType="local:WindowsSystemButton" x:Key="WindowsCloseButtonWithIconPack" BasedOn="{StaticResource WindowsControlButtonWithIconPack}">
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="Red" />
+                <Setter Property="Foreground" Value="{StaticResource ForeGroundLightBrush}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+
     <!-- Window Control Button -->
     <Style TargetType="{x:Type Button}" x:Key="WindowsControlButton" BasedOn="{StaticResource BaseStyle}">
         <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
@@ -38,6 +76,7 @@
         <Setter Property="Width" Value="45"/>
         <Setter Property="VerticalAlignment" Value="Stretch"/>
         <Setter Property="Foreground" Value="{StaticResource ForegroundMainBrush}"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
         
         <Setter Property="Template">
             <Setter.Value>

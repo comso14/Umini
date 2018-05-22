@@ -4,13 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Umini"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Icon="Images/Logo/logo-small.png"
         x:Name="AppWindow"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
         AllowsTransparency="True"
-        Title="Umini" Height="450" Width="800">
+        Title="Umini" Height="450" Width="800" Loaded="AppWindow_Loaded">
 
     <Window.Resources>
         <Style TargetType="{x:Type local:MainWindow}">
@@ -68,9 +69,9 @@
 
                                         <!-- Window Buttons -->
                                         <StackPanel Grid.Column="2" Orientation="Horizontal">
-                                            <Button Command="{Binding MinimizeCommand}" Style="{StaticResource WindowsControlButton}" Content="-"/>
-                                            <Button Command="{Binding MaximizeCommand}" Style="{StaticResource WindowsControlButton}" Content="[]"/>
-                                            <Button Command="{Binding CloseCommand}" Style="{StaticResource WindowsCloseButton}" Content="X"/>
+                                            <local:WindowsSystemButton Kind="WindowMinimize" Command="{Binding MinimizeCommand}" Style="{StaticResource WindowsControlButtonWithIconPack}"/>
+                                            <local:WindowsSystemButton Kind="WindowMaximize" Command="{Binding MaximizeCommand}" Style="{StaticResource WindowsControlButtonWithIconPack}"/>
+                                            <local:WindowsSystemButton Kind="WindowClose" Command="{Binding CloseCommand}" Style="{StaticResource WindowsCloseButtonWithIconPack}"/>
                                         </StackPanel>
 
                                     </Grid>
@@ -134,12 +135,23 @@
                     </Grid>
 
                     <StackPanel Orientation="Horizontal" Grid.Row="1">
-                        
-                        <Button x:Name="btn_Play" Width="40" Height="30" Margin="10" Content="play" Click="btn_Play_Click" />
-                        <Button x:Name="btn_Pause" Width="40" Height="30" Margin="10" Content="pause" Click="btn_Pause_Click"/>
-                        <Button x:Name="btn_Stop" Width="40" Height="30" Margin="10" Content="stop" Click="btn_Stop_Click" />
-                        <Button x:Name="btn_Next" Width="40" Height="30" Margin="10" Content="next" Click="btn_Next_Click" />
-                        <Button x:Name="btn_Prev" Width="40" Height="30" Margin="10" Content="prev" Click="btn_Prev_Click" />
+                        <Button Width="40" Height="30" Margin="10" Click="btn_Play_Click">
+                            <materialDesign:PackIcon Kind="Play" Height="24" Width="24" />
+                        </Button>
+
+                            <Button Width="40" Height="30" Margin="10"  Click="btn_Pause_Click">
+                            <materialDesign:PackIcon Kind="Pause" Height="24" Width="24" />
+                        </Button>
+                            <Button Width="40" Height="30" Margin="10" Click="btn_Stop_Click" >
+                            <materialDesign:PackIcon Kind="Stop" Height="24" Width="24" />
+                        </Button>
+                            <Button Width="40" Height="30" Margin="10" Click="btn_Next_Click" >
+                            <materialDesign:PackIcon Kind="SkipNext" Height="24" Width="24" />
+                        </Button>
+                            <Button Width="40" Height="30" Margin="10" Click="btn_Prev_Click" >
+                            <materialDesign:PackIcon Kind="SkipPrevious" Height="24" Width="24" />
+                        </Button>
+
                     </StackPanel>
                 </Grid>
                 <Button Width="50" Height="50" Content="test" Click="Button_Click" Grid.Column="4" Margin="25"/>
@@ -150,14 +162,14 @@
                 <Label Content="- 검색" FontSize="20" Margin="10 80 0 0" />
             </Grid>
             <!-- content area -->
-            <Frame Source="PlaylistPage.xaml" Grid.Column="1" Grid.Row="1"/>
             <!-- 
+            <Frame Source="PlaylistPage.xaml" Grid.Column="1" Grid.Row="1"/>
+             --> 
             
             <Frame x:Name="frame" Background="LightGoldenrodYellow" Grid.Column="1" Grid.Row="1"> 
                 
             </Frame>
             
-            -->
         </Grid>
         <!--
             <TextBox x:Name="txtVideoFullpath" HorizontalAlignment="Left" Height="18" TextWrapping="Wrap" VerticalAlignment="Top" Width="400" Margin="201,349,0,0"/>

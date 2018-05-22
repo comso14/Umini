@@ -40,18 +40,13 @@ namespace Umini
         public MainWindow()
         {
             InitializeComponent();
-
             DataContext = new WindowViewModel(this);
 
             play = new Test_play();
             mNowPlayingList = new NowPlayingList();
 
             play.video.MediaEnded += new RoutedEventHandler(MediaEnded);
-        }
 
-        private void AppWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            //frame.NavigationService.Navigate(new PlaylistPage());
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -60,7 +55,7 @@ namespace Umini
             window.Show();
         }
 
-       
+
 
         private void btn_Play_Click(object sender, RoutedEventArgs e)
         {
@@ -73,11 +68,11 @@ namespace Umini
                 txtLyric.Text = media.mLyric;
 
                 Play();
-                
+
             }
         }
 
-        
+
 
         private void btn_Pause_Click(object sender, RoutedEventArgs e)
         {
@@ -95,12 +90,14 @@ namespace Umini
             NextPlay();
         }
         
-
         private void btn_Prev_Click(object sender, RoutedEventArgs e)
         {
             PrevPlay();
         }
-
+        private void AppWindow_Loaded(object sender, RoutedEventArgs e)
+            {
+                frame.NavigationService.Navigate(new PlaylistPage());
+            }
 
 
         public void Play()

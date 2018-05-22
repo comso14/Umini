@@ -44,23 +44,18 @@ namespace Umini
 
             play = new Test_play();
             mNowPlayingList = new NowPlayingList();
-<<<<<<< HEAD
-=======
 
             play.video.MediaEnded += new RoutedEventHandler(MediaEnded);
-        }
->>>>>>> f00d56474cbdd621cce44f5daa9b6403b92305b8
 
-            
         }
-        
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Window window = new TestWindow();
             window.Show();
         }
 
-       
+
 
         private void btn_Play_Click(object sender, RoutedEventArgs e)
         {
@@ -73,18 +68,14 @@ namespace Umini
                 txtLyric.Text = media.mLyric;
 
                 Play();
-                
+
             }
         }
 
-        
+
 
         private void btn_Pause_Click(object sender, RoutedEventArgs e)
         {
-<<<<<<< HEAD
-
-            play.VideoPause();
-=======
             Pause();
         }
 
@@ -99,18 +90,14 @@ namespace Umini
             NextPlay();
         }
         
->>>>>>> f00d56474cbdd621cce44f5daa9b6403b92305b8
-
         private void btn_Prev_Click(object sender, RoutedEventArgs e)
         {
             PrevPlay();
         }
-
-<<<<<<< HEAD
         private void AppWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            frame.NavigationService.Navigate(new PlaylistPage());
-=======
+            {
+                frame.NavigationService.Navigate(new PlaylistPage());
+            }
 
 
         public void Play()
@@ -157,7 +144,6 @@ namespace Umini
         public void MediaEnded(object sender, RoutedEventArgs e)
         {
             NextPlay();
->>>>>>> f00d56474cbdd621cce44f5daa9b6403b92305b8
         }
     }
 

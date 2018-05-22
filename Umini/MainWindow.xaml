@@ -10,7 +10,7 @@
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
         AllowsTransparency="True"
-        Title="Umini" Height="450" Width="800">
+        Title="Umini" Height="600" Width="1000">
 
     <Window.Resources>
         <Style TargetType="{x:Type local:MainWindow}">

@@ -78,7 +78,7 @@ namespace Umini
             public BitmapImage ImageData { get; set; }
             public string type { get; set; }
             public string album { get; set; }
-            public float length { get; set; }
+            public double length { get; set; }
             public string singer { get; set; }
         }
 

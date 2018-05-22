@@ -54,7 +54,7 @@ namespace Umini.Test.hhhh24
 
             files.mExt = ext[ext.Length == 0 ? ext.Length - 1 : 0];
             files.mPath = path;
-            files.mLength = Convert.ToUInt32(video.Position.TotalSeconds);
+            
 
             if (files.mExt == "mp3")
             {
@@ -91,7 +91,8 @@ namespace Umini.Test.hhhh24
             
             mfiles.Add(files); // 다 저장된 하나의 mediafile 클래스를 리스트에 추가함\
             VideoPlay();
-           
+            files.mLength = t.TotalSeconds;
+
         }
 
         void update(object sender,EventArgs e)
@@ -99,6 +100,11 @@ namespace Umini.Test.hhhh24
             Slider_Time.Value = video.Position.TotalSeconds;
             time.Text = new TimeSpan(0,0,(Convert.ToInt32(Slider_Time.Value))).ToString() + "/" + new TimeSpan(0, 0, Convert.ToInt32(t.TotalSeconds)); ;
             
+        }
+
+        public double CurPosition()
+        {
+            return video.Position.TotalMilliseconds;
         }
         
         public void YoutubePlay(string url)

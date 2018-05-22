@@ -135,6 +135,7 @@
                     </Grid>
 
                     <StackPanel Orientation="Horizontal" Grid.Row="1">
+<<<<<<< HEAD
 
                         <Button Width="40" Height="30" Margin="10" Click="Button_Click_1">
                             <materialDesign:PackIcon Kind="Play" Height="24" Width="24" />
@@ -152,6 +153,14 @@
                         <Button Width="40" Height="30" Margin="10"  >
                             <materialDesign:PackIcon Kind="SkipPrevious" Height="24" Width="24" />
                         </Button>
+=======
+                        
+                        <Button x:Name="btn_Play" Width="40" Height="30" Margin="10" Content="play" Click="btn_Play_Click" />
+                        <Button x:Name="btn_Pause" Width="40" Height="30" Margin="10" Content="pause" Click="btn_Pause_Click"/>
+                        <Button x:Name="btn_Stop" Width="40" Height="30" Margin="10" Content="stop" Click="btn_Stop_Click" />
+                        <Button x:Name="btn_Next" Width="40" Height="30" Margin="10" Content="next" Click="btn_Next_Click" />
+                        <Button x:Name="btn_Prev" Width="40" Height="30" Margin="10" Content="prev" Click="btn_Prev_Click" />
+>>>>>>> f00d56474cbdd621cce44f5daa9b6403b92305b8
                     </StackPanel>
                 </Grid>
                 <Button Width="50" Height="50" Content="test" Click="Button_Click" Grid.Column="4" Margin="25"/>

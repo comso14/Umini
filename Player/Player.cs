@@ -16,7 +16,7 @@ namespace Player
     {
         public bool mIsPlay { get; set; }
         public int mNowPlayingOrder { get; set; }   // now playing media's Order in playlist 
-        public float mNowMediaPosition { get; set; }    // now playing media's position
+        public double mNowMediaPosition { get; set; }    // now playing media's position
         public List<MediaFile> mMediaList { get; set; }
 
         public NowPlayingList()
@@ -58,7 +58,7 @@ namespace Player
         public string mType { get; set; }  // file type
         public string mExt { get; set; }
         public string mPath { get; set; }
-        public float mLength { get; set; }
+        public double mLength { get; set; }
 
         // media tag
         public string mTitle { get; set; }

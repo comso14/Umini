@@ -37,22 +37,55 @@ namespace Umini.Test.mgh3326
         string _mYoutbueTitle = "";//유튜브 제목
 
         List<string> temp_list = new List<string>();//임시 전역변수
-
+        public static bool IsValidURI(string uri)
+        {
+            if (!Uri.IsWellFormedUriString(uri, UriKind.Absolute))
+                return false;
+            Uri tmp;
+            if (!Uri.TryCreate(uri, UriKind.Absolute, out tmp))
+                return false;
+            return tmp.Scheme == Uri.UriSchemeHttp || tmp.Scheme == Uri.UriSchemeHttps;
+        }
         /// <summary>
         /// 함수 대충
         /// </summary>
         /// <param name="url">이 파라미터는 유알엘 입니다.</param>
         /// <returns></returns>
+        /// 
         public Youtube ParsingYoutube(string url)
         {
             Youtube mfile = new Youtube();
             mfile.mURL = url;
+            //try
+            //{
 
-            Uri myUri = new Uri(url);//id 반환
-            mfile.mYoutubeID = HttpUtility.ParseQueryString(myUri.Query).Get("v");
-            if (mfile.mYoutubeID[0] == '-')
+            //}
+            //catch (System.UriFormatException)
+            //{
+
+            //}
+            
+            if(IsValidURI(url))//url인지 비교
             {
-                mfile.mYoutubeID = "\\" + mfile.mYoutubeID;
+                try
+                {
+                    Uri myUri = new Uri(url);//id 반환
+                    mfile.mYoutubeID = HttpUtility.ParseQueryString(myUri.Query).Get("v");
+
+                    if (mfile.mYoutubeID[0] == '-')
+                    {
+                        mfile.mYoutubeID = "\\" + mfile.mYoutubeID;
+                    }
+                }
+                catch (UriFormatException ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
+
+            }
+            else
+            {
+                mfile.mYoutubeTitle = url;
             }
             //MessageBox.Show(mfile.mYoutubeID);
             Update(mfile);
@@ -117,18 +150,30 @@ namespace Umini.Test.mgh3326
             });
 
             var searchListRequest = youtubeService.Search.List("snippet");
-            searchListRequest.Q = _youtube.mYoutubeID;// Replace with your search term.
-            searchListRequest.MaxResults = 1;//50->1
+            if(_youtube.mYoutubeTitle==null)
 
-            // Call the search.list method to retrieve results matching the specified query term.
-            //var searchListResponse = await searchListRequest.ExecuteAsync();
-            var searchListResponse = searchListRequest.Execute();
+            {
+                searchListRequest.Q = _youtube.mYoutubeID;// Replace with your search term.
+                searchListRequest.MaxResults = 1;//50->1
 
-            //List<string> videos = new List<string>();
-            //List<string> channels = new List<string>();
-            //List<string> playlists = new List<string>();
-            //MessageBox.Show(String.Format("{0} ({1})", searchListResponse.Items[0].Snippet.Title, searchListResponse.Items[0].Id.VideoId));
-            _youtube.mYoutubeTitle = searchListResponse.Items[0].Snippet.Title;
+                // Call the search.list method to retrieve results matching the specified query term.
+                //var searchListResponse = await searchListRequest.ExecuteAsync();
+                var searchListResponse = searchListRequest.Execute();
+
+                //List<string> videos = new List<string>();
+                //List<string> channels = new List<string>();
+                //List<string> playlists = new List<string>();
+                //MessageBox.Show(String.Format("{0} ({1})", searchListResponse.Items[0].Snippet.Title, searchListResponse.Items[0].Id.VideoId));
+                _youtube.mYoutubeTitle = searchListResponse.Items[0].Snippet.Title;
+            }
+            else
+            {
+                searchListRequest.Q = _youtube.mYoutubeTitle;// Replace with your search term.
+                searchListRequest.MaxResults = 1;//50->1
+                var searchListResponse = searchListRequest.Execute();
+                _youtube.mYoutubeID = searchListResponse.Items[0].Id.VideoId.ToString();
+                
+            }
 
             //// Add each result to the appropriate list, and then display the lists of
             //// matching videos, channels, and playlists.
@@ -147,8 +192,15 @@ namespace Umini.Test.mgh3326
             //M / V
 
             //var youtube_name = TextBoxPlay.Text;
-
-            var url = Uri.EscapeUriString(@"http://search.api.mnet.com/search/totalweb?q=" + _mediaFile.mYoutubeTitle + "&sort=r");//인코딩?
+            var url = "";
+            if (_mediaFile.mTitle == null)
+            {
+                url = Uri.EscapeUriString(@"http://search.api.mnet.com/search/totalweb?q=" + _mediaFile.mYoutubeTitle + "&sort=r");//인코딩?
+            }
+            else
+            {
+                url = Uri.EscapeUriString(@"http://search.api.mnet.com/search/totalweb?q=" + _mediaFile.mTitle + "&sort=r");//인코딩?
+            }
             WebClient wc = new WebClient();
             wc.Encoding = Encoding.UTF8;
             string doc = "";
@@ -189,6 +241,7 @@ namespace Umini.Test.mgh3326
                     if (obj["info"]["tvcnt"].ToString() != "0")
                     {
                         MessageBox.Show("예외 처리 중입니다.");
+                        _mediaFile.mTitle = obj["data"]["tvlist"][0]["mvtitle"].ToString();
                         MnetParsing(_mediaFile);//뮤직비디오 있으면 재귀
                     }
                     return -1;

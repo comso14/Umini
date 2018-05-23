@@ -34,15 +34,8 @@ namespace Umini.Test.mgh3326
 
     public partial class Test_PlaylistParsing : Window
     {
-        string mYoutubeID = "";//유튜브 아이디
         string _mYoutbueTitle = "";//유튜브 제목
-        string mMusicLyric = "";//가사
-        string mMusicTitle = "";//노래 제목
-        string mMusicArtist = "";//노래 가수
-        string mMusicAlbumName = "";//앨범 이름
-        string mMusicAlbumPictureUrl = "";//앨범 사진 url
-        string mMusicGenre = "";//장르
-        string mMusicYear = "";//출시 일자
+
         List<string> temp_list = new List<string>();//임시 전역변수
 
         /// <summary>
@@ -71,7 +64,7 @@ namespace Umini.Test.mgh3326
             //mediaFile.mYoutubeID
             try
             {
-                YoutubePlaySearch(mediaFile.mYoutubeID).Wait();
+                YoutubePlaySearch(mediaFile).Wait();
             }
             catch (AggregateException ex)
             {
@@ -80,31 +73,26 @@ namespace Umini.Test.mgh3326
                     Console.WriteLine("Error: " + e.Message);
                 }
             }
-            StringBuilder builder = new StringBuilder(_mYoutbueTitle);
+            StringBuilder builder = new StringBuilder(mediaFile.mYoutubeTitle);
             //builder.Replace("\"", "");//이거 왜 있지
 
-            builder.Replace("Music Video", "");
+            builder.Replace("Music Video", "");//예외처리 해주기
+            builder.Replace("[MV]", "");
 
             mediaFile.mYoutubeTitle = builder.ToString(); // Value of y is "Hello 1st 2nd world"
             //mediaFile.mYoutubeTitle = _mYoutbueTitle;//타이틀 받아오기
             int temp;
-            temp = MnetParsing(mediaFile.mYoutubeTitle, out mMusicTitle, out mMusicAlbumName, out mMusicArtist, out mMusicAlbumPictureUrl, out mMusicGenre, out mMusicYear);
-            mediaFile.mTitle = mMusicTitle;
-            mediaFile.mAllbum = mMusicAlbumName;
-            mediaFile.mImagePath = mMusicAlbumPictureUrl;
-            mediaFile.mArtist = mMusicArtist;
-            mediaFile.mGenre = mMusicGenre;
-            mediaFile.mYear = mMusicYear;
+            temp = MnetParsing(mediaFile);
+
             if (temp == 0)
             {
-                AlsongParsing(mediaFile.mTitle, mediaFile.mArtist, out mMusicLyric);//알송 가사 파싱
-                mediaFile.mLyric = mMusicLyric;
+                AlsongParsing(mediaFile);//알송 가사 파싱
             }
 
             return 0; //true
             return 1;//false
         }
-        private async Task YoutubePlaySearch(string youtubeIDorName)
+        private async Task YoutubePlaySearch(Youtube _youtube)
         {
             UserCredential credential;
             using (var stream = new FileStream("client_secrets.json", FileMode.Open, FileAccess.Read))
@@ -129,7 +117,7 @@ namespace Umini.Test.mgh3326
             });
 
             var searchListRequest = youtubeService.Search.List("snippet");
-            searchListRequest.Q = youtubeIDorName;// Replace with your search term.
+            searchListRequest.Q = _youtube.mYoutubeID;// Replace with your search term.
             searchListRequest.MaxResults = 1;//50->1
 
             // Call the search.list method to retrieve results matching the specified query term.
@@ -140,7 +128,7 @@ namespace Umini.Test.mgh3326
             //List<string> channels = new List<string>();
             //List<string> playlists = new List<string>();
             //MessageBox.Show(String.Format("{0} ({1})", searchListResponse.Items[0].Snippet.Title, searchListResponse.Items[0].Id.VideoId));
-            _mYoutbueTitle = searchListResponse.Items[0].Snippet.Title;
+            _youtube.mYoutubeTitle = searchListResponse.Items[0].Snippet.Title;
 
             //// Add each result to the appropriate list, and then display the lists of
             //// matching videos, channels, and playlists.
@@ -154,47 +142,42 @@ namespace Umini.Test.mgh3326
             //Console.WriteLine(String.Format("Channels:\n{0}\n", string.Join("\n", channels)));
             //Console.WriteLine(String.Format("Playlists:\n{0}\n", string.Join("\n", playlists)));
         }
-        int MnetParsing(string youtube_name, out string song_name, out string album_name, out string artist_name, out string image_path, out string genrenm_name, out string releaseymd_name)
+        int MnetParsing(Youtube _mediaFile)
         {
             //M / V
 
             //var youtube_name = TextBoxPlay.Text;
-            var url = Uri.EscapeUriString(@"http://search.api.mnet.com/search/totalweb?q=" + youtube_name + "&sort=r");//인코딩?
+
+            var url = Uri.EscapeUriString(@"http://search.api.mnet.com/search/totalweb?q=" + _mediaFile.mYoutubeTitle + "&sort=r");//인코딩?
             WebClient wc = new WebClient();
             wc.Encoding = Encoding.UTF8;
             string doc = "";
             doc = wc.DownloadString(url);
             wc.Dispose();//이게 해제인가
-            //doc = doc.Substring(21);
-            
+                         //doc = doc.Substring(21);
+
             JObject obj = JObject.Parse(doc);
-            //Console.WriteLine(obj["message"].ToString());
-            image_path = "";
-            artist_name = "";
-            album_name = "";
-            song_name = "";
-            genrenm_name = "";
-            releaseymd_name = "";
             if (obj["resultCode"].ToString() == "S0000" || obj["message"].ToString() == "성공")
             {
                 if (obj["info"]["songcnt"].ToString() != "0")
                 {
-                    song_name = obj["data"]["songlist"][0]["songnm"].ToString();
-                    album_name = obj["data"]["songlist"][0]["albumnm"].ToString();
-                    artist_name = obj["data"]["songlist"][0]["ARTIST_NMS"].ToString();
+                    _mediaFile.mTitle = obj["data"]["songlist"][0]["songnm"].ToString();
+
+                    _mediaFile.mArtist = obj["data"]["songlist"][0]["ARTIST_NMS"].ToString();
+                    _mediaFile.mAllbum = obj["data"]["songlist"][0]["albumnm"].ToString();
+                    _mediaFile.mGenre = obj["data"]["songlist"][0]["genrenm"].ToString();
+                    _mediaFile.mYear = obj["data"]["songlist"][0]["releaseymd"].ToString();
+
                     string album_id = obj["data"]["songlist"][0]["albumid"].ToString();
-                    genrenm_name = obj["data"]["songlist"][0]["genrenm"].ToString();
-                    releaseymd_name = obj["data"]["songlist"][0]["releaseymd"].ToString();
-                    //장르 : genrenm 
-                    //출시 : releaseymd
-                    image_path = "";
                     if (album_id.Length == 7)
                     {
-                        image_path = "http://cmsimg.mnet.com/clipimage/album/480/00" + album_id[0] + "/" + album_id.Substring(1, 3) + "/" + album_id + ".jpg";
+                        _mediaFile.mImagePath = "http://cmsimg.mnet.com/clipimage/album/480/00" + album_id[0] + "/" + album_id.Substring(1, 3) + "/" + album_id + ".jpg";
+                        //image_path = "http://cmsimg.mnet.com/clipimage/album/480/00" + album_id[0] + "/" + album_id.Substring(1, 3) + "/" + album_id + ".jpg";
                     }
                     else
                     {
-                        image_path = "http://cmsimg.mnet.com/clipimage/album/480/000/" + album_id.Substring(0, 3) + "/" + album_id + ".jpg";
+                        _mediaFile.mImagePath = "http://cmsimg.mnet.com/clipimage/album/480/000/" + album_id.Substring(0, 3) + "/" + album_id + ".jpg";
+                        //image_path = "http://cmsimg.mnet.com/clipimage/album/480/000/" + album_id.Substring(0, 3) + "/" + album_id + ".jpg";
                     }
 
 
@@ -203,7 +186,11 @@ namespace Umini.Test.mgh3326
                 else
                 {
                     //TextBox1.Text = "검색결과가 없습니다.";
-
+                    if (obj["info"]["tvcnt"].ToString() != "0")
+                    {
+                        MessageBox.Show("예외 처리 중입니다.");
+                        MnetParsing(_mediaFile);//뮤직비디오 있으면 재귀
+                    }
                     return -1;
                 }
             }
@@ -215,9 +202,10 @@ namespace Umini.Test.mgh3326
             }
         }
 
-        int AlsongParsing(string title, string artist, out string lyric)
+        int AlsongParsing(Youtube _mediaFile)
         {
-            lyric = "가사를 찾지 못했습니다.";
+            _mediaFile.mLyric = "가사를 찾지 못했습니다.";
+
 
             String callUrl = "http://lyrics.alsong.co.kr/alsongwebservice/service1.asmx";
 
@@ -225,7 +213,7 @@ namespace Umini.Test.mgh3326
             //string artist = TextBoxPlayartist.Text;
 
             //String postData = "<?xml version=" + '\u0022' + "1.0" + '\u0022' + " encoding=" + '\u0022' + "UTF-8" + '\u0022' + "?>" + "<SOAP-ENV:Envelope  xmlns:SOAP-ENV=" + '\u0022' + "http://www.w3.org/2003/05/soap-envelope" + '\u0022' + " xmlns:SOAP-ENC=" + '\u0022' + "http://www.w3.org/2003/05/soap-encoding" + '\u0022' + " xmlns:xsi=" + '\u0022' + "http://www.w3.org/2001/XMLSchema-instance" + '\u0022' + " xmlns:xsd=" + '\u0022' + "http://www.w3.org/2001/XMLSchema" + '\u0022' + " xmlns:ns2=" + '\u0022' + "ALSongWebServer/Service1Soap" + '\u0022' + " xmlns:ns1=" + '\u0022' + "ALSongWebServer" + '\u0022' + " xmlns:ns3=" + '\u0022' + "ALSongWebServer/Service1Soap12" + '\u0022' + ">" + "<SOAP-ENV:Body>" + "<ns1:GetLyric5>" + "<ns1:stQuery>" + "<ns1:strChecksum>" + musicmd5 + "</ns1:strChecksum>" + "<ns1:strVersion>3.36</ns1:strVersion>" + "<ns1:strMACAddress>00ff667f9a08</ns1:strMACAddress>" + "<ns1:strIPAddress>xxx.xxx.xxx.xxx</ns1:strIPAddress>" + "</ns1:stQuery>" + "</ns1:GetLyric5>" + "</SOAP-ENV:Body>" + "</SOAP-ENV:Envelope>";
-            String xml_string = "<?xml version=" + '\u0022' + "1.0" + '\u0022' + " encoding=" + '\u0022' + "UTF-8" + '\u0022' + "?><SOAP-ENV:Envelope xmlns:SOAP-ENV=" + '\u0022' + "http://www.w3.org/2003/05/soap-envelope" + '\u0022' + " xmlns:SOAP-ENC=" + '\u0022' + "http://www.w3.org/2003/05/soap-encoding" + '\u0022' + " xmlns:xsi=" + '\u0022' + "http://www.w3.org/2001/XMLSchema-instance" + '\u0022' + " xmlns:xsd=" + '\u0022' + "http://www.w3.org/2001/XMLSchema" + '\u0022' + " xmlns:ns2=" + '\u0022' + "ALSongWebServer/Service1Soap" + '\u0022' + " xmlns:ns1=" + '\u0022' + "ALSongWebServer" + '\u0022' + " xmlns:ns3=" + '\u0022' + "ALSongWebServer/Service1Soap12" + '\u0022' + "><SOAP-ENV:Body><ns1:GetResembleLyric2><ns1:stQuery><ns1:strTitle>" + title + "</ns1:strTitle><ns1:strArtistName>" + artist + "</ns1:strArtistName><ns1:nCurPage>0</ns1:nCurPage></ns1:stQuery></ns1:GetResembleLyric2></SOAP-ENV:Body></SOAP-ENV:Envelope>";
+            String xml_string = "<?xml version=" + '\u0022' + "1.0" + '\u0022' + " encoding=" + '\u0022' + "UTF-8" + '\u0022' + "?><SOAP-ENV:Envelope xmlns:SOAP-ENV=" + '\u0022' + "http://www.w3.org/2003/05/soap-envelope" + '\u0022' + " xmlns:SOAP-ENC=" + '\u0022' + "http://www.w3.org/2003/05/soap-encoding" + '\u0022' + " xmlns:xsi=" + '\u0022' + "http://www.w3.org/2001/XMLSchema-instance" + '\u0022' + " xmlns:xsd=" + '\u0022' + "http://www.w3.org/2001/XMLSchema" + '\u0022' + " xmlns:ns2=" + '\u0022' + "ALSongWebServer/Service1Soap" + '\u0022' + " xmlns:ns1=" + '\u0022' + "ALSongWebServer" + '\u0022' + " xmlns:ns3=" + '\u0022' + "ALSongWebServer/Service1Soap12" + '\u0022' + "><SOAP-ENV:Body><ns1:GetResembleLyric2><ns1:stQuery><ns1:strTitle>" + _mediaFile.mTitle + "</ns1:strTitle><ns1:strArtistName>" + _mediaFile.mArtist + "</ns1:strArtistName><ns1:nCurPage>0</ns1:nCurPage></ns1:stQuery></ns1:GetResembleLyric2></SOAP-ENV:Body></SOAP-ENV:Envelope>";
 
             //Console.WriteLine("{0}", xml_string);
             HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(callUrl);
@@ -251,11 +239,11 @@ namespace Umini.Test.mgh3326
             string alsong_artist = xdoc.ChildNodes[1].FirstChild.FirstChild.FirstChild.FirstChild["strArtistName"].InnerText;
             string lyric_parsing = xdoc.ChildNodes[1].FirstChild.FirstChild.FirstChild.FirstChild["strLyric"].InnerText;
             string[] tokens = lyric_parsing.Split(new[] { "<br>" }, StringSplitOptions.None);
-            lyric = "";
+            _mediaFile.mLyric = "";
             foreach (var word in tokens)
             {
                 //TextBox1.AppendText(word + "\r\n");
-                lyric += (word + "\n");
+                _mediaFile.mLyric += (word + "\n");
             }
 
             return 0;//성공

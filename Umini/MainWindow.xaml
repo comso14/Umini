@@ -5,13 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Umini"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+        xmlns:menu="clr-namespace:Player;assembly=Player"
         mc:Ignorable="d"
         Icon="Images/Logo/logo-small.png"
         x:Name="AppWindow"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
         AllowsTransparency="True"
-        Title="Umini" Height="600" Width="1000" Loaded="AppWindow_Loaded">
+        Title="Umini" Height="600" Width="1000" Loaded="AppWindow_Loaded"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}">
 
     <Window.Resources>
         <Style TargetType="{x:Type local:MainWindow}">
@@ -36,48 +45,31 @@
 
                                 <!-- The Main window content -->
                                 <Grid>
-
                                     <Grid.RowDefinitions>
                                         <!-- Title Bar -->
                                         <RowDefinition Height="{Binding TitleHeightGridLength, FallbackValue=30}"/>
-                                        <!-- Drop shadow -->
-                                        <RowDefinition Height="Auto" />
                                         <!-- Window Content -->
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
 
-                                    <!-- Title Bar -->
-                                    <Grid Grid.Column="0" Panel.ZIndex="1">
+                                    <!-- TitleBar -->
+                                    <Grid Grid.Row="0" Background="{StaticResource TitleBackgroundDarkBrush}">
                                         <Grid.ColumnDefinitions>
-                                            <!-- Icon -->
-                                            <ColumnDefinition Width="Auto" />
-                                            <!-- Title -->
-                                            <ColumnDefinition Width="*" />
-                                            <!-- Windows Button -->
-                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="180"/>
                                         </Grid.ColumnDefinitions>
-
-                                        <!-- Icon -->
-                                        <Button Style="{StaticResource SytemIconButton}" Command="{Binding MenuCommand}">
-                                            <Image Source="/Images/Logo/logo-small.png" />
-                                        </Button>
-
-                                        <!-- Title -->
-                                        <Viewbox Grid.Column="1" Margin="0">
-                                            <TextBlock Style="{StaticResource HeaderText}" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Title, FallbackValue='Welcome, '}"/>
-                                        </Viewbox>
-
-                                        <!-- Window Buttons -->
-                                        <StackPanel Grid.Column="2" Orientation="Horizontal">
-                                            <local:WindowsSystemButton Kind="WindowMinimize" Command="{Binding MinimizeCommand}" Style="{StaticResource WindowsControlButtonWithIconPack}"/>
-                                            <local:WindowsSystemButton Kind="WindowMaximize" Command="{Binding MaximizeCommand}" Style="{StaticResource WindowsControlButtonWithIconPack}"/>
-                                            <local:WindowsSystemButton Kind="WindowClose" Command="{Binding CloseCommand}" Style="{StaticResource WindowsCloseButtonWithIconPack}"/>
+                                        <Image Margin="10,2,0,0" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" Width="92" Source="Images/Logo/UminiTitleWhite.png"/>
+                                        <StackPanel Grid.Column="2" Orientation="Horizontal" Height="30" VerticalAlignment="Top" HorizontalAlignment="Right" Panel.ZIndex="1000">
+                                            <local:MaterialButton Kind="Menu" Command="{Binding MenuCommand}" Style="{StaticResource WindowsControlButtonWithIconPack}"/>
+                                            <local:MaterialButton Kind="WindowMinimize" Command="{Binding MinimizeCommand}" Style="{StaticResource WindowsControlButtonWithIconPack}"/>
+                                            <local:MaterialButton Kind="WindowMaximize" Command="{Binding MaximizeCommand}" Style="{StaticResource WindowsControlButtonWithIconPack}"/>
+                                            <local:MaterialButton Kind="WindowClose" Command="{Binding CloseCommand}" Style="{StaticResource WindowsCloseButtonWithIconPack}"/>
                                         </StackPanel>
-
                                     </Grid>
 
                                     <!-- Page Content -->
-                                    <Border Grid.Row="2" Padding="{Binding InnerContentPadding}">
+                                    <Border Grid.Row="1" Padding="{Binding InnerContentPadding}">
                                         <ContentPresenter Content="{TemplateBinding Content}"/>
                                     </Border>
                                 </Grid>
@@ -109,67 +101,105 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <!-- player layout -->
-            <Grid Background="LightGray" Grid.ColumnSpan="2" Grid.Row="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="100"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="100"/>
-                </Grid.ColumnDefinitions>
-                <!-- album image -->
-                <Grid Grid.Column="0" >
-                    <Image x:Name="album" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100" Source="Images/Logo/icon.ico" />
+            <Grid Background="{StaticResource TitleBackgroundDarkBrush}" Grid.ColumnSpan="2" Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <!-- Title Bar -->
+                    <RowDefinition Height="0"/>
+                    <!-- Player -->
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <!-- Title area-->
+                <Grid Grid.Row="0">
+                    <Label x:Name="lbTitleBar" HorizontalAlignment="Center" Foreground="White" Height="30" Panel.ZIndex="1000" Margin="0,-30,0,0"/>
                 </Grid>
-                <Grid Grid.Column="1" Grid.ColumnSpan="3">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="50"/>
-                        <RowDefinition Height="50"/>
-                    </Grid.RowDefinitions>
-                    <Grid Grid.Row="0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="2*"/>
-                            <ColumnDefinition Width="3*"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBox x:Name="txtNoPlayingInformation" Text="" Background="LightGray" Grid.Column="0"/>
-                        <TextBox x:Name="txtLyric" Text="" Background="LightGray" Grid.Column="1"/>
+                <!-- Player Area-->
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <!-- Album art -->
+                        <ColumnDefinition Width="100"/>
+                        <!-- Player information-->
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <!-- Album art -->
+                    <Grid Grid.Column="0" >
+                        <Image x:Name="album" VerticalAlignment="Top" Width="100" Source="Images/Icons/music-album.png" />
+                    </Grid>
+                    <!-- Player information-->
+                    <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <!-- player information-->
+                            <RowDefinition Height="*"/>
+                            <!-- satus bar-->
+                            <RowDefinition Height="10"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <!-- Player Buttons -->
+                                <ColumnDefinition Width="200"/>
+                                <!-- Play Information-->
+                                <ColumnDefinition Width="*"/>
+                                <!-- Setting -->
+                                <ColumnDefinition Width="300"/>
+                            </Grid.ColumnDefinitions>
+                            <!-- Player Buttons -->
+                            <Grid Grid.Column="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Grid Grid.Row="0" VerticalAlignment="Center" Margin="10,0,0,0">
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,10">
+                                        <local:MaterialButton Kind="Shuffle" Width="30" Height="30" Style="{StaticResource ButtonWithIconPack}" Margin="0,0,10,0" />
+                                        <local:MaterialButton Kind="Repeat" Width="30" Height="30" Style="{StaticResource ButtonWithIconPack}" Margin="0,0,10,0"/>
+                                        <local:MaterialButton Kind="FileDocument" Width="30" Height="30" Style="{StaticResource ButtonWithIconPack}" Margin="0,0,10,0"/>
+                                        <local:MaterialButton Kind="Heart" Width="30" Height="30" Style="{StaticResource ButtonWithIconPack}" Margin="0,0,10,0" Foreground="Red"/>
 
+                                    </StackPanel>
+
+                                </Grid>
+                                <Grid Grid.Row="1" VerticalAlignment="Center" Margin="10,0,0,0">
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,10">
+                                        <materialDesign:PackIcon Height="30" Width="30" Kind="VolumeHigh" Padding="20" materialDesign:ColorZoneAssist.Mode="Light" Foreground="White" Margin="0, 0, 20, 0"/>
+                                        <Slider Height="20" Width="130" HorizontalAlignment="Stretch" TickFrequency="5" Minimum="1" Maximum="50" Value="25" Foreground="White"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Grid>
+                            <Grid Grid.Column="1">
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="1">
+                                    <local:MaterialButton Kind="SkipPrevious" Click="btn_Next_Click" Width="45" Height="45" Style="{StaticResource ButtonWithIconPack}" />
+                                    <local:MaterialButton Kind="Play" Click="btn_Play_Click" Style="{StaticResource PlayButtonWithIconPack}" />
+                                    <local:MaterialButton Kind="SkipNext" Click="btn_Prev_Click" Width="45" Height="45" Style="{StaticResource ButtonWithIconPack}" />
+                                    <local:MaterialButton Kind="Pause" Click="btn_Pause_Click" Width="45" Height="45" Style="{StaticResource ButtonWithIconPack}" />
+                                </StackPanel>
+                            </Grid>
+                            <Grid Grid.Column="2">
+                            </Grid>
+
+                            <!-- Music Information -->
+                            <Grid Grid.Column="1" Grid.ColumnSpan="3">
+                            </Grid>
+                        </Grid>
+                        <!-- Status bar -->
+                        <Grid Grid.Row="1" Background="{StaticResource TitleHoverBackgroundBrush}">
+
+                        </Grid>
                     </Grid>
 
-                    <StackPanel Orientation="Horizontal" Grid.Row="1">
-                        <Button Width="40" Height="30" Margin="10" Click="btn_Play_Click">
-                            <materialDesign:PackIcon Kind="Play" Height="24" Width="24" />
-                        </Button>
-
-                            <Button Width="40" Height="30" Margin="10"  Click="btn_Pause_Click">
-                            <materialDesign:PackIcon Kind="Pause" Height="24" Width="24" />
-                        </Button>
-                            <Button Width="40" Height="30" Margin="10" Click="btn_Stop_Click" >
-                            <materialDesign:PackIcon Kind="Stop" Height="24" Width="24" />
-                        </Button>
-                            <Button Width="40" Height="30" Margin="10" Click="btn_Next_Click" >
-                            <materialDesign:PackIcon Kind="SkipNext" Height="24" Width="24" />
-                        </Button>
-                            <Button Width="40" Height="30" Margin="10" Click="btn_Prev_Click" >
-                            <materialDesign:PackIcon Kind="SkipPrevious" Height="24" Width="24" />
-                        </Button>
-
-                    </StackPanel>
+                    
                 </Grid>
-                <Button Width="50" Height="50" Content="test" Click="Button_Click" Grid.Column="4" Margin="25"/>
+
             </Grid>
             <Grid Background="LightCyan" Grid.Column="0" Grid.Row="1">
-                <Label Content="- 재생목록" FontSize="20" Margin="10 20 0 0" />
-                <Label Content="- 추천노래" FontSize="20" Margin="10 50 0 0" />
-                <Label Content="- 검색" FontSize="20" Margin="10 80 0 0" />
+                <Button Width="50" Height="50" Content="test" Click="Button_Click" Grid.Column="4" Margin="25"/>
             </Grid>
             <!-- content area -->
             <!-- 
             <Frame Source="PlaylistPage.xaml" Grid.Column="1" Grid.Row="1"/>
-             --> 
-            
-            <Frame x:Name="frame" Background="LightGoldenrodYellow" Grid.Column="1" Grid.Row="1"> 
-                
+             -->
+
+            <Frame x:Name="frame" Background="LightGoldenrodYellow" Grid.Column="1" Grid.Row="1">
+
             </Frame>
-            
         </Grid>
         <!--
             <TextBox x:Name="txtVideoFullpath" HorizontalAlignment="Left" Height="18" TextWrapping="Wrap" VerticalAlignment="Top" Width="400" Margin="201,349,0,0"/>

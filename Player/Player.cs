@@ -8,8 +8,14 @@ namespace Player
 {
     public class Account
     {
-        private string mID { get; set; }
+        public string mID { get; set; }
         List<Playlist> mPlaylistList { get; set; }
+
+        public Account()
+        {
+            mID = null;
+            mPlaylistList = new List<Playlist>();
+        }
     }
 
     public class NowPlayingList

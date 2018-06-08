@@ -66,7 +66,7 @@ namespace Umini
       
             BitmapImage bi = new BitmapImage(new Uri(youtube.mImagePath, UriKind.RelativeOrAbsolute));
           
-            playlist.Items.Add( new ListV() { ImageData = bi , album = youtube.mAllbum, title = youtube.mTitle, singer = youtube.mArtist, length = youtube.mLength, type = youtube.mType });
+            playlist.Items.Add( new ListV() { ImageData = bi , album = youtube.mAllbum, title = youtube.mTitle, singer = youtube.mArtist, length = youtube.mLength, type = youtube.mType , path = youtube.mPath});
 
         }
         /// <summary>
@@ -80,6 +80,7 @@ namespace Umini
             public string album { get; set; }
             public double length { get; set; }
             public string singer { get; set; }
+            public string path { get; set; }
         }
 
         /// <summary>
@@ -95,12 +96,21 @@ namespace Umini
             var videos = youTube.GetAllVideos(link);
             var video = videos.FirstOrDefault(v => v.Resolution == 144); // gets a Video object with info about the video
 
-            Directory.CreateDirectory(Directory.GetCurrentDirectory() + @"\videotmp");
-            string path = Directory.GetCurrentDirectory() + @"\videotmp\" + link.Split('=').Last() + ".mp4";
-            // MessageBox.Show("path : " + path);
+            if (video == null)  // If there is no resolution, set default resolution.
+                video = youTube.GetVideo(link);
+
+            ImportExport ie = new ImportExport();
+            string path  = System.IO.Path.Combine(ie.makeFolder("videotmp"), link.Split('=').Last() + ".mp4");
+
             File.WriteAllBytes(path, video.GetBytes()); // save media file
             int index = mw.mNowPlayingList.mMediaList.FindIndex(s => ((Youtube)s).mURL.Contains(link));
             mw.mNowPlayingList.mMediaList[index].mPath = path;
+
+            /*
+            var item = playlist.Items.FindItemWithText(mw.mNowPlayingList.mMediaList[index].mTitle);
+            int itemNum = playlist         .Items.IndexOf();
+            ListViewItem item = (ListViewItem)playlist.Items[itemNum];
+            */
 
             return;
         }

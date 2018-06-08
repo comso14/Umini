@@ -17,4 +17,13 @@
     <Color x:Key="ForeGroundLight">#ffffff</Color>
     <SolidColorBrush x:Key="ForeGroundLightBrush" Color="{StaticResource ForeGroundLight}" />
 
+
+
+    <Color x:Key="TitleHoverBackground">#544a44</Color>
+    <SolidColorBrush x:Key="TitleHoverBackgroundBrush" Color="{StaticResource TitleHoverBackground}" />
+
+
+    <Color x:Key="TitleBackgroundDark">#423630</Color>
+    <SolidColorBrush x:Key="TitleBackgroundDarkBrush" Color="{StaticResource TitleBackgroundDark}" />
+
 </ResourceDictionary>

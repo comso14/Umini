@@ -14,15 +14,13 @@ namespace Umini
     {
     }
 
-    public class WindowsSystemButton : Button
+    public class MaterialButton : Button
     {
         public static DependencyProperty KindProperty;
 
-        static WindowsSystemButton()
+        static MaterialButton()
         {
-            KindProperty = DependencyProperty.Register("Kind", typeof(PackIconKind), typeof(WindowsSystemButton));
-
-
+            KindProperty = DependencyProperty.Register("Kind", typeof(PackIconKind), typeof(MaterialButton));
         }
 
         public PackIconKind Kind

@@ -23,7 +23,58 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
+    <!-- Button using Material iconPack-->
+    <Style TargetType="local:MaterialButton" x:Key="ButtonWithIconPack" BasedOn="{StaticResource BaseStyle}">
+        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Padding" Value="15"/>
+        <Setter Property="Width" Value="25"/>
+        <Setter Property="Height" Value="25"/>
+        <Setter Property="VerticalAlignment" Value="Stretch"/>
+        <Setter Property="Foreground" Value="White"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:MaterialButton">
+                    <Border BorderBrush="White" Background="Transparent">
+                        <materialDesign:PackIcon Kind="{TemplateBinding Kind}" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="10"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="{StaticResource TitleHoverBackgroundBrush}"/>
+                <Setter Property="Background" Value="{StaticResource BackgroundLightBrush}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- Play Button using Material iconPack-->
+    <Style TargetType="local:MaterialButton" x:Key="PlayButtonWithIconPack" BasedOn="{StaticResource ButtonWithIconPack}">
+        <Setter Property="Width" Value="60"/>
+        <Setter Property="Height" Value="60"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:MaterialButton">
+                    <Grid>
+                        <Ellipse Fill="{TemplateBinding Background}" Stroke="{TemplateBinding Foreground}" StrokeThickness="1"/>
+                        <materialDesign:PackIcon Kind="{TemplateBinding Kind}" Width="45" Height="45" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="{StaticResource TitleHoverBackgroundBrush}"/>
+                <Setter Property="Background" Value="{StaticResource BackgroundLightBrush}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
     <!-- System Icon Button -->
 
     <Style TargetType="{x:Type Button}" x:Key="SytemIconButton" BasedOn="{StaticResource Hoverless}">
@@ -31,18 +82,19 @@
         <Setter Property="Padding" Value="10"/>
     </Style>
 
+
     <!-- Window Control Button using Material iconPack-->
-    <Style TargetType="local:WindowsSystemButton" x:Key="WindowsControlButtonWithIconPack" BasedOn="{StaticResource BaseStyle}">
+    <Style TargetType="local:MaterialButton" x:Key="WindowsControlButtonWithIconPack" BasedOn="{StaticResource BaseStyle}">
         <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Padding" Value="8"/>
         <Setter Property="Width" Value="45"/>
         <Setter Property="VerticalAlignment" Value="Stretch"/>
-        <Setter Property="Foreground" Value="{StaticResource ForegroundMainBrush}"/>
+        <Setter Property="Foreground" Value="White"/>
 
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="local:WindowsSystemButton">
+                <ControlTemplate TargetType="local:MaterialButton">
                     <Border Padding="{TemplateBinding Padding}" Background="{TemplateBinding Background}">
                         <materialDesign:PackIcon Kind="{TemplateBinding Kind}" VerticalAlignment="Center" HorizontalAlignment="Center" />
                     </Border>
@@ -52,13 +104,13 @@
 
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource BackgroundLightBrush}"/>
+                <Setter Property="Background" Value="{StaticResource TitleHoverBackgroundBrush}"/>
             </Trigger>
         </Style.Triggers>
     </Style>
 
     <!-- Window Close Button using Material iconPack -->
-    <Style TargetType="local:WindowsSystemButton" x:Key="WindowsCloseButtonWithIconPack" BasedOn="{StaticResource WindowsControlButtonWithIconPack}">
+    <Style TargetType="local:MaterialButton" x:Key="WindowsCloseButtonWithIconPack" BasedOn="{StaticResource WindowsControlButtonWithIconPack}">
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="Red" />
@@ -66,43 +118,5 @@
             </Trigger>
         </Style.Triggers>
     </Style>
-
-
-    <!-- Window Control Button -->
-    <Style TargetType="{x:Type Button}" x:Key="WindowsControlButton" BasedOn="{StaticResource BaseStyle}">
-        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Padding" Value="8"/>
-        <Setter Property="Width" Value="45"/>
-        <Setter Property="VerticalAlignment" Value="Stretch"/>
-        <Setter Property="Foreground" Value="{StaticResource ForegroundMainBrush}"/>
-        <Setter Property="BorderBrush" Value="Transparent"/>
-        
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Border Padding="{TemplateBinding Padding}" Background="{TemplateBinding Background}">
-                        <TextBlock  VerticalAlignment="Center" HorizontalAlignment="Center" Text="{TemplateBinding Content}"/>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource BackgroundLightBrush}"/>
-            </Trigger>
-        </Style.Triggers>
-    </Style>
-           
     
-    <!-- Window Close Button -->
-    <Style TargetType="{x:Type Button}" x:Key="WindowsCloseButton" BasedOn="{StaticResource WindowsControlButton}">
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="Red" />
-                <Setter Property="Foreground" Value="{StaticResource ForeGroundLightBrush}"/>
-            </Trigger>
-        </Style.Triggers>
-    </Style>
 </ResourceDictionary>

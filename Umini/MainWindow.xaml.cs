@@ -30,9 +30,6 @@ namespace Umini
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-
-
-
     public partial class MainWindow : Window
     {
         public NowPlayingList mNowPlayingList;
@@ -46,7 +43,6 @@ namespace Umini
             mNowPlayingList = new NowPlayingList();
 
             play.video.MediaEnded += new RoutedEventHandler(MediaEnded);
-
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -64,9 +60,8 @@ namespace Umini
                 BitmapImage bi = new BitmapImage(new Uri(mNowPlayingList.mMediaList[mNowPlayingList.mNowPlayingOrder].mImagePath, UriKind.RelativeOrAbsolute));
                 album.Source = bi;
                 MediaFile media = mNowPlayingList.mMediaList[mNowPlayingList.mNowPlayingOrder];
-                txtNoPlayingInformation.Text = "노래 제목 : " + media.mTitle + "\n가     수 : " + media.mArtist;
-                txtLyric.Text = media.mLyric;
-
+                lbTitleBar.Content = media.mTitle + " - " + media.mArtist;
+                //txtLyric.Text = media.mLyric;
                 Play();
 
             }
@@ -79,12 +74,7 @@ namespace Umini
             Pause();
         }
 
-
-        private void btn_Stop_Click(object sender, RoutedEventArgs e)
-        {
-            Stop();
-        }
-
+        
         private void btn_Next_Click(object sender, RoutedEventArgs e)
         {
             NextPlay();

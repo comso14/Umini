@@ -36,10 +36,10 @@
                         </GridViewColumn>
                         <GridViewColumn Header="앨범" Width="100" DisplayMemberBinding="{Binding album}"/>
                         <GridViewColumn Header="제목" Width="280" DisplayMemberBinding="{Binding title}"/>
-                        <GridViewColumn Header="가수" Width="120" DisplayMemberBinding="{Binding singer}"/>
+                        <GridViewColumn Header="가수" Width="50" DisplayMemberBinding="{Binding singer}"/>
                         <GridViewColumn Header="길이" Width="50" DisplayMemberBinding="{Binding length}"/>
                         <GridViewColumn Header="타입" Width="50" DisplayMemberBinding="{Binding type}"/>
-                        
+                        <GridViewColumn Header="타입" Width="50" DisplayMemberBinding="{Binding path}"/>
                     </GridView>
                 </ListView.View>
             </ListView>

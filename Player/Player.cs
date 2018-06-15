@@ -9,11 +9,13 @@ namespace Player
     public class Account
     {
         public string mID { get; set; }
+        public string mYoutubeID { get; set; }
         List<Playlist> mPlaylistList { get; set; }
 
         public Account()
         {
             mID = null;
+            mYoutubeID = null;
             mPlaylistList = new List<Playlist>();
         }
     }

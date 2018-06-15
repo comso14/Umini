@@ -143,6 +143,7 @@ namespace Umini
             NextPlay();
 
         }
+
         /// <summary>
         /// load account profile in ./profile/[account-name].json
         /// return no;
@@ -190,6 +191,7 @@ namespace Umini
             new AccountWindow().Show();
 
         }
+        
     }
 
 }

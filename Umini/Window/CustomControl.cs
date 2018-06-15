@@ -29,4 +29,5 @@ namespace Umini
             set { base.SetValue(KindProperty, value); }
         }
     }
+
 }

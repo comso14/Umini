@@ -55,18 +55,15 @@
                                     <!-- TitleBar -->
                                     <Grid Grid.Row="0" Background="{StaticResource TitleBackgroundDarkBrush}">
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="70"/>
                                             <ColumnDefinition Width="*"/>
                                             <ColumnDefinition Width="180"/>
                                         </Grid.ColumnDefinitions>
                                         <StackPanel Grid.Column="0" >
-                                            <Image Margin="10,2,0,0" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" Width="92" Source="Images/Logo/UminiTitleWhite.png"/>
+                                            <Image Margin="10,5,0,0" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" Width="92" Source="Images/Logo/UminiTitleWhite.png"/>
                                         </StackPanel>
                                         <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                            <Button Content="sss" Width="100" Click="btnProfile_Click"/>
-                                            <local:MaterialButton Kind="SkipPrevious" Click="btnProfile_Click" Height="30" Style="{StaticResource ButtonWithIconPack}" />
-                                            <!--<local:MaterialButton Content="hello" Width="100" Style="{StaticResource WindowsControlButtonWithIconPack}" Click="ttthlhlhl"/>-->
-                                            <local:MaterialButton Kind="Menu" Command="{Binding MenuCommand}" Style="{StaticResource WindowsControlButtonWithIconPack}"/>
+                                            <Button Padding="0,0,0,0" Background="Yellow" BorderBrush="Yellow" Style="{StaticResource MaterialDesignRaisedAccentButton}" Width="100" ToolTip="Resource name: MaterialDesignRaisedAccentButton" WindowChrome.IsHitTestVisibleInChrome="True" Content="Default" Height="18" Click="btnAccount_Click" materialDesign:RippleAssist.Feedback="#DD000000"/>
                                         </StackPanel>
                                         <StackPanel Grid.Column="2" Orientation="Horizontal" Height="30" VerticalAlignment="Top" HorizontalAlignment="Right" Panel.ZIndex="1000">
                                             <local:MaterialButton Kind="Menu" Command="{Binding MenuCommand}" Style="{StaticResource WindowsControlButtonWithIconPack}"/>
@@ -75,7 +72,7 @@
                                             <local:MaterialButton Kind="WindowClose" Command="{Binding CloseCommand}" Style="{StaticResource WindowsCloseButtonWithIconPack}"/>
                                         </StackPanel>
                                     </Grid>
-
+ 
                                     <!-- Page Content -->
                                     <Border Grid.Row="1" Padding="{Binding InnerContentPadding}">
                                         <ContentPresenter Content="{TemplateBinding Content}"/>

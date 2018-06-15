@@ -21,9 +21,9 @@ namespace Player
             string readJson;
             try
             {
-                 readJson = File.ReadAllText(Path.Combine("account", name + ".json" ));
+                readJson = File.ReadAllText(Path.Combine("profile", name + ".json"));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return null;
             }
@@ -41,9 +41,17 @@ namespace Player
             string writeJson = json.Serialize(account);
             try
             {
-                File.WriteAllText(Path.Combine(makeFolder("account"), account.mID + ".json"), writeJson);
+                if (account.mID == null)
+                {
+                    File.WriteAllText(Path.Combine(makeFolder("profile"), "default.json"), writeJson);//account 에서 profile로 바꿈
+                }
+                else
+                {
+                    File.WriteAllText(Path.Combine(makeFolder("profile"), account.mID + ".json"), writeJson);
+                }
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return -1;
             }

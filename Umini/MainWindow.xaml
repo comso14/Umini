@@ -62,6 +62,8 @@
                                         <StackPanel Grid.Column="0" >
                                             <Image Margin="10,2,0,0" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" Width="92" Source="Images/Logo/UminiTitleWhite.png"/>
                                         </StackPanel>
+                                        <StackPanel Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                        </StackPanel>
                                         <StackPanel Grid.Column="2" Orientation="Horizontal" Height="30" VerticalAlignment="Top" HorizontalAlignment="Right" Panel.ZIndex="1000">
                                             <local:MaterialButton Kind="Menu" Command="{Binding MenuCommand}" Style="{StaticResource WindowsControlButtonWithIconPack}"/>
                                             <local:MaterialButton Kind="WindowMinimize" Command="{Binding MinimizeCommand}" Style="{StaticResource WindowsControlButtonWithIconPack}"/>
@@ -93,7 +95,11 @@
     </WindowChrome.WindowChrome>
 
     <Grid>
-        <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="193*"/>
+            <ColumnDefinition Width="787*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.ColumnSpan="2" Margin="0,0,0,-0.4">
             <Grid.RowDefinitions>
                 <RowDefinition Height="100"/>
                 <RowDefinition Height="*"/>
@@ -188,13 +194,15 @@
                         </Grid>
                     </Grid>
 
-                    
+
                 </Grid>
 
             </Grid>
-            <Grid Background="LightCyan" Grid.Column="0" Grid.Row="1">
+            <Grid Background="LightCyan" Grid.Column="0" Grid.Row="1" >
                 <!--<local:SideMenuListControl/>
                 <Button Width="50" Height="50" Content="test" Click="Button_Click" Grid.Column="4" Margin="25"/>-->
+                <Button Content="default" Width="100" x:Name="btnAccount" Height="30" Click="btnAccount_Click"/>
+
             </Grid>
             <!-- content area -->
             <!-- 
@@ -205,6 +213,7 @@
 
             </Frame>
         </Grid>
+        <local:MaterialButton Content="MaterialButton" HorizontalAlignment="Left" Margin="349.4,-102,0,0" VerticalAlignment="Top" Width="75" Grid.Column="1"/>
         <!--
             <TextBox x:Name="txtVideoFullpath" HorizontalAlignment="Left" Height="18" TextWrapping="Wrap" VerticalAlignment="Top" Width="400" Margin="201,349,0,0"/>
         -->

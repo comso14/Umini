@@ -88,8 +88,13 @@ namespace Umini
         /// NuGet download : Install-Package VideoLibrary
         /// </summary>
         /// <param name="link"></param>
+        public delegate void de(double x);
+        public void lblchange() { label1.Content = "Downloading . . "; }
+        public void lblchange2(double percentage) { label1.Content = $"{percentage}% of video downloaded"; }
+
         private void DownloadYoutube(string link)
         {
+
             // using https://github.com/i3arnon/libvideo 
 
             var youTube = YouTube.Default; // starting point for YouTube actions
@@ -99,11 +104,27 @@ namespace Umini
             if (video == null)  // If there is no resolution, set default resolution.
                 video = youTube.GetVideo(link);
 
-            ImportExport ie = new ImportExport();
-            string path  = System.IO.Path.Combine(ie.makeFolder("videotmp"), link.Split('=').Last() + ".mp4");
+            var streamLength = (long)video.StreamLength();
 
-            File.WriteAllBytes(path, video.GetBytes()); // save media file
+            ImportExport ie = new ImportExport();
+            string path = System.IO.Path.Combine(ie.makeFolder("videotmp"), link.Split('=').Last() + ".mp4");
+
+            var videoByte = video.FileExtension;
+            var outFile = File.OpenWrite(path);
+            var ps = new ProgressStream(outFile);
+
+            ps.BytesMoved += (sender, args) =>
+            {
+                var percentage = args.StreamLength * 100 / streamLength;
+                label1.Dispatcher.Invoke((de)(lblchange2), new object[] { percentage });
+
+            };
+            video.Stream().CopyTo(ps);
+            ps.Close();
+
+
             int index = mw.mNowPlayingList.mMediaList.FindIndex(s => ((Youtube)s).mURL.Contains(link));
+
             mw.mNowPlayingList.mMediaList[index].mPath = path;
 
             /*

@@ -62,7 +62,11 @@
                                         <StackPanel Grid.Column="0" >
                                             <Image Margin="10,2,0,0" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" Width="92" Source="Images/Logo/UminiTitleWhite.png"/>
                                         </StackPanel>
-                                        <StackPanel Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                        <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                            <Button Content="sss" Width="100" Click="btnProfile_Click"/>
+                                            <local:MaterialButton Kind="SkipPrevious" Click="btnProfile_Click" Height="30" Style="{StaticResource ButtonWithIconPack}" />
+                                            <!--<local:MaterialButton Content="hello" Width="100" Style="{StaticResource WindowsControlButtonWithIconPack}" Click="ttthlhlhl"/>-->
+                                            <local:MaterialButton Kind="Menu" Command="{Binding MenuCommand}" Style="{StaticResource WindowsControlButtonWithIconPack}"/>
                                         </StackPanel>
                                         <StackPanel Grid.Column="2" Orientation="Horizontal" Height="30" VerticalAlignment="Top" HorizontalAlignment="Right" Panel.ZIndex="1000">
                                             <local:MaterialButton Kind="Menu" Command="{Binding MenuCommand}" Style="{StaticResource WindowsControlButtonWithIconPack}"/>

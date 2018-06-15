@@ -90,7 +90,7 @@ namespace Umini.Test.mgh3326
             int temp;
             temp = MnetParsing(mediaFile.mYoutubeTitle, out mMusicTitle, out mMusicAlbumName, out mMusicArtist, out mMusicAlbumPictureUrl, out mMusicGenre, out mMusicYear);
             mediaFile.mTitle = mMusicTitle;
-            mediaFile.mAllbum = mMusicAlbumName;
+            mediaFile.mAlbum = mMusicAlbumName;
             mediaFile.mImagePath = mMusicAlbumPictureUrl;
             mediaFile.mArtist = mMusicArtist;
             mediaFile.mGenre = mMusicGenre;

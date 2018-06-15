@@ -71,7 +71,7 @@ namespace Player
         // media tag
         public string mTitle { get; set; }
         public string mArtist { get; set; }
-        public string mAllbum { get; set; }
+        public string mAlbum { get; set; }
         public string mYear { get; set; }
         public int mTrack { get; set; }
         public string mGenre { get; set; }

@@ -26,7 +26,7 @@ namespace Umini
         public AccountWindow()
         {
             InitializeComponent();
-            textboxId.Text = mainWindow.account.mID;
+            textboxId.Text = mainWindow.mAccount.mID;
             LoadAccount();
         }
 
@@ -38,7 +38,7 @@ namespace Umini
             }
             else
             {
-                mainWindow.account.mID = textboxId.Text;
+                mainWindow.mAccount.mID = textboxId.Text;
                 mainWindow.LoadAccount();//디폴트 호출
 
             }
@@ -78,7 +78,7 @@ namespace Umini
             {
                var items = listviewIDs.SelectedItems;
                 
-                mainWindow.account.mID = items[0].ToString();
+                mainWindow.mAccount.mID = items[0].ToString();
                 mainWindow.LoadAccount();//디폴트 호출
 
             }

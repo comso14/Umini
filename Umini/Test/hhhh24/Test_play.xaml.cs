@@ -65,7 +65,7 @@ namespace Umini.Test.hhhh24
                     int k = 0;
 
                     files.mTitle = mp3.Tag.Title;
-                    files.mAllbum = mp3.Tag.Album;
+                    files.mAlbum = mp3.Tag.Album;
                     files.mYear = mp3.Tag.Year.ToString();
                     files.mTrack = Convert.ToInt32(mp3.Tag.Track);
                     while (true)

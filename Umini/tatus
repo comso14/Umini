@@ -1,0 +1,327 @@
+[33mcommit e8ba780d4b33373ad222040c608660ba5d164ebe[m[33m ([m[1;36mHEAD -> [m[1;32mdevelop[m[33m, [m[1;31morigin/develop[m[33m)[m
+Merge: 483f133 0a32e1f
+Author: hyounglin Jun <bearics@gmail.com>
+Date:   Wed May 9 00:37:30 2018 +0900
+
+    Fix conflict
+
+[33mcommit 483f133a08ec954a04096daad048c618551ac463[m
+Merge: 2d6df7f 94f5534
+Author: hyounglin Jun <bearics@gmail.com>
+Date:   Wed May 9 00:32:50 2018 +0900
+
+    Merge remote-tracking branch 'origin/test_videoDownload' into develop
+
+[33mcommit 2d6df7f9155a58a589e0b2665d54df79f37bf480[m
+Merge: 3311b5c b5dda0c
+Author: hyounglin Jun <bearics@gmail.com>
+Date:   Wed May 9 00:31:18 2018 +0900
+
+    Merge remote-tracking branch 'origin/MakeNormalLayout' into develop
+
+[33mcommit 0a32e1f053394414c93096c86d3356a23f30d378[m
+Author: mgh3326 <mgh3326@naver.com>
+Date:   Tue May 8 18:11:59 2018 +0900
+
+    textbox out
+
+[33mcommit 67706a1eac639978d4ed4eca0d087beae90cd1eb[m
+Author: mgh3326 <mgh3326@naver.com>
+Date:   Tue May 8 17:26:09 2018 +0900
+
+    mnet parsing and alsong parsing
+    
+    -genre
+    -release day
+    -lyric
+
+[33mcommit 7324eeb364fe8001ae8f9ebe896ead0cf4e5dec7[m
+Author: mgh3326 <mgh3326@naver.com>
+Date:   Tue May 8 16:37:47 2018 +0900
+
+    genre and realse year search
+
+[33mcommit 94f55345fd036634dbb52c67366bc2c5480fd245[m[33m ([m[1;31morigin/test_videoDownload[m[33m)[m
+Author: pansyscent <pansyscent@gmail.com>
+Date:   Sun May 6 05:15:16 2018 +0900
+
+    Video Download fuction
+    [+] DownFile class
+    [+] List of DownFile
+    [+] Searching index as Youtube id
+
+[33mcommit 02ad04f32d0b1821a6c06ab00d823af2c62ecc3c[m
+Author: pansyscent <pansyscent@gmail.com>
+Date:   Sun May 6 04:43:25 2018 +0900
+
+    delete some file
+
+[33mcommit 359f33820651a2e72053d3f1c2538e238a34b60e[m
+Author: pansyscent <pansyscent@gmail.com>
+Date:   Sun May 6 04:37:39 2018 +0900
+
+    Video Download
+
+[33mcommit 1acfdb33570126b7cf8bef44306ce469c925d20c[m
+Author: mgh3326 <mgh3326@naver.com>
+Date:   Sun May 6 02:28:04 2018 +0900
+
+    update function create
+    
+    -youtube search api
+    -mnet api
+
+[33mcommit b5dda0c635176d82d7483feabf1b328659f445fa[m[33m ([m[1;31morigin/MakeNormalLayout[m[33m)[m
+Author: hyounglin Jun <bearics@gmail.com>
+Date:   Fri May 4 12:05:57 2018 +0900
+
+    Update TitleBar size
+
+[33mcommit 3311b5c4ffaef182505850ba48e6a5504547141a[m
+Merge: 4f88667 94b10e5
+Author: hyounglin Jun <bearics@gmail.com>
+Date:   Fri May 4 11:45:27 2018 +0900
+
+    Merge remote-tracking branch 'origin/MakeNormalLayout' into develop
+
+[33mcommit 94b10e5fe334227b37c5b3d32bc37571e60c9027[m
+Author: hyounglin Jun <bearics@gmail.com>
+Date:   Fri May 4 11:44:18 2018 +0900
+
+    Update Umini/Sytles/Colors.xaml
+
+[33mcommit 4f886678b06acdecf177920a80a5967244cab7a4[m
+Merge: 01b41ee 115ebd7
+Author: hyounglin Jun <bearics@gmail.com>
+Date:   Fri May 4 11:36:58 2018 +0900
+
+    Merge remote-tracking branch 'origin/MakeNormalLayout' into develop
+
+[33mcommit 115ebd7ca0aad7f1b768c5a09c1c94c8c44e4124[m
+Author: hyounglin Jun <bearics@gmail.com>
+Date:   Fri May 4 04:15:49 2018 +0900
+
+    Remove icon
+
+[33mcommit fd5ea8f05cbdf514a6c8a7fcfedd652f3cbbea91[m
+Author: hyounglin Jun <bearics@gmail.com>
+Date:   Fri May 4 03:10:12 2018 +0900
+
+    Add TitleBar in MainWindow
+
+[33mcommit 080a7d1219894ed88ed315c8d085b2528ca65cbf[m
+Author: hyounglin Jun <bearics@gmail.com>
+Date:   Fri May 4 02:08:30 2018 +0900
+
+    Add border and dropshadown in MainWindow
+
+[33mcommit 74a076577a9324e1c00d57f72d534d69a6444449[m
+Author: hyounglin Jun <bearics@gmail.com>
+Date:   Fri May 4 02:02:07 2018 +0900
+
+    Add WindowChrome
+    
+    - successful to add windowChrome
+       - resize window
+       - remove all of controls in window
+
+[33mcommit 01b41eec5b69c0dec8551e6f726b90640eae0bc9[m
+Author: hyounglin Jun <bearics@gmail.com>
+Date:   Thu May 3 22:28:15 2018 +0900
+
+    Clean up project
+
+[33mcommit 680b3039103aa8f00ca4e08a6f96547af8736928[m
+Merge: 1c3185b 7801e17
+Author: hyounglin Jun <bearics@gmail.com>
+Date:   Thu May 3 21:47:23 2018 +0900
+
+    Merge branch 'MakeNormalLayout' into develop
+
+[33mcommit 7801e179b1c2c0fddee9c713c8f41a2fdede30d5[m
+Author: hyounglin Jun <bearics@gmail.com>
+Date:   Thu May 3 21:31:54 2018 +0900
+
+    Add Apis & NormalLayout
+    
+    - add fody
+    - add NormalLayout
+
+[33mcommit 1c3185bfa8d9de8c738d3dd92b608715d3be60ad[m
+Merge: 3f60602 1ed3d61
+Author: pansyscent <pansyscent@gmail.com>
+Date:   Thu May 3 21:02:11 2018 +0900
+
+    Merge remote-tracking branch 'origin/test_FunctionOption' into develop
+
+[33mcommit 1ed3d61965740f6b6f5ad1ee548785baa9b05c06[m[33m ([m[1;31morigin/test_FunctionOption[m[33m)[m
+Author: pansyscent <pansyscent@gmail.com>
+Date:   Thu May 3 20:33:37 2018 +0900
+
+    setting feature
+    
+    - shortcut(global hotkey)
+    - Tray
+    - Alarm
+    - auto shutdown
+    - always top
+
+[33mcommit 3f60602c746b26eff07df9ffeec15d44a5d5b719[m
+Merge: 440ec56 1f21f07
+Author: hhhh245 <hhhh245@naver.com>
+Date:   Thu May 3 20:30:55 2018 +0900
+
+    Merge remote-tracking branch 'origin/Test_Play' into develop
+
+[33mcommit 1f21f073e9f4065ecbe764b16b170cf69733b7ac[m
+Author: hhhh245 <hhhh245@naver.com>
+Date:   Thu May 3 19:50:38 2018 +0900
+
+    ver 1.0
+
+[33mcommit 440ec56bde3274b55af1c497ce22a05ce17021df[m
+Merge: 78b0436 ec31ef2
+Author: mgh3326 <mgh3326@naver.com>
+Date:   Thu May 3 19:23:37 2018 +0900
+
+    Merge branch 'test_PlayListParshing' into develop
+    PlayListParshing merge
+
+[33mcommit ec31ef27239958db5e1f469533ede4c64f97629a[m[33m ([m[1;31morigin/test_PlayListParshing[m[33m)[m
+Author: mgh3326 <mgh3326@naver.com>
+Date:   Thu May 3 19:16:07 2018 +0900
+
+    music image update
+
+[33mcommit ab5e71ce32352e0498c1307110dc9ddaa565b39f[m
+Author: mgh3326 <mgh3326@naver.com>
+Date:   Thu May 3 16:28:25 2018 +0900
+
+    lyric output complete
+
+[33mcommit 1abc0584a398414ab494a12a5829afb4dca70886[m
+Author: mgh3326 <mgh3326@naver.com>
+Date:   Wed May 2 21:02:15 2018 +0900
+
+    m-net parsing complete
+
+[33mcommit bb07ab49602f649ace3368ea8162f42a732efce3[m
+Author: hyounglin Jun <bearics@gmail.com>
+Date:   Wed May 2 19:29:23 2018 +0900
+
+    Add Matreial Desingn in XAML Toolkit
+    
+    - include google's material design icons
+
+[33mcommit 6130b4ed04d1c1bda5bc6d53e4cc4859a7204ccd[m
+Author: mgh3326 <mgh3326@naver.com>
+Date:   Tue May 1 18:16:00 2018 +0900
+
+    play list textbox and button update
+
+[33mcommit f07ef126f0acb2f7b839a310109ad0b6b820728b[m
+Author: mgh3326 <mgh3326@naver.com>
+Date:   Sun Apr 22 16:23:08 2018 +0900
+
+    do not run function output value
+
+[33mcommit 8c90fb391b7da73f702b6b682256487e3d22609f[m
+Author: mgh3326 <mgh3326@naver.com>
+Date:   Sun Apr 22 14:45:58 2018 +0900
+
+    ignore update
+
+[33mcommit da814bc14ab1cb07cdcc0703c334cba6d2224831[m
+Merge: ca001de fc99a5a
+Author: mgh3326 <mgh3326@naver.com>
+Date:   Sun Apr 22 14:31:28 2018 +0900
+
+    merge complete
+
+[33mcommit ca001ded9ba6533b22d0bc434f1c5bf7435a0c9f[m
+Author: mgh3326 <mgh3326@naver.com>
+Date:   Sun Apr 22 14:29:55 2018 +0900
+
+    for merge
+
+[33mcommit fc99a5aead4f85d9b8f3002f2a25ae8c12240ae0[m
+Author: hyounglin Jun <bearics@gmail.com>
+Date:   Sun Apr 22 14:24:17 2018 +0900
+
+    Add google apis
+    
+    Add google apis
+      - google.apis.auth
+      - google.apis.youtube.v3
+    
+    change layout from mgh3326
+
+[33mcommit d2623dfa6219b13ae31921f197a7924a7a2f3cd8[m
+Author: mgh3326 <mgh3326@naver.com>
+Date:   Sun Apr 22 14:08:06 2018 +0900
+
+    basic layout update
+
+[33mcommit 78b043647f27188e5d15aa23868c121fab846134[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m)[m
+Merge: 0cde745 e9ef963
+Author: hyounglin Jun <bearics@gmail.com>
+Date:   Fri Apr 20 00:38:34 2018 +0900
+
+    Merge branch 'AddTestspace' into develop
+
+[33mcommit e9ef96314f735d18c8c629c291e67bb739e99f47[m[33m ([m[1;31morigin/AddTestspace[m[33m)[m
+Author: hyounglin Jun <bearics@gmail.com>
+Date:   Fri Apr 20 00:32:09 2018 +0900
+
+    Make testspace for testing.
+    
+    how to use.
+    1. make my folder in /Test/.
+    2. make my window in /Test/{name}
+        - window's name is "Test_{feature_name}"
+    3. Add button in TestWindow.xaml by {name}
+
+[33mcommit 0cde745a8a6783802aa619dd415bd35b5c56e216[m
+Author: hyounglin Jun <bearics@gmail.com>
+Date:   Fri Apr 13 07:58:25 2018 +0900
+
+    Add Test window
+    
+    The TestWindow is for testing new feature. It can make more windows in
+    Test area.
+
+[33mcommit af7de36042fec7011fed22e0296839bc1b08fcb2[m
+Author: bearics <bearics@gmail.com>
+Date:   Fri Apr 13 07:41:37 2018 +0900
+
+    Delete READEME.md
+
+[33mcommit 2e1f3bd3c45b33cea716f34d79aff0912280007a[m
+Author: bearics <bearics@gmail.com>
+Date:   Fri Apr 13 07:41:20 2018 +0900
+
+    Create README.md
+
+[33mcommit b2cddf62c872729804a59e59a38d4fbf77cf0b39[m
+Author: bearics <bearics@gmail.com>
+Date:   Fri Apr 13 07:33:42 2018 +0900
+
+    Set theme jekyll-theme-cayman
+
+[33mcommit 1cabb4760c590856481ffe41ea0ca325595f92fc[m
+Author: hyounglin Jun <bearics@gmail.com>
+Date:   Fri Apr 13 07:28:37 2018 +0900
+
+    Add README.md
+
+[33mcommit 2611c6855a9e04b4107511943d6a8e0f1c0763f1[m
+Author: hyounglin Jun <bearics@gmail.com>
+Date:   Fri Apr 13 07:21:16 2018 +0900
+
+    Add project files.
+
+[33mcommit 1ffba425c739924ae5c46aa4e0eea6bdfd565c0c[m
+Author: bearics <bearics@gmail.com>
+Date:   Fri Apr 13 07:21:09 2018 +0900
+
+    Add .gitignore and .gitattributes.

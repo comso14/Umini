@@ -1,0 +1,24 @@
+﻿<UserControl x:Class="Umini.SideMenuListControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Umini"
+             mc:Ignorable="d" 
+             d:DesignHeight="60" d:DesignWidth="200">
+    <Grid Background="White">
+        <Grid.ColumnDefinitions>
+            <!-- menu icon -->
+            <ColumnDefinition Width="40"/>
+            <!-- menu name-->
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        
+        <!-- Icon -->
+        <local:MaterialButton Foreground="Black" Kind="SkipPrevious" Click="btn_Next_Click" Width="30" Height="30" Style="{StaticResource ButtonWithIconPack}" />
+
+        <Border Grid.Column="1" VerticalAlignment="Center" Padding="5" >
+            <TextBox Text="재생목록" FontSize="20" />
+        </Border>
+    </Grid>
+</UserControl>

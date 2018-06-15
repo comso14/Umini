@@ -134,6 +134,7 @@ namespace Umini
         public void MediaEnded(object sender, RoutedEventArgs e)
         {
             NextPlay();
+
         }
     }
 

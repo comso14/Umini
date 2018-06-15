@@ -30,10 +30,14 @@ namespace Umini
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    /// 
+
     public partial class MainWindow : Window
     {
         public NowPlayingList mNowPlayingList;
         public Test_play play;
+        public Account account;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -43,6 +47,9 @@ namespace Umini
             mNowPlayingList = new NowPlayingList();
 
             play.video.MediaEnded += new RoutedEventHandler(MediaEnded);
+            account = new Account();
+
+            LoadAccount();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -74,20 +81,20 @@ namespace Umini
             Pause();
         }
 
-        
+
         private void btn_Next_Click(object sender, RoutedEventArgs e)
         {
             NextPlay();
         }
-        
+
         private void btn_Prev_Click(object sender, RoutedEventArgs e)
         {
             PrevPlay();
         }
         private void AppWindow_Loaded(object sender, RoutedEventArgs e)
-            {
-                frame.NavigationService.Navigate(new PlaylistPage());
-            }
+        {
+            frame.NavigationService.Navigate(new PlaylistPage());
+        }
 
 
         public void Play()
@@ -120,7 +127,7 @@ namespace Umini
 
             }
         }
-        
+
         public void PrevPlay()
         {
             if (--mNowPlayingList.mNowPlayingOrder < 0)
@@ -136,6 +143,55 @@ namespace Umini
             NextPlay();
 
         }
+
+        /// <summary>
+        /// load account profile in ./profile/[account-name].json
+        /// return no;
+        /// </summary>
+        public void LoadAccount()//이거 파라미터가 들어온다면 다르게 폴더 이름이 달리질듯 하오
+        {
+            String path;
+            ImportExport importExport = new ImportExport();
+            path = importExport.makeFolder("profile");
+            System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(path);
+            if (di.GetFiles().Length > 0)
+            {
+                foreach (System.IO.FileInfo File in di.GetFiles())
+                {
+
+                    if (File.Extension.ToLower().CompareTo(".json") == 0)
+                    {
+                        String FileNameOnly = File.Name.Substring(0, File.Name.Length - 5);
+                        String FullFileName = File.FullName;
+                        if(FileNameOnly.Equals(account.mID))
+                        {
+                            account = importExport.importAccount(account.mID);
+                            return;
+                        }
+                    }
+                }
+                //ㅠㅠ 디포트가 없으면 여길로 오겠구먼
+                if(account.mID=="")
+                {
+                    account.mID = "default";
+                }
+                importExport.exportAccount(account);
+            }
+            else//아무것도 없을때
+            {
+                //MessageBox.Show("default.json 파일이 없습니다. 그래서 json 파일을 만들겠습니다.");
+                account.mID = "default";
+                importExport.exportAccount(account);
+            }
+
+        }
+
+        private void btnAccount_Click(object sender, RoutedEventArgs e)
+        {
+            new AccountWindow().Show();
+
+        }
+        
     }
 
 }

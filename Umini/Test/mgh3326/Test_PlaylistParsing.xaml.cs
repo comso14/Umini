@@ -165,8 +165,8 @@ namespace Umini.Test.mgh3326
             string doc = "";
             doc = wc.DownloadString(url);
             wc.Dispose();//이게 해제인가
-            //doc = doc.Substring(21);
-            
+                         //doc = doc.Substring(21);
+
             JObject obj = JObject.Parse(doc);
             //Console.WriteLine(obj["message"].ToString());
             image_path = "";

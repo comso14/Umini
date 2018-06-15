@@ -33,7 +33,6 @@ namespace Umini
     public partial class PlaylistPage : Page
     {
       
-
         MainWindow mw;
         List<ListV> mediaItems = new List<ListV>();
 
@@ -41,6 +40,7 @@ namespace Umini
         {
             InitializeComponent();
             mw = (MainWindow)Application.Current.MainWindow;
+            dgPlaylist.ItemsSource = mw.mNowPlayingList.mMediaList;
         }
        
         private void btnURLAdd_Click(object sender, RoutedEventArgs e)
@@ -66,7 +66,7 @@ namespace Umini
       
             BitmapImage bi = new BitmapImage(new Uri(youtube.mImagePath, UriKind.RelativeOrAbsolute));
           
-            playlist.Items.Add( new ListV() { ImageData = bi , album = youtube.mAllbum, title = youtube.mTitle, singer = youtube.mArtist, length = youtube.mLength, type = youtube.mType , path = youtube.mPath});
+            // playlist.Items.Add( new ListV() { ImageData = bi , album = youtube.mAllbum, title = youtube.mTitle, singer = youtube.mArtist, length = youtube.mLength, type = youtube.mType , path = youtube.mPath});
 
         }
         /// <summary>

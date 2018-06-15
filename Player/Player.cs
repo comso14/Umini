@@ -9,11 +9,13 @@ namespace Player
     public class Account
     {
         public string mID { get; set; }
-        List<Playlist> mPlaylistList { get; set; }
+        public string mYoutubeID { get; set; }
+        public List<Playlist> mPlaylistList { get; set; }
 
         public Account()
         {
             mID = null;
+            mYoutubeID = null;
             mPlaylistList = new List<Playlist>();
         }
     }
@@ -60,7 +62,7 @@ namespace Player
     public class MediaFile
     { // mp3,wmv,  mp4
       // file's information
-
+        
         public string mType { get; set; }  // file type
         public string mExt { get; set; }
         public string mPath { get; set; }

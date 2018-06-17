@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Umini"
              mc:Ignorable="d" 
-             d:DesignHeight="60" d:DesignWidth="200">
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             d:DesignHeight="40" d:DesignWidth="200">
     <Grid Background="White">
         <Grid.ColumnDefinitions>
             <!-- menu icon -->
@@ -15,10 +16,12 @@
         </Grid.ColumnDefinitions>
         
         <!-- Icon -->
-        <local:MaterialButton Foreground="Black" Kind="SkipPrevious" Click="btn_Next_Click" Width="30" Height="30" Style="{StaticResource ButtonWithIconPack}" />
-
-        <Border Grid.Column="1" VerticalAlignment="Center" Padding="5" >
+        <Grid Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <materialDesign:PackIcon Kind="PlaylistPlay" Width="30" Height="30"/>
+        </Grid>
+        <Grid Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBox Text="재생목록" FontSize="20" />
-        </Border>
+        </Grid>
+
     </Grid>
 </UserControl>

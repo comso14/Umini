@@ -200,10 +200,7 @@
 
             </Grid>
             <Grid Background="LightCyan" Grid.Column="0" Grid.Row="1" >
-                <!--<local:SideMenuListControl/>
-                <Button Width="50" Height="50" Content="test" Click="Button_Click" Grid.Column="4" Margin="25"/>-->
-                <Button Content="default" Width="100" x:Name="btnAccount" Height="30" Click="btnAccount_Click"/>
-
+                <local:SideMenuListControl />
             </Grid>
             <!-- content area -->
             <!-- 
@@ -214,7 +211,6 @@
 
             </Frame>
         </Grid>
-        <local:MaterialButton Content="MaterialButton" HorizontalAlignment="Left" Margin="349.4,-102,0,0" VerticalAlignment="Top" Width="75" Grid.Column="1"/>
         <!--
             <TextBox x:Name="txtVideoFullpath" HorizontalAlignment="Left" Height="18" TextWrapping="Wrap" VerticalAlignment="Top" Width="400" Margin="201,349,0,0"/>
         -->

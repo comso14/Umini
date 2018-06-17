@@ -34,7 +34,6 @@ namespace Umini
     {
       
         MainWindow mw;
-        List<ListV> mediaItems = new List<ListV>();
 
         public PlaylistPage()
         {
@@ -49,6 +48,7 @@ namespace Umini
             string link = txtUrl.Text;
             Thread downloadThread = new Thread(() => DownloadYoutube(link));
             downloadThread.Start();
+            dgPlaylist.Items.Refresh();
         }
        
         /// <summary>
@@ -90,7 +90,6 @@ namespace Umini
         /// <param name="link"></param>
         private void DownloadYoutube(string link)
         {
-            // using https://github.com/i3arnon/libvideo 
 
             var youTube = YouTube.Default; // starting point for YouTube actions
             var videos = youTube.GetAllVideos(link);
@@ -115,4 +114,5 @@ namespace Umini
             return;
         }
     }
+
 }

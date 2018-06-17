@@ -35,5 +35,13 @@ namespace Umini
             mw.mAccount.mNowPlayingList.mMediaList.Remove(media);
             dgPlaylist.Items.Refresh();
         }
+
+        private void DataGridRow_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            DataGridRow row = sender as DataGridRow;
+            MediaFile media = row.DataContext as MediaFile;
+            DetailMediaWindow dmw = new DetailMediaWindow(media);
+            dmw.Show();
+        }
     }
 }

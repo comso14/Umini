@@ -119,6 +119,14 @@ namespace Umini
             MediaFile media = row.DataContext as MediaFile;
             mw.mAccount.mNowPlayingList.mMediaList.Add(media);
         }
+
+        private void DataGridRow_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            DataGridRow row = sender as DataGridRow;
+            MediaFile media = row.DataContext as MediaFile;
+            DetailMediaWindow dmw = new DetailMediaWindow(media);
+            dmw.Show();
+        }
     }
 
 }

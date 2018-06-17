@@ -146,6 +146,9 @@
     <Compile Include="Controls\SideMenu\SideMenuListControl.xaml.cs">
       <DependentUpon>SideMenuListControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DetailMediaWindow.xaml.cs">
+      <DependentUpon>DetailMediaWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ManagePlaylistPage.xaml.cs">
       <DependentUpon>ManagePlaylistPage.xaml</DependentUpon>
     </Compile>
@@ -209,6 +212,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\SideMenu\SideMenuListControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DetailMediaWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

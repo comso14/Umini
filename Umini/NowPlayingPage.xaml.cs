@@ -38,15 +38,10 @@ namespace Umini
 
         private void DataGridRow_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
-
+            DataGridRow row = sender as DataGridRow;
+            MediaFile media = row.DataContext as MediaFile;
+            DetailMediaWindow dmw = new DetailMediaWindow(media);
+            dmw.Show();
         }
-
-
-        //private void DataGridRow_MouseRightButtonUp(object sender, MouseWheelEventArgs e)
-        //{
-        //    MessageBox.Show("right");
-
-        //}
-
     }
 }

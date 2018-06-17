@@ -32,8 +32,21 @@ namespace Umini
         {
             DataGridRow row = sender as DataGridRow;
             MediaFile media = row.DataContext as MediaFile;
-            mw.mAccount.mNowPlayingList.mMediaList.Remove(media);
+            mw.mAccount.mNowPlayingList.mMediaList.Remove(media);//삭제 말고 
             dgPlaylist.Items.Refresh();
         }
+
+        private void DataGridRow_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+
+        //private void DataGridRow_MouseRightButtonUp(object sender, MouseWheelEventArgs e)
+        //{
+        //    MessageBox.Show("right");
+
+        //}
+
     }
 }

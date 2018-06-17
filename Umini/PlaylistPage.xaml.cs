@@ -100,7 +100,19 @@ namespace Umini
             ImportExport ie = new ImportExport();
             string path  = System.IO.Path.Combine(ie.makeFolder("videotmp"), link.Split('=').Last() + ".mp4");
 
-            File.WriteAllBytes(path, video.GetBytes()); // save media file
+            System.IO.FileInfo fi = new System.IO.FileInfo(path);
+            if (fi.Exists)
+            {
+                //MessageBox.Show("이미 있다리");
+            }
+            else
+            {
+                // 파일 없음.
+                File.WriteAllBytes(path, video.GetBytes()); // save media file
+
+            }
+
+
             int index = playlist.mMediaList.FindIndex(s => ((Youtube)s).mURL.Contains(link));
             playlist.mMediaList[index].mPath = path;
 

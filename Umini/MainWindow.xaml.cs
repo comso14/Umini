@@ -277,7 +277,17 @@ namespace Umini
             return playlist;
         }
 
+        private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            if (mAccount.mID == null)
+            {
+                mAccount.mID = "default";
+                mAccount.mNowPlayingList = new NowPlayingList();
+            }
+            ImportExport importExport = new ImportExport();
 
+            importExport.exportAccount(mAccount);
+        }
     }
 }
 

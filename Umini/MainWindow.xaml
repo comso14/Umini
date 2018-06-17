@@ -72,7 +72,7 @@
                                             <local:MaterialButton Kind="WindowClose" Command="{Binding CloseCommand}" Style="{StaticResource WindowsCloseButtonWithIconPack}"/>
                                         </StackPanel>
                                     </Grid>
- 
+
                                     <!-- Page Content -->
                                     <Border Grid.Row="1" Padding="{Binding InnerContentPadding}">
                                         <ContentPresenter Content="{TemplateBinding Content}"/>
@@ -182,7 +182,7 @@
                                 </StackPanel>
                             </Grid>
                             <Grid Grid.Column="2">
-                                
+
                             </Grid>
 
                             <!-- Music Information -->
@@ -214,7 +214,8 @@
                         <TreeViewItem x:Name="tviSetting" Header="Setting"/>
                     </TreeView>
                 </StackPanel>
-              
+                <Button x:Name="btnSave" Content="Save" HorizontalAlignment="Left" Margin="23,148,0,0" VerticalAlignment="Top" Width="75" Click="btnSave_Click"/>
+
                 <!--<local:SideMenuListControl />-->
             </Grid>
             <!-- content area -->

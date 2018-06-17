@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Player;
 
 namespace Umini
 {
@@ -26,6 +27,13 @@ namespace Umini
         {
             InitializeComponent();
             dgPlaylist.ItemsSource = mw.mAccount.mNowPlayingList.mMediaList;
+        }
+        private void DataGridRow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            DataGridRow row = sender as DataGridRow;
+            MediaFile media = row.DataContext as MediaFile;
+            mw.mAccount.mNowPlayingList.mMediaList.Remove(media);
+            dgPlaylist.Items.Refresh();
         }
     }
 }

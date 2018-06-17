@@ -65,16 +65,16 @@ namespace Umini
             downloadThread.Start();
             dgPlaylist.Items.Refresh();
         }
-       
+
         /// <summary>
         /// Parsing youtube media and add information to youtube class
         /// </summary>
         /// <param name="link"></param>
-        private void ParsingYoutube(string link, Playlist playlist)
+        public  void ParsingYoutube(string link, Playlist playlist)
         {
             Test_PlaylistParsing parsing = new Test_PlaylistParsing();
 
-            Youtube youtube = parsing.ParsingYoutube(txtUrl.Text);  // parsing part
+            Youtube youtube = parsing.ParsingYoutube(link);  // parsing part
 
             MessageBox.Show(youtube.mTitle);
             playlist.mMediaList.Add((MediaFile)youtube);
@@ -87,7 +87,7 @@ namespace Umini
         /// NuGet download : Install-Package VideoLibrary
         /// </summary>
         /// <param name="link"></param>
-        private void DownloadYoutube(string link, Playlist playlist)
+        public void DownloadYoutube(string link, Playlist playlist)
         {
 
             var youTube = YouTube.Default; // starting point for YouTube actions

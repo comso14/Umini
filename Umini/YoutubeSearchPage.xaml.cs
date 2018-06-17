@@ -26,10 +26,12 @@ namespace Umini
     /// </summary>
     public partial class YoutubeSearchPage : Page
     {
-
+        MainWindow mw;
         public YoutubeSearchPage()
         {
             InitializeComponent();
+            mw = (MainWindow)Application.Current.MainWindow;
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -80,8 +82,11 @@ namespace Umini
             {
                 var items = listviewSearchList.SelectedItems;
 
-                MessageBox.Show("https://www.youtube.com/watch?v=" + items[0].GetType().GetProperty("VideoId").GetValue(items[0], null).ToString());
+                //MessageBox.Show("https://www.youtube.com/watch?v=" + items[0].GetType().GetProperty("VideoId").GetValue(items[0], null).ToString());
 
+                SelectPlayList selectPlayList = new SelectPlayList("https://www.youtube.com/watch?v=" + items[0].GetType().GetProperty("VideoId").GetValue(items[0], null).ToString());
+                selectPlayList.Show();
+                //mw.mAccount.mPlaylistList
             }
         }
     }

@@ -14,7 +14,7 @@
             </InlineUIContainer></TextBlock>
 
         <Button Content="Button" Width="75" Margin="441,61,284,369" Click="Button_Click"/>
-        <TextBox x:Name="txtTitle" HorizontalAlignment="Left" Height="23" Margin="36,63,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="358"/>
+        <TextBox x:Name="txtTitle" HorizontalAlignment="Left" Height="23" Margin="36,63,0,0" TextWrapping="Wrap" Text="볼빨간사춘기" VerticalAlignment="Top" Width="358"/>
         <TextBlock HorizontalAlignment="Left" Height="0" Margin="321,117,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="13"/>
         <ListView x:Name="listviewSearchList" HorizontalAlignment="Left" Height="295" Margin="52,122,0,0" VerticalAlignment="Top" Width="666" MouseDoubleClick="listviewSearchList_MouseDoubleClick">
             <ListView.View>

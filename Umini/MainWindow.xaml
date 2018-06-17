@@ -20,7 +20,7 @@
         TextOptions.TextFormattingMode="Ideal" 
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="{DynamicResource MaterialDesignFont}">
+        FontFamily="{DynamicResource MaterialDesignFont}" Closing="AppWindow_Closing">
 
     <Window.Resources>
         <Style TargetType="{x:Type local:MainWindow}">

@@ -19,10 +19,13 @@ using Player;
 using Umini.Test.mgh3326;
 using System.Web;
 using Umini.Test.hhhh24;
+using System.Windows.Interop;
 using System.Threading;
 using System.Windows.Threading;
 using VideoLibrary;
 using System.IO;
+using System.Runtime.InteropServices;
+
 
 
 namespace Umini
@@ -32,11 +35,43 @@ namespace Umini
     /// </summary>
     public partial class MainWindow : Window
     {
+        [DllImport("user32.dll")]
+        private static extern int RegisterHotKey(int hwnd, int id, int fsModifiers, int vk);
+        [DllImport("user32.dll")]
+        private static extern int UnregisterHotKey(int hwnd, int id); 
+        [DllImport("user32.dll")]
+        public static extern IntPtr SendMessageW(IntPtr hWnd, int Msg, IntPtr wParam, IntPtr lParam); //시스템 볼륨 조절
+        private const int APPCOMMAND_VOLUME_MUTE = 0x80000;
+        private const int APPCOMMAND_VOLUME_UP = 0xA0000;
+        private const int APPCOMMAND_VOLUME_DOWN = 0x90000;
+        private const int WM_APPCOMMAND = 0x319;
+
         public NowPlayingList mNowPlayingList;
         public Test_play play;
+        public System.Windows.Forms.NotifyIcon notify;
         public MainWindow()
         {
             InitializeComponent();
+            HotKey _hotkey;
+            
+            Loaded += (s, e) =>   //핫키등록
+            {
+                _hotkey = new HotKey(ModifierKeys.Control | ModifierKeys.Alt, Keys.F1, this);
+                _hotkey.HotKeyPressed += (k) => VolDown();
+                _hotkey = new HotKey(ModifierKeys.Control | ModifierKeys.Alt, Keys.F2, this);
+                _hotkey.HotKeyPressed += (k) => VolUp();
+                _hotkey = new HotKey(ModifierKeys.Control | ModifierKeys.Alt, Keys.F3, this);
+                _hotkey.HotKeyPressed += (k) => Mute();
+                _hotkey = new HotKey(ModifierKeys.Control | ModifierKeys.Alt, Keys.F4, this);
+                _hotkey.HotKeyPressed += (k) => PrevPlay();
+                _hotkey = new HotKey(ModifierKeys.Control | ModifierKeys.Alt, Keys.F6, this);
+                    _hotkey.HotKeyPressed += (k) => Pause();
+                _hotkey = new HotKey(ModifierKeys.Control | ModifierKeys.Alt, Keys.F5, this);
+                _hotkey.HotKeyPressed += (k) => Play();
+                _hotkey = new HotKey(ModifierKeys.Control | ModifierKeys.Alt, Keys.F7, this);
+                _hotkey.HotKeyPressed += (k) => NextPlay();
+            };
+
             DataContext = new WindowViewModel(this);
 
             play = new Test_play();
@@ -85,9 +120,13 @@ namespace Umini
             PrevPlay();
         }
         private void AppWindow_Loaded(object sender, RoutedEventArgs e)
-            {
-                frame.NavigationService.Navigate(new PlaylistPage());
-            }
+        {
+            frame.NavigationService.Navigate(new PlaylistPage());
+            notify = new System.Windows.Forms.NotifyIcon();
+            notify.Icon = Properties.Resources.Icon1;
+            notify.Text = "Umini";
+            notify.MouseClick += Notify_Click;
+        }
 
 
         public void Play()
@@ -135,6 +174,60 @@ namespace Umini
         {
             NextPlay();
 
+        }
+        private void Mute()
+        {
+            SendMessageW(new WindowInteropHelper(this).Handle, WM_APPCOMMAND, new WindowInteropHelper(this).Handle,
+                (IntPtr)APPCOMMAND_VOLUME_MUTE);
+        }
+
+        private void VolDown()
+        {
+            SendMessageW(new WindowInteropHelper(this).Handle, WM_APPCOMMAND, new WindowInteropHelper(this).Handle,
+                (IntPtr)APPCOMMAND_VOLUME_DOWN);
+        }
+
+        private void VolUp()
+        {
+            SendMessageW(new WindowInteropHelper(this).Handle, WM_APPCOMMAND, new WindowInteropHelper(this).Handle,
+                (IntPtr)APPCOMMAND_VOLUME_UP);
+        }
+   
+
+ 
+        private void Notify_Click(object sender, EventArgs e) // 트레이 버튼 클릭
+        {
+            notify.Visible = false;
+            this.Visibility = Visibility.Visible;
+        }
+
+        private void AppWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (notify.Visible == true) { }
+            else
+            {
+                string messageBoxText = "트레이로 최소화 하시려면 Yes , 종료는 No입니다.";
+                string caption = "트레이";
+                MessageBoxButton button = MessageBoxButton.YesNoCancel;
+
+
+                MessageBoxResult messageBoxResult = MessageBox.Show(messageBoxText, caption, button);
+                switch (messageBoxResult)
+                {
+                    case MessageBoxResult.Yes: // 트레이로 보냄
+                        e.Cancel = true;
+                        notify.Visible = true;
+                        this.Visibility = Visibility.Hidden;
+                        break;
+                    case MessageBoxResult.No:
+                        // 윈도우 종료
+                        break;
+                    case MessageBoxResult.Cancel: // 취소
+                        e.Cancel = true;
+                        break;
+                }
+            }
+            return;
         }
     }
 

@@ -66,8 +66,8 @@ namespace Umini
       
             BitmapImage bi = new BitmapImage(new Uri(youtube.mImagePath, UriKind.RelativeOrAbsolute));
           
-            playlist.Items.Add( new ListV() { ImageData = bi , album = youtube.mAllbum, title = youtube.mTitle, singer = youtube.mArtist, length = youtube.mLength, type = youtube.mType , path = youtube.mPath});
-
+            playlist.Items.Add(new ListV() { ImageData = bi , album = youtube.mAllbum, title = youtube.mTitle, singer = youtube.mArtist, length = youtube.mLength, type = youtube.mType});
+          
         }
         /// <summary>
         /// 플레이리스트에 추가하기 위한 클래스
@@ -80,7 +80,7 @@ namespace Umini
             public string album { get; set; }
             public double length { get; set; }
             public string singer { get; set; }
-            public string path { get; set; }
+            //public string path { get; set; }
         }
 
         /// <summary>

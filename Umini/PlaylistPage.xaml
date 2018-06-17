@@ -75,8 +75,8 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="60"/>
                 </Grid.ColumnDefinitions>
-                <TextBox  Grid.Column="0" Height="40"  x:Name="txtUrl" materialDesign:HintAssist.Hint="Youtube 주소 입력" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
-                <Button Grid.Column="1" Click="btnURLAdd_Click" Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}" ToolTip="MaterialDesignFloatingActionMiniLightButton">
+                <TextBox  Grid.Column="0" Height="40" Margin="20,0,20,0"  x:Name="txtUrl" materialDesign:HintAssist.Hint="Youtube 주소 입력" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+                <Button Grid.Column="1" Click="btnURLAdd_Click" Background="Yellow" BorderBrush="Yellow" Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}" ToolTip="MaterialDesignFloatingActionMiniLightButton">
                     <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" />
                 </Button>
             </Grid>

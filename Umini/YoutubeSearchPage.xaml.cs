@@ -18,6 +18,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Player;
 
 namespace Umini
 {
@@ -31,13 +32,15 @@ namespace Umini
         {
             InitializeComponent();
             mw = (MainWindow)Application.Current.MainWindow;
-
+            foreach(Playlist playlist in mw.mAccount.mPlaylistList)
+            {
+                cbbPlaylist.Items.Add(playlist.mName);
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             YoutubePlaySearch(txtTitle.Text).Wait();
-
         }
         private async Task YoutubePlaySearch(string youtubeIDorName)
         {
@@ -80,14 +83,30 @@ namespace Umini
         {
             if (listviewSearchList.SelectedItems.Count == 1)
             {
+                if(cbbPlaylist.SelectedIndex == -1)
+                {
+                    MessageBox.Show("추가한 플레이 리스트를 선택해주세요");
+                    return;
+                }
                 var items = listviewSearchList.SelectedItems;
 
-                //MessageBox.Show("https://www.youtube.com/watch?v=" + items[0].GetType().GetProperty("VideoId").GetValue(items[0], null).ToString());
+                string url = "https://www.youtube.com/watch?v=" + items[0].GetType().GetProperty("VideoId").GetValue(items[0], null).ToString();
+                PlaylistPage plp = new PlaylistPage();
 
-                SelectPlayList selectPlayList = new SelectPlayList("https://www.youtube.com/watch?v=" + items[0].GetType().GetProperty("VideoId").GetValue(items[0], null).ToString());
-                selectPlayList.Show();
-                //mw.mAccount.mPlaylistList
+                string playlistName =(cbbPlaylist.SelectedItem).ToString();
+                Playlist playlist = FindPlaylist(playlistName);
+
+                plp.ParsingYoutube(url, playlist);
+                Thread downloadThread = new Thread(() => plp.DownloadYoutube(url, playlist));
+                downloadThread.Start();
+
             }
+        }
+
+        public Playlist FindPlaylist(string name)
+        {
+            Playlist playlist = mw.mAccount.mPlaylistList.FirstOrDefault(x => x.mName.Equals(name));
+            return playlist;
         }
     }
 }

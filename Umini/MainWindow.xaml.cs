@@ -37,14 +37,16 @@ namespace Umini
     {
         public Test_play play;
         public Account mAccount;
-
+        DispatcherTimer mtimer = new DispatcherTimer();
         public MainWindow()
         {
 
 
             InitializeComponent();
             DataContext = new WindowViewModel(this);
-
+            mtimer.Interval = TimeSpan.FromMilliseconds(1000);
+            mtimer.Tick += new EventHandler(Update_timeslider);
+            mtimer.Start();
             play = new Test_play();
 
             play.video.MediaEnded += new RoutedEventHandler(MediaEnded);
@@ -69,7 +71,14 @@ namespace Umini
             window.Show();
         }
 
+        void Update_timeslider(object sender, EventArgs e)
+        {
+            NowPlayingList npl = mAccount.mNowPlayingList;
+            Slider_time.Value = play.video.Position.TotalSeconds;
+            Slider_time.Maximum = play.total == 0 ? 1 : play.total;
+            //time.Text = new TimeSpan(0, 0, (Convert.ToInt32(Slider_time.Value))).ToString() + "/" + new TimeSpan(0, 0, Convert.ToInt32(t.TotalSeconds)); ;
 
+        }
 
         private void btn_Play_Click(object sender, RoutedEventArgs e)
         {
@@ -115,6 +124,10 @@ namespace Umini
 
             play.Music_Open(npl.mMediaList[npl.mNowPlayingOrder].mPath);
             play.video.Position = new TimeSpan(0, 0, 0, 0, Convert.ToInt32(npl.mNowMediaPosition));
+            Slider_time.Minimum = 0;
+
+            Slider_time.IsMoveToPointEnabled = true;
+
             npl.mIsPlay = true;
         }
 
@@ -287,6 +300,34 @@ namespace Umini
             ImportExport importExport = new ImportExport();
 
             importExport.exportAccount(mAccount);
+        }
+
+        private void Slider_time_LostMouseCapture(object sender, MouseEventArgs e)
+        {
+            int pos = Convert.ToInt32(Slider_time.Value);
+            play.video.Position = new TimeSpan(0, 0, 0, pos);
+        }
+
+        private void Slider_time_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                int pos = Convert.ToInt32(Slider_time.Value);
+                play.video.Position = new TimeSpan(0, 0, 0, pos);
+            }
+        }
+
+        private void Slider_volume_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                play.video.Volume = Slider_volume.Value;
+            }
+        }
+
+        private void Slider_volume_LostMouseCapture(object sender, MouseEventArgs e)
+        {
+            play.video.Volume = Slider_volume.Value;
         }
     }
 }

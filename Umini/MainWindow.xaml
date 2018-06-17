@@ -169,7 +169,7 @@
                                 <Grid Grid.Row="1" VerticalAlignment="Center" Margin="10,0,0,0">
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,10">
                                         <materialDesign:PackIcon Height="30" Width="30" Kind="VolumeHigh" Padding="20" materialDesign:ColorZoneAssist.Mode="Light" Foreground="White" Margin="0, 0, 20, 0"/>
-                                        <Slider Height="20" Width="130" HorizontalAlignment="Stretch" TickFrequency="5" Minimum="1" Maximum="50" Value="25" Foreground="White"/>
+                                        <Slider x:Name="Slider_volume" Height="20" Width="130" HorizontalAlignment="Stretch" TickFrequency="0.01" Minimum="0" Maximum="1" Value="0.5" Foreground="White" MouseMove="Slider_volume_MouseMove" LostMouseCapture="Slider_volume_LostMouseCapture"/>
                                     </StackPanel>
                                 </Grid>
                             </Grid>
@@ -191,6 +191,7 @@
                         </Grid>
                         <!-- Status bar -->
                         <Grid Grid.Row="1" Background="{StaticResource TitleHoverBackgroundBrush}">
+                            <Slider x:Name="Slider_time" HorizontalAlignment="Left" VerticalAlignment="Top" Width="880" Margin="0,-10,0,0" LostMouseCapture="Slider_time_LostMouseCapture" MouseMove="Slider_time_MouseMove"/>
 
                         </Grid>
                     </Grid>

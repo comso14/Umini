@@ -27,26 +27,25 @@ namespace Umini.Test.hhhh24
     /// </summary>
     public partial class Test_play : Window
     {
-        TimeSpan t;
+        public TimeSpan t;
         bool mIsPlayed = false;
         DispatcherTimer mTimer = new DispatcherTimer();
         List<MediaFile> mfiles = new List<MediaFile>();
-
+        public double total = 0;
         public Test_play()
         {
             InitializeComponent();
             mTimer.Interval = TimeSpan.FromMilliseconds(1000);
             mTimer.Tick += new EventHandler(update);
             mTimer.Start();
-           // CompositionTarget.Rendering += new EventHandler(Rendering_Update);
+            // CompositionTarget.Rendering += new EventHandler(Rendering_Update);
         }
-        
+
         public void Music_Open(string path)
         {
             video.Source = new Uri(path);
             video.LoadedBehavior = MediaState.Manual;
             video.UnloadedBehavior = MediaState.Manual;
-
             FileInfo file = new FileInfo(path);
             MediaFile files = new MediaFile();
 
@@ -54,12 +53,12 @@ namespace Umini.Test.hhhh24
 
             files.mExt = ext[ext.Length == 0 ? ext.Length - 1 : 0];
             files.mPath = path;
-            
+
 
             if (files.mExt == "mp3")
             {
 
-                
+
                 using (TagLib.File mp3 = TagLib.File.Create(path))
                 {
                     int k = 0;
@@ -88,25 +87,32 @@ namespace Umini.Test.hhhh24
                 }
 
             }
-            
+            files.mLength = total;
             mfiles.Add(files); // 다 저장된 하나의 mediafile 클래스를 리스트에 추가함\
             VideoPlay();
-            files.mLength = t.TotalSeconds;
+
 
         }
 
-        void update(object sender,EventArgs e)
+        void update(object sender, EventArgs e)
         {
             Slider_Time.Value = video.Position.TotalSeconds;
-            time.Text = new TimeSpan(0,0,(Convert.ToInt32(Slider_Time.Value))).ToString() + "/" + new TimeSpan(0, 0, Convert.ToInt32(t.TotalSeconds)); ;
-            
+            time.Text = new TimeSpan(0, 0, (Convert.ToInt32(Slider_Time.Value))).ToString() + "/" + new TimeSpan(0, 0, Convert.ToInt32(t.TotalSeconds)); ;
+
         }
 
         public double CurPosition()
         {
             return video.Position.TotalMilliseconds;
         }
-        
+        public double NowPosition()
+        {
+            return video.Position.TotalSeconds;
+        }
+        public double totallength()
+        {
+            return total;
+        }
         public void YoutubePlay(string url)
         {
             var ytb = new YouTubeService(new BaseClientService.Initializer()
@@ -136,7 +142,7 @@ namespace Umini.Test.hhhh24
             btn_Play.Content = "||";
             video.Play();
             mIsPlayed = true;
-            
+
         }
         public void VideoPause()
         {
@@ -144,19 +150,21 @@ namespace Umini.Test.hhhh24
             video.Pause();
             mIsPlayed = false;
         }
-        
+
 
         private void video_MediaOpened(object sender, RoutedEventArgs e)
         {
             t = video.NaturalDuration.TimeSpan;
+
             Slider_Time.Minimum = 0;
             Slider_Time.Maximum = t.TotalSeconds;
+            total = t.TotalSeconds;
             Slider_Time.IsMoveToPointEnabled = true;
         }
- 
+
         private void Slider_Time_LostMouseCapture(object sender, MouseEventArgs e)
         {
-            
+
             int pos = Convert.ToInt32(Slider_Time.Value);
             video.Position = new TimeSpan(0, 0, 0, pos);
             string curTime = (new TimeSpan(0, 0, 0, pos)).ToString() + "/" + new TimeSpan(0, 0, Convert.ToInt32(t.TotalSeconds));
@@ -194,11 +202,11 @@ namespace Umini.Test.hhhh24
 
         public void btn_Play_Click(object sender, RoutedEventArgs e)
         {
-            if (mIsPlayed)              
+            if (mIsPlayed)
                 VideoPause();
             else
                 VideoPlay();
-                
+
         }
 
         private void Slider_Volume_LostMouseCapture(object sender, MouseEventArgs e)

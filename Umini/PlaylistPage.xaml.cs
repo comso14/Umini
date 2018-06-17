@@ -64,24 +64,8 @@ namespace Umini
             MessageBox.Show(youtube.mTitle);
             mw.mNowPlayingList.mMediaList.Add((MediaFile)youtube);
       
-            BitmapImage bi = new BitmapImage(new Uri(youtube.mImagePath, UriKind.RelativeOrAbsolute));
-          
-            // playlist.Items.Add( new ListV() { ImageData = bi , album = youtube.mAllbum, title = youtube.mTitle, singer = youtube.mArtist, length = youtube.mLength, type = youtube.mType , path = youtube.mPath});
+        }
 
-        }
-        /// <summary>
-        /// 플레이리스트에 추가하기 위한 클래스
-        /// </summary>
-        private class ListV 
-        {
-            public string title { get; set; }
-            public BitmapImage ImageData { get; set; }
-            public string type { get; set; }
-            public string album { get; set; }
-            public double length { get; set; }
-            public string singer { get; set; }
-            public string path { get; set; }
-        }
 
         /// <summary>
         /// using https://github.com/i3arnon/libvideo

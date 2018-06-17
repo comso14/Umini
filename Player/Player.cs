@@ -40,8 +40,7 @@ namespace Player
     {
         List<MediaFile> mMediaList { get; set; }
 
-        private string mName { get; set; }
-        private string mAccount { get; set; }
+        public string mName { get; set; }
     }
 
     public class Youtube : MediaFile

@@ -199,15 +199,27 @@
                 </Grid>
 
             </Grid>
-            <Grid Background="LightCyan" Grid.Column="0" Grid.Row="1" >
-                <local:SideMenuListControl />
+            <Grid Background="{StaticResource BackgroundLightBrush}" Grid.Column="0" Grid.Row="1" >
+                <!-- tree view -->
+                <StackPanel Orientation="Vertical">
+                    <TreeView x:Name="trvPlaylist" TreeViewItem.Selected="trvPlaylistItem_Selected">
+                        <TreeViewItem x:Name="trviPlaylist" Header="PlayList" IsExpanded="True">
+                        </TreeViewItem>
+                    </TreeView>
+                    <TreeView x:Name="trvSideMenu" TreeViewItem.Selected="trvPlaylistItem_Selected">
+                        <TreeViewItem Header="Search"/>
+                        <TreeViewItem Header="Setting"/>
+                    </TreeView>
+                </StackPanel>
+              
+                <!--<local:SideMenuListControl />-->
             </Grid>
             <!-- content area -->
             <!-- 
             <Frame Source="PlaylistPage.xaml" Grid.Column="1" Grid.Row="1"/>
              -->
 
-            <Frame x:Name="frame" Background="LightGoldenrodYellow" Grid.Column="1" Grid.Row="1">
+            <Frame x:Name="frame" Background="LightGoldenrodYellow" Grid.Column="1" Grid.Row="1" NavigationUIVisibility="Hidden">
 
             </Frame>
         </Grid>

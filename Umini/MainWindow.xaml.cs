@@ -23,6 +23,7 @@ using System.Threading;
 using System.Windows.Threading;
 using VideoLibrary;
 using System.IO;
+using System.Collections.ObjectModel;
 
 
 namespace Umini
@@ -40,6 +41,8 @@ namespace Umini
 
         public MainWindow()
         {
+            
+
             InitializeComponent();
             DataContext = new WindowViewModel(this);
 
@@ -48,6 +51,16 @@ namespace Umini
 
             play.video.MediaEnded += new RoutedEventHandler(MediaEnded);
             mAccount = new Account();
+
+            mAccount.mPlaylistList.Add(new Playlist() { mName = "TestPlaylist1" });
+            mAccount.mPlaylistList.Add(new Playlist() { mName = "TestPlaylist2" });
+            mAccount.mPlaylistList.Add(new Playlist() { mName = "TestPlaylist3" });
+            mAccount.mPlaylistList.Add(new Playlist() { mName = "TestPlaylist4" });
+
+            foreach(Playlist playlist in mAccount.mPlaylistList)
+            {
+                trviPlaylist.Items.Add(new TreeViewItem() { Header = playlist.mName });
+            }
 
             LoadAccount();
         }
@@ -171,7 +184,7 @@ namespace Umini
                     }
                 }
                 //ㅠㅠ 디포트가 없으면 여길로 오겠구먼
-                if(mAccount.mID=="")
+                if(mAccount.mID == null)
                 {
                     mAccount.mID = "default";
                 }
@@ -183,6 +196,7 @@ namespace Umini
                 mAccount.mID = "default";
                 importExport.exportAccount(mAccount);
             }
+
 
         }
 
@@ -197,8 +211,32 @@ namespace Umini
             MessageBox.Show("dd");
         }
 
+        private void trvPlaylistItem_Selected(object sender, RoutedEventArgs e)
+        {
+            TreeViewItem tvi = e.OriginalSource as TreeViewItem;
+
+            string menu = tvi.Header.ToString();
 
 
+            switch(menu)
+            {
+                case "Playlist":
+                case "TestPlaylist1":
+                case "TestPlaylist2":
+                case "TestPlaylist3":
+                case "TestPlaylist4":
+                    frame.NavigationService.Navigate(new PlaylistPage());
+                    break;
+                case "Search":
+                    frame.NavigationService.Navigate(new YoutubeSearchPage());
+                    break;
+                case "Setting":
+                    frame.NavigationService.Navigate(new SettingPage());
+                    break;
+            }
+
+
+        }
     }
 
 }

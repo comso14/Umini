@@ -226,7 +226,10 @@ namespace Umini
 
             string menu = tvi.Header.ToString();
             if (menu == "PlayList")
+            {
+                frame.NavigationService.Navigate(new ManagePlaylistPage());
                 return;
+            }
 
             Playlist playlist = FindPlaylist(menu);
             frame.NavigationService.Navigate(new PlaylistPage(playlist));

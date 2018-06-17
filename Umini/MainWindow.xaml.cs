@@ -35,19 +35,17 @@ namespace Umini
 
     public partial class MainWindow : Window
     {
-        public NowPlayingList mNowPlayingList;
         public Test_play play;
         public Account mAccount;
 
         public MainWindow()
         {
-            
+
 
             InitializeComponent();
             DataContext = new WindowViewModel(this);
 
             play = new Test_play();
-            mNowPlayingList = new NowPlayingList();
 
             play.video.MediaEnded += new RoutedEventHandler(MediaEnded);
             mAccount = new Account();
@@ -57,9 +55,9 @@ namespace Umini
             mAccount.mPlaylistList.Add(new Playlist() { mName = "TestPlaylist3" });
             mAccount.mPlaylistList.Add(new Playlist() { mName = "TestPlaylist4" });
 
-            foreach(Playlist playlist in mAccount.mPlaylistList)
+            foreach (Playlist playlist in mAccount.mPlaylistList)
             {
-                trviPlaylist.Items.Add(new TreeViewItem() { Header = playlist.mName });
+                tviPlaylist.Items.Add(new TreeViewItem() { Header = playlist.mName });
             }
 
             LoadAccount();
@@ -75,11 +73,12 @@ namespace Umini
 
         private void btn_Play_Click(object sender, RoutedEventArgs e)
         {
-            if (mNowPlayingList.mMediaList[mNowPlayingList.mNowPlayingOrder].mPath != null)
+            NowPlayingList npl = mAccount.mNowPlayingList;
+            if (npl.mMediaList[npl.mNowPlayingOrder].mPath != null)
             {
-                BitmapImage bi = new BitmapImage(new Uri(mNowPlayingList.mMediaList[mNowPlayingList.mNowPlayingOrder].mImagePath, UriKind.RelativeOrAbsolute));
+                BitmapImage bi = new BitmapImage(new Uri(npl.mMediaList[npl.mNowPlayingOrder].mImagePath, UriKind.RelativeOrAbsolute));
                 album.Source = bi;
-                MediaFile media = mNowPlayingList.mMediaList[mNowPlayingList.mNowPlayingOrder];
+                MediaFile media = npl.mMediaList[npl.mNowPlayingOrder];
                 lbTitleBar.Content = media.mTitle + " - " + media.mArtist;
                 //txtLyric.Text = media.mLyric;
                 Play();
@@ -106,49 +105,58 @@ namespace Umini
         }
         private void AppWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            frame.NavigationService.Navigate(new PlaylistPage());
+            frame.NavigationService.Navigate(new NowPlayingPage());
         }
 
 
         public void Play()
         {
-            play.Music_Open(mNowPlayingList.mMediaList[mNowPlayingList.mNowPlayingOrder].mPath);
-            play.video.Position = new TimeSpan(0, 0, 0, 0, Convert.ToInt32(mNowPlayingList.mNowMediaPosition));
-            mNowPlayingList.mIsPlay = true;
+            NowPlayingList npl = mAccount.mNowPlayingList;
+
+            play.Music_Open(npl.mMediaList[npl.mNowPlayingOrder].mPath);
+            play.video.Position = new TimeSpan(0, 0, 0, 0, Convert.ToInt32(npl.mNowMediaPosition));
+            npl.mIsPlay = true;
         }
 
         public void Pause()
         {
-            mNowPlayingList.mNowMediaPosition = play.CurPosition();
-            mNowPlayingList.mIsPlay = false;
+            NowPlayingList npl = mAccount.mNowPlayingList;
+
+            npl.mNowMediaPosition = play.CurPosition();
+            npl.mIsPlay = false;
             play.VideoPause();
         }
         public void Stop()
         {
+            NowPlayingList npl = mAccount.mNowPlayingList;
             play.video.Stop();
-            mNowPlayingList.mIsPlay = false;
+            npl.mIsPlay = false;
         }
 
         public void NextPlay()
         {
-            if (++mNowPlayingList.mNowPlayingOrder == mNowPlayingList.mMediaList.Count)
-                mNowPlayingList.mNowPlayingOrder = 0;
-            if (mNowPlayingList.mMediaList[mNowPlayingList.mNowPlayingOrder].mPath != null)
+            NowPlayingList npl = mAccount.mNowPlayingList;
+
+            if (++npl.mNowPlayingOrder == npl.mMediaList.Count)
+                npl.mNowPlayingOrder = 0;
+            if (npl.mMediaList[npl.mNowPlayingOrder].mPath != null)
             {
-                mNowPlayingList.mNowMediaPosition = 0;
-                play.Music_Open(mNowPlayingList.mMediaList[mNowPlayingList.mNowPlayingOrder].mPath);
+                npl.mNowMediaPosition = 0;
+                play.Music_Open(npl.mMediaList[npl.mNowPlayingOrder].mPath);
 
             }
         }
 
         public void PrevPlay()
         {
-            if (--mNowPlayingList.mNowPlayingOrder < 0)
-                mNowPlayingList.mNowPlayingOrder = mNowPlayingList.mMediaList.Count - 1;
-            if (mNowPlayingList.mMediaList[mNowPlayingList.mNowPlayingOrder].mPath != null)
+            NowPlayingList npl = mAccount.mNowPlayingList;
+
+            if (--npl.mNowPlayingOrder < 0)
+                npl.mNowPlayingOrder = npl.mMediaList.Count - 1;
+            if (npl.mMediaList[npl.mNowPlayingOrder].mPath != null)
             {
-                mNowPlayingList.mNowMediaPosition = 0;
-                play.Music_Open(mNowPlayingList.mMediaList[mNowPlayingList.mNowPlayingOrder].mPath);
+                npl.mNowMediaPosition = 0;
+                play.Music_Open(npl.mMediaList[npl.mNowPlayingOrder].mPath);
             }
         }
         public void MediaEnded(object sender, RoutedEventArgs e)
@@ -176,7 +184,7 @@ namespace Umini
                     {
                         String FileNameOnly = File.Name.Substring(0, File.Name.Length - 5);
                         String FullFileName = File.FullName;
-                        if(FileNameOnly.Equals(mAccount.mID))
+                        if (FileNameOnly.Equals(mAccount.mID))
                         {
                             mAccount = importExport.importAccount(mAccount.mID);
                             return;
@@ -184,9 +192,10 @@ namespace Umini
                     }
                 }
                 //ㅠㅠ 디포트가 없으면 여길로 오겠구먼
-                if(mAccount.mID == null)
+                if (mAccount.mID == null)
                 {
                     mAccount.mID = "default";
+                    mAccount.mNowPlayingList = new NowPlayingList();
                 }
                 importExport.exportAccount(mAccount);
             }
@@ -194,6 +203,7 @@ namespace Umini
             {
                 //MessageBox.Show("default.json 파일이 없습니다. 그래서 json 파일을 만들겠습니다.");
                 mAccount.mID = "default";
+                mAccount.mNowPlayingList = new NowPlayingList();
                 importExport.exportAccount(mAccount);
             }
 
@@ -206,27 +216,36 @@ namespace Umini
 
         }
 
-        private void btnProfile_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("dd");
-        }
-
         private void trvPlaylistItem_Selected(object sender, RoutedEventArgs e)
         {
+            tviNowPlaying.IsSelected = false;
+            tviSearch.IsSelected = false;
+            tviSetting.IsSelected = false;
+
+            TreeViewItem tvi = e.OriginalSource as TreeViewItem;
+
+            string menu = tvi.Header.ToString();
+            if (menu == "PlayList")
+                return;
+
+            Playlist playlist = FindPlaylist(menu);
+            frame.NavigationService.Navigate(new PlaylistPage(playlist));
+
+        }
+
+        private void trvSideMenu_Selected(object sender, RoutedEventArgs e)
+        {
+            foreach(TreeViewItem item in tviPlaylist.Items)
+            {
+                item.IsSelected = false;
+            }
+            tviNowPlaying.IsSelected = false;
             TreeViewItem tvi = e.OriginalSource as TreeViewItem;
 
             string menu = tvi.Header.ToString();
 
-
-            switch(menu)
+            switch (menu)
             {
-                case "Playlist":
-                case "TestPlaylist1":
-                case "TestPlaylist2":
-                case "TestPlaylist3":
-                case "TestPlaylist4":
-                    frame.NavigationService.Navigate(new PlaylistPage());
-                    break;
                 case "Search":
                     frame.NavigationService.Navigate(new YoutubeSearchPage());
                     break;
@@ -234,11 +253,29 @@ namespace Umini
                     frame.NavigationService.Navigate(new SettingPage());
                     break;
             }
-
-
         }
-    }
 
+        private void trvNowPlaying_Selected(object sender, RoutedEventArgs e)
+        {
+            tviSearch.IsSelected = false;
+            tviSetting.IsSelected = false;
+            foreach (TreeViewItem item in tviPlaylist.Items)
+            {
+                item.IsSelected = false;
+            }
+
+            frame.NavigationService.Navigate(new NowPlayingPage());
+        }
+
+
+        public Playlist FindPlaylist(string name)
+        {
+            Playlist playlist = mAccount.mPlaylistList.FirstOrDefault(x => x.mName.Equals(name));
+            return playlist;
+        }
+
+
+    }
 }
 
 

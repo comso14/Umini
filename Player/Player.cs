@@ -10,6 +10,7 @@ namespace Player
     {
         public string mID { get; set; }
         public string mYoutubeID { get; set; }
+        public NowPlayingList mNowPlayingList { get; set; }
         public List<Playlist> mPlaylistList { get; set; }
 
         public Account()
@@ -38,9 +39,15 @@ namespace Player
 
     public class Playlist
     {
-        List<MediaFile> mMediaList { get; set; }
+        public List<MediaFile> mMediaList { get; set; }
 
         public string mName { get; set; }
+
+        public Playlist()
+        {
+            mMediaList = new List<MediaFile>();
+            mName = null;
+        }
     }
 
     public class Youtube : MediaFile

@@ -10,17 +10,20 @@
       Title="PlaylistPage">
 
     <Grid Background="White">
-        <StackPanel Orientation="Vertical">
-            <Label Margin="40 5 0 0"  Content="현재 재생 목록"/>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="50"/>
-                </Grid.RowDefinitions>
-            </Grid>
-            <DataGrid Grid.Row="0" x:Name="dgPlaylist" Margin="0 8 0 0" CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False" 
+        <Label Margin="40 5 0 0"  Content="현재 재생 목록"/>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            <DataGrid Grid.Row="0" IsReadOnly="True" x:Name="dgPlaylist" Margin="0 8 0 0" CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False" 
                       materialDesign:DataGridAssist.CellPadding="13 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8" 
                       ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" >
+                <DataGrid.Resources>
+                    <Style TargetType="DataGridRow">
+                        <EventSetter Event="MouseDoubleClick" Handler="DataGridRow_MouseDoubleClick"/>
+                    </Style>
+                </DataGrid.Resources>
                 <DataGrid.Columns>
                     <DataGridCheckBoxColumn Binding="{Binding IsSelected}" ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
                             EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}">
@@ -67,13 +70,18 @@
                     </materialDesign:MaterialDataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
+            <Grid Grid.Row="1" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="60"/>
+                </Grid.ColumnDefinitions>
+                <TextBox  Grid.Column="0" Height="40"  x:Name="txtUrl" materialDesign:HintAssist.Hint="Youtube 주소 입력" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+                <Button Grid.Column="1" Click="btnURLAdd_Click" Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}" ToolTip="MaterialDesignFloatingActionMiniLightButton">
+                    <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" />
+                </Button>
+            </Grid>
 
-            <StackPanel Grid.Row="1" Orientation="Horizontal">
-                <TextBox x:Name="txtUrl" Margin="40 5 0 0" Width="400" Text="https://www.youtube.com/watch?v=rRzxEiBLQCA"/>
-                <Button Width="100" Content="URL로 추가" Margin="0 5 0 0" Click="btnURLAdd_Click"/>
-            </StackPanel>
-
-        </StackPanel>
+        </Grid>
         <Viewbox HorizontalAlignment="Left" Height="100" Margin="-260,105,0,0" VerticalAlignment="Top" Width="100"/>
 
     </Grid>

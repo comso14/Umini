@@ -33,20 +33,35 @@ namespace Umini
     public partial class PlaylistPage : Page
     {
       
-        MainWindow mw;
+        MainWindow mw = (MainWindow)Application.Current.MainWindow;
+        Playlist playlist;
 
         public PlaylistPage()
         {
             InitializeComponent();
-            mw = (MainWindow)Application.Current.MainWindow;
-            dgPlaylist.ItemsSource = mw.mNowPlayingList.mMediaList;
+            dgPlaylist.ItemsSource = mw.mAccount.mNowPlayingList.mMediaList;
+
         }
-       
+
+
+
+        public PlaylistPage(Playlist _playlist)
+        {
+            InitializeComponent();
+            playlist = _playlist;
+            dgPlaylist.ItemsSource = playlist.mMediaList;
+        }
+
         private void btnURLAdd_Click(object sender, RoutedEventArgs e)
         {
-            ParsingYoutube(txtUrl.Text);
+            if (!txtUrl.Text.Contains("watch?v="))
+            {
+                MessageBox.Show("Youtube 영상 주소를 확인 해주세요 ");
+                return;
+            }
+            ParsingYoutube(txtUrl.Text, playlist);
             string link = txtUrl.Text;
-            Thread downloadThread = new Thread(() => DownloadYoutube(link));
+            Thread downloadThread = new Thread(() => DownloadYoutube(link, playlist));
             downloadThread.Start();
             dgPlaylist.Items.Refresh();
         }
@@ -55,14 +70,14 @@ namespace Umini
         /// Parsing youtube media and add information to youtube class
         /// </summary>
         /// <param name="link"></param>
-        private void ParsingYoutube(string link)
+        private void ParsingYoutube(string link, Playlist playlist)
         {
             Test_PlaylistParsing parsing = new Test_PlaylistParsing();
 
             Youtube youtube = parsing.ParsingYoutube(txtUrl.Text);  // parsing part
 
             MessageBox.Show(youtube.mTitle);
-            mw.mNowPlayingList.mMediaList.Add((MediaFile)youtube);
+            playlist.mMediaList.Add((MediaFile)youtube);
       
         }
 
@@ -72,7 +87,7 @@ namespace Umini
         /// NuGet download : Install-Package VideoLibrary
         /// </summary>
         /// <param name="link"></param>
-        private void DownloadYoutube(string link)
+        private void DownloadYoutube(string link, Playlist playlist)
         {
 
             var youTube = YouTube.Default; // starting point for YouTube actions
@@ -86,8 +101,8 @@ namespace Umini
             string path  = System.IO.Path.Combine(ie.makeFolder("videotmp"), link.Split('=').Last() + ".mp4");
 
             File.WriteAllBytes(path, video.GetBytes()); // save media file
-            int index = mw.mNowPlayingList.mMediaList.FindIndex(s => ((Youtube)s).mURL.Contains(link));
-            mw.mNowPlayingList.mMediaList[index].mPath = path;
+            int index = playlist.mMediaList.FindIndex(s => ((Youtube)s).mURL.Contains(link));
+            playlist.mMediaList[index].mPath = path;
 
             /*
             var item = playlist.Items.FindItemWithText(mw.mNowPlayingList.mMediaList[index].mTitle);
@@ -96,6 +111,13 @@ namespace Umini
             */
 
             return;
+        }
+
+        private void DataGridRow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            DataGridRow row = sender as DataGridRow;
+            MediaFile media = row.DataContext as MediaFile;
+            mw.mAccount.mNowPlayingList.mMediaList.Add(media);
         }
     }
 

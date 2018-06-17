@@ -202,13 +202,16 @@
             <Grid Background="{StaticResource BackgroundLightBrush}" Grid.Column="0" Grid.Row="1" >
                 <!-- tree view -->
                 <StackPanel Orientation="Vertical">
+                    <TreeView x:Name="trvNowPlaying" TreeViewItem.Selected="trvNowPlaying_Selected">
+                        <TreeViewItem x:Name="tviNowPlaying" Header="Now Playing"/>
+                    </TreeView>
                     <TreeView x:Name="trvPlaylist" TreeViewItem.Selected="trvPlaylistItem_Selected">
-                        <TreeViewItem x:Name="trviPlaylist" Header="PlayList" IsExpanded="True">
+                        <TreeViewItem x:Name="tviPlaylist" Header="PlayList" IsExpanded="True">
                         </TreeViewItem>
                     </TreeView>
-                    <TreeView x:Name="trvSideMenu" TreeViewItem.Selected="trvPlaylistItem_Selected">
-                        <TreeViewItem Header="Search"/>
-                        <TreeViewItem Header="Setting"/>
+                    <TreeView x:Name="trvSideMenu" TreeViewItem.Selected="trvSideMenu_Selected">
+                        <TreeViewItem x:Name="tviSearch" Header="Search"/>
+                        <TreeViewItem x:Name="tviSetting" Header="Setting"/>
                     </TreeView>
                 </StackPanel>
               

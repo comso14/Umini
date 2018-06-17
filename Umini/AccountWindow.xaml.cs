@@ -21,13 +21,15 @@ namespace Umini
     /// </summary>
     public partial class AccountWindow : Window
     {
-        MainWindow mainWindow = new MainWindow();
+        MainWindow mainWindow;
         ImportExport importExport = new ImportExport();
         public AccountWindow()
         {
             InitializeComponent();
             textboxId.Text = mainWindow.mAccount.mID;
             LoadAccount();
+            mainWindow = (MainWindow)Application.Current.MainWindow;
+
         }
 
         private void btnAccount_Click(object sender, RoutedEventArgs e)

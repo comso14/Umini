@@ -1,0 +1,70 @@
+﻿<Page x:Class="Umini.ManagePlaylistPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Umini"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ManagePlaylistPage">
+
+    <Grid Background="White">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            <TextBlock TextAlignment="Right" Margin="0,0,15,0">
+                해당 플레이스트를 더블 클릭 할 시에 삭제 됩니다.
+            </TextBlock>
+            <DataGrid Grid.Row="1" IsReadOnly="True" x:Name="dgPlaylist" Margin="0 8 0 0" CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False" 
+                      materialDesign:DataGridAssist.CellPadding="13 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8" 
+                      ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" >
+                <DataGrid.Resources>
+                    <Style TargetType="DataGridRow">
+                        <EventSetter Event="MouseDoubleClick" Handler="DataGridRow_MouseDoubleClick"/>
+                    </Style>
+                </DataGrid.Resources>
+                <DataGrid.Columns>
+                    <DataGridCheckBoxColumn Binding="{Binding IsSelected}" ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
+                            EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}">
+                        <DataGridCheckBoxColumn.Header>
+                            <!--padding to allow hit test to pass thru for sorting -->
+                            <Border Background="Transparent" Padding="6 0 6 0" HorizontalAlignment="Center">
+                                <CheckBox HorizontalAlignment="Center" DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}, Path=DataContext}" IsChecked="{Binding IsAllItems3Selected}" />
+                            </Border>
+                        </DataGridCheckBoxColumn.Header>
+                    </DataGridCheckBoxColumn>
+                    <!-- if you want to use the pop up style (MaterialDesignDataGridTextColumnPopupEditingStyle), you must use MaterialDataGridTextColumn -->
+                    <!--<materialDesign:MaterialDataGridTextColumn Binding="{Binding mAllbum}" Header="Album" MaxLength="200" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>-->
+                    <!-- set a max length to get an indicator in the editor -->
+                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding mName}" Width="200" Header="Name" MaxLength="100" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" >
+                        <DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                <Setter Property="HorizontalAlignment" Value="Center" />
+                            </Style>
+                        </DataGridTextColumn.HeaderStyle>
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="HorizontalAlignment" Value="Left" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </materialDesign:MaterialDataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="120"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Grid.Column="0" x:Name="txtPlaylistName" Margin="20,0,20,10"  materialDesign:HintAssist.Hint="Playlist 이름 입력" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                <Button Grid.Column="1" Background="Yellow" BorderBrush="Yellow" Height="30" Click="btnAddPlaylist_Click" Style="{StaticResource MaterialDesignRaisedLightButton}" Width="100" ToolTip="Resource name: MaterialDesignRaisedLightButton" Margin="0,0,10,0">
+                    추가하기
+                </Button>
+            </Grid>
+        </Grid>
+        
+    </Grid>
+</Page>

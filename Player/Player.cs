@@ -40,7 +40,6 @@ namespace Player
     public class Playlist
     {
         public List<MediaFile> mMediaList { get; set; }
-
         public string mName { get; set; }
 
         public Playlist()

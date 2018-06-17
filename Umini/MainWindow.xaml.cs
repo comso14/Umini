@@ -23,6 +23,7 @@ using System.Threading;
 using System.Windows.Threading;
 using VideoLibrary;
 using System.IO;
+using System.Collections.ObjectModel;
 
 
 namespace Umini
@@ -36,10 +37,12 @@ namespace Umini
     {
         public NowPlayingList mNowPlayingList;
         public Test_play play;
-        public Account account;
+        public Account mAccount;
 
         public MainWindow()
         {
+            
+
             InitializeComponent();
             DataContext = new WindowViewModel(this);
 
@@ -47,7 +50,17 @@ namespace Umini
             mNowPlayingList = new NowPlayingList();
 
             play.video.MediaEnded += new RoutedEventHandler(MediaEnded);
-            account = new Account();
+            mAccount = new Account();
+
+            mAccount.mPlaylistList.Add(new Playlist() { mName = "TestPlaylist1" });
+            mAccount.mPlaylistList.Add(new Playlist() { mName = "TestPlaylist2" });
+            mAccount.mPlaylistList.Add(new Playlist() { mName = "TestPlaylist3" });
+            mAccount.mPlaylistList.Add(new Playlist() { mName = "TestPlaylist4" });
+
+            foreach(Playlist playlist in mAccount.mPlaylistList)
+            {
+                trviPlaylist.Items.Add(new TreeViewItem() { Header = playlist.mName });
+            }
 
             LoadAccount();
         }
@@ -163,26 +176,27 @@ namespace Umini
                     {
                         String FileNameOnly = File.Name.Substring(0, File.Name.Length - 5);
                         String FullFileName = File.FullName;
-                        if(FileNameOnly.Equals(account.mID))
+                        if(FileNameOnly.Equals(mAccount.mID))
                         {
-                            account = importExport.importAccount(account.mID);
+                            mAccount = importExport.importAccount(mAccount.mID);
                             return;
                         }
                     }
                 }
                 //ㅠㅠ 디포트가 없으면 여길로 오겠구먼
-                if(account.mID=="")
+                if(mAccount.mID == null)
                 {
-                    account.mID = "default";
+                    mAccount.mID = "default";
                 }
-                importExport.exportAccount(account);
+                importExport.exportAccount(mAccount);
             }
             else//아무것도 없을때
             {
                 //MessageBox.Show("default.json 파일이 없습니다. 그래서 json 파일을 만들겠습니다.");
-                account.mID = "default";
-                importExport.exportAccount(account);
+                mAccount.mID = "default";
+                importExport.exportAccount(mAccount);
             }
+
 
         }
 
@@ -191,7 +205,38 @@ namespace Umini
             new AccountWindow().Show();
 
         }
-        
+
+        private void btnProfile_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("dd");
+        }
+
+        private void trvPlaylistItem_Selected(object sender, RoutedEventArgs e)
+        {
+            TreeViewItem tvi = e.OriginalSource as TreeViewItem;
+
+            string menu = tvi.Header.ToString();
+
+
+            switch(menu)
+            {
+                case "Playlist":
+                case "TestPlaylist1":
+                case "TestPlaylist2":
+                case "TestPlaylist3":
+                case "TestPlaylist4":
+                    frame.NavigationService.Navigate(new PlaylistPage());
+                    break;
+                case "Search":
+                    frame.NavigationService.Navigate(new YoutubeSearchPage());
+                    break;
+                case "Setting":
+                    frame.NavigationService.Navigate(new SettingPage());
+                    break;
+            }
+
+
+        }
     }
 
 }

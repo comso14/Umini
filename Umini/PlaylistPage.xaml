@@ -12,9 +12,15 @@
     <Grid Background="White">
         <StackPanel Orientation="Vertical">
             <Label Margin="40 5 0 0"  Content="현재 재생 목록"/>
-
-            <DataGrid x:Name="dgPlaylist" Margin="0 8 0 0" CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False" 
-                      materialDesign:DataGridAssist.CellPadding="13 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8" >
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="50"/>
+                </Grid.RowDefinitions>
+            </Grid>
+            <DataGrid Grid.Row="0" x:Name="dgPlaylist" Margin="0 8 0 0" CanUserSortColumns="True" CanUserAddRows="False" AutoGenerateColumns="False" 
+                      materialDesign:DataGridAssist.CellPadding="13 8 8 8" materialDesign:DataGridAssist.ColumnHeaderPadding="8" 
+                      ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" >
                 <DataGrid.Columns>
                     <DataGridCheckBoxColumn Binding="{Binding IsSelected}" ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}"
                             EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}">
@@ -26,58 +32,43 @@
                         </DataGridCheckBoxColumn.Header>
                     </DataGridCheckBoxColumn>
                     <!-- if you want to use the pop up style (MaterialDesignDataGridTextColumnPopupEditingStyle), you must use MaterialDataGridTextColumn -->
-                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding mAllbum}" Header="Album" MaxLength="200" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                    <!--<materialDesign:MaterialDataGridTextColumn Binding="{Binding mAllbum}" Header="Album" MaxLength="200" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>-->
+                    <DataGridTemplateColumn Header="Album">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image Source="{Binding mImagePath}" Height="50"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                     <!-- set a max length to get an indicator in the editor -->
-                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding mTitle}" Header="Title" MaxLength="100" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
-                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding mArtist}" Header="Artist" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
+                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding mTitle}" Header="Title" MaxLength="100" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" >
                         <DataGridTextColumn.HeaderStyle>
                             <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
-                                <Setter Property="HorizontalAlignment" Value="Right" />
+                                <Setter Property="HorizontalAlignment" Value="Center" />
                             </Style>
                         </DataGridTextColumn.HeaderStyle>
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="{x:Type TextBlock}">
-                                <Setter Property="HorizontalAlignment" Value="Right" />
+                                <Setter Property="HorizontalAlignment" Value="Left" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </materialDesign:MaterialDataGridTextColumn>
+                    <materialDesign:MaterialDataGridTextColumn Binding="{Binding mArtist}" Header="Artist" EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
+                        <DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                <Setter Property="HorizontalAlignment" Value="Center" />
+                            </Style>
+                        </DataGridTextColumn.HeaderStyle>
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="HorizontalAlignment" Value="Left" />
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </materialDesign:MaterialDataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
 
-            <!--<ListView x:Name="playlist" HorizontalAlignment="Left" Height="359" VerticalAlignment="Top" Width="734" RenderTransformOrigin="0.504,0.496" Margin="40,0,0,0">
-                <ListView.Resources>
-                    <BitmapImage x:Key="Albumart" UriSource="{Binding ImageData}"/>
-                </ListView.Resources>
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Margin="3" Text="{Binding Name}"/>
-                            <Image Margin="3" Source="{Binding ImageData}"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="앨범아트" Width="120" >
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Grid>
-                                        <Image Source="{Binding ImageData}" />
-                                    </Grid>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn Header="앨범" Width="100" DisplayMemberBinding="{Binding album}"/>
-                        <GridViewColumn Header="제목" Width="280" DisplayMemberBinding="{Binding title}"/>
-                        <GridViewColumn Header="가수" Width="50" DisplayMemberBinding="{Binding singer}"/>
-                        <GridViewColumn Header="길이" Width="50" DisplayMemberBinding="{Binding length}"/>
-                        <GridViewColumn Header="타입" Width="50" DisplayMemberBinding="{Binding type}"/>
-                        <GridViewColumn Header="타입" Width="50" DisplayMemberBinding="{Binding path}"/>
-                    </GridView>
-                </ListView.View>
-            </ListView>-->
-
-            <StackPanel Orientation="Horizontal">
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
                 <TextBox x:Name="txtUrl" Margin="40 5 0 0" Width="400" Text="https://www.youtube.com/watch?v=rRzxEiBLQCA"/>
                 <Button Width="100" Content="URL로 추가" Margin="0 5 0 0" Click="btnURLAdd_Click"/>
             </StackPanel>

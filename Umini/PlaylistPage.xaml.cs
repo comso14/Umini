@@ -34,7 +34,6 @@ namespace Umini
     {
       
         MainWindow mw;
-        List<ListV> mediaItems = new List<ListV>();
 
         public PlaylistPage()
         {
@@ -49,6 +48,7 @@ namespace Umini
             string link = txtUrl.Text;
             Thread downloadThread = new Thread(() => DownloadYoutube(link));
             downloadThread.Start();
+            dgPlaylist.Items.Refresh();
         }
        
         /// <summary>
@@ -64,24 +64,8 @@ namespace Umini
             MessageBox.Show(youtube.mTitle);
             mw.mNowPlayingList.mMediaList.Add((MediaFile)youtube);
       
-            BitmapImage bi = new BitmapImage(new Uri(youtube.mImagePath, UriKind.RelativeOrAbsolute));
-          
-            // playlist.Items.Add( new ListV() { ImageData = bi , album = youtube.mAllbum, title = youtube.mTitle, singer = youtube.mArtist, length = youtube.mLength, type = youtube.mType , path = youtube.mPath});
+        }
 
-        }
-        /// <summary>
-        /// 플레이리스트에 추가하기 위한 클래스
-        /// </summary>
-        private class ListV 
-        {
-            public string title { get; set; }
-            public BitmapImage ImageData { get; set; }
-            public string type { get; set; }
-            public string album { get; set; }
-            public double length { get; set; }
-            public string singer { get; set; }
-            public string path { get; set; }
-        }
 
         /// <summary>
         /// using https://github.com/i3arnon/libvideo
@@ -90,7 +74,6 @@ namespace Umini
         /// <param name="link"></param>
         private void DownloadYoutube(string link)
         {
-            // using https://github.com/i3arnon/libvideo 
 
             var youTube = YouTube.Default; // starting point for YouTube actions
             var videos = youTube.GetAllVideos(link);
@@ -115,4 +98,5 @@ namespace Umini
             return;
         }
     }
+
 }
